@@ -12,7 +12,7 @@ public class Socks {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @Column(name = "color")
+    @Column
     private String color;
     @Column
     private Long cottonPart;

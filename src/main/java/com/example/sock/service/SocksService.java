@@ -23,7 +23,7 @@ public class SocksService implements ISocksService{
             case lessThan: return socksRepository.getSocksByColorAndCottonPartLessThan(color, cottonPart).orElseThrow(()->new NullResultException("Nothing was found for this query"));
             case equals: return socksRepository.getSocksByColorAndCottonPartEquals(color, cottonPart).orElseThrow(()-> new NullResultException("Nothing was found for this query"));
             default:
-                throw new IncorrectParametersException("Incorrect parameters in url");
+                throw new IncorrectParametersException("Incorrect parameters in url"); // заглушка для компилятора
 
         }
     }

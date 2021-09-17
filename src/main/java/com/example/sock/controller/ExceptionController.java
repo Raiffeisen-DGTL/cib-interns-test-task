@@ -18,7 +18,7 @@ public class ExceptionController {
         return new ErrorResponce("Incorrect parameters", exception.getMessage());
     }
 
-    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR) // Для возврата клиенту вместо null - json c сообщением, что ничего не найдено
     @ExceptionHandler(NullResultException.class)
     public ErrorResponce onNullResult(NullResultException exception){
         return new ErrorResponce("Null result", exception.getMessage());

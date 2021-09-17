@@ -16,7 +16,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class SocksController {
 
-    private ISocksService iSocksService;
+    private final ISocksService iSocksService;
 
     @GetMapping(value = "api/socks")
     public Socks getByColorAndCottonPart(@RequestParam(value = "color") final String color,
