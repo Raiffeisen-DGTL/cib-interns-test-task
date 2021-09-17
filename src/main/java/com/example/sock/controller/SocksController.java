@@ -1,7 +1,9 @@
 package com.example.sock.controller;
 
 import com.example.sock.domain.Socks;
+import com.example.sock.enums.Operations;
 import com.example.sock.service.ISocksService;
+import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -13,27 +15,27 @@ import java.util.Optional;
 @RestController
 @RequiredArgsConstructor
 public class SocksController {
-    @Autowired
+
     private ISocksService iSocksService;
 
     @GetMapping(value = "api/socks")
-    public Optional<Socks> getByColorAndCottonPart(@RequestParam(value = "color") final String color,
-                                                   @RequestParam(value = "operation", defaultValue = "moreThan") final String operation,
-                                                   @RequestParam(value = "cottonPart", defaultValue = "0") final int cottonPart){
+    public Socks getByColorAndCottonPart(@RequestParam(value = "color") final String color,
+                                                   @RequestParam(value = "operation") final Operations operation,
+                                                   @RequestParam(value = "cottonPart") final Long cottonPart){
         return iSocksService.getByColorAndCottonPart(color, operation, cottonPart);
 
 
     }
+    @ResponseStatus(HttpStatus.OK)
     @PostMapping(value = "api/socks/income")
-    public ResponseEntity addSocks(@RequestBody Socks socks){
+    public void addSocks(@RequestBody Socks socks){
         iSocksService.addSocks(socks);
-        return ResponseEntity.ok(HttpStatus.OK);
     }
 
+    @ResponseStatus(HttpStatus.OK)
     @PostMapping(value = "api/socks/outcome")
-    public ResponseEntity reduceSocks(@RequestBody Socks socks){
+    public void reduceSocks(@RequestBody Socks socks){
         iSocksService.reduceSocks(socks);
-        return ResponseEntity.ok(HttpStatus.OK);
     }
 
 

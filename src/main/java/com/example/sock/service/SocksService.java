@@ -1,8 +1,13 @@
 package com.example.sock.service;
 
 import com.example.sock.domain.Socks;
+import com.example.sock.enums.Operations;
+import com.example.sock.exceptions.IncorrectParametersException;
+import com.example.sock.exceptions.NullResultException;
 import com.example.sock.repos.SocksRepository;
+import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import java.util.Optional;
 
@@ -11,19 +16,20 @@ import java.util.Optional;
 public class SocksService implements ISocksService{
     private final SocksRepository socksRepository;
     @Override
-    public Optional<Socks> getByColorAndCottonPart(String color, String operation, int cottonPart) {
+    public @NonNull Socks getByColorAndCottonPart(@NonNull String color, @NonNull Operations operation, @NonNull Long cottonPart) {
         switch (operation){
-            case "moreThan": return socksRepository.getSocksByColorAndCottonPartIsGreaterThan(color, cottonPart);
-            case "lessThan": return socksRepository.getSocksByColorAndCottonPartLessThan(color, cottonPart);
-            case "equals": return socksRepository.getSocksByColorAndCottonPartEquals(color, cottonPart);
+            case moreThan:
+                return socksRepository.getSocksByColorAndCottonPartIsGreaterThan(color, cottonPart).orElseThrow(()->new NullResultException("Nothing was found for this query"));
+            case lessThan: return socksRepository.getSocksByColorAndCottonPartLessThan(color, cottonPart).orElseThrow(()->new NullResultException("Nothing was found for this query"));
+            case equals: return socksRepository.getSocksByColorAndCottonPartEquals(color, cottonPart).orElseThrow(()-> new NullResultException("Nothing was found for this query"));
             default:
-                return Optional.empty();
+                throw new IncorrectParametersException("Incorrect parameters in url");
 
         }
     }
 
     @Override
-    public void addSocks(Socks socks) {
+    public void addSocks(@NonNull Socks socks) {
         if (socksRepository.getSocksByColorAndCottonPartEquals(socks.getColor(), socks.getCottonPart()).isEmpty()){
             socksRepository.save(socks);
         }else{
@@ -33,7 +39,7 @@ public class SocksService implements ISocksService{
         }
     }
     @Override
-    public void reduceSocks(Socks socks) {
+    public void reduceSocks(@NonNull Socks socks) {
         if (socksRepository.getSocksByColorAndCottonPartEquals(socks.getColor(), socks.getCottonPart()).isPresent()) {
             Socks socksInBD = socksRepository.getSocksByColorAndCottonPartEquals(socks.getColor(), socks.getCottonPart()).get();
             socksInBD.setQuantity(Math.max(socks.getQuantity() - socksInBD.getQuantity(), 0));
