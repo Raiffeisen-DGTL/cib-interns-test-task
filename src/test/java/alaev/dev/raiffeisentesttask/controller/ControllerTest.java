@@ -6,6 +6,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
+import alaev.dev.raiffeisentesttask.controller.dto.SockDto;
 import alaev.dev.raiffeisentesttask.exception.InvalidCottonPart;
 import alaev.dev.raiffeisentesttask.exception.InvalidQuantity;
 import alaev.dev.raiffeisentesttask.service.SockService;
@@ -37,7 +38,8 @@ class ControllerTest {
 
   @Test
   void shouldThrowInvalidCottonPartException() {
-    assertThatThrownBy(() -> controller.registerArrivalSocks("", INVALID_COTTON_PART, QUANTITY))
+    assertThatThrownBy(
+        () -> controller.registerArrivalSocks(new SockDto("", INVALID_COTTON_PART, QUANTITY)))
         .isInstanceOf(InvalidCottonPart.class);
 
     verify(service, times(0))
@@ -46,7 +48,8 @@ class ControllerTest {
 
   @Test
   void shouldThrowInvalidQuantityException() {
-    assertThatThrownBy(() -> controller.registerArrivalSocks("", COTTON_PART, INVALID_QUANTITY))
+    assertThatThrownBy(
+        () -> controller.registerArrivalSocks(new SockDto("", COTTON_PART, INVALID_QUANTITY)))
         .isInstanceOf(InvalidQuantity.class);
 
     verify(service, times(0))
