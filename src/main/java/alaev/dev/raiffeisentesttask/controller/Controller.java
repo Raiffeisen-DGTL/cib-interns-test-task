@@ -54,7 +54,7 @@ public class Controller {
       InvalidCottonPartException exception) {
     return ResponseEntity.status(400)
         .body("{\n"
-                  + "    \"error\" : " + exception.getMessage() + "\n"
+                  + "    \"error\" : \"" + exception.getMessage() + "\"\n"
                   + "}");
   }
 
@@ -62,7 +62,7 @@ public class Controller {
   public ResponseEntity<String> handleInvalidQuantityException(InvalidQuantityException exception) {
     return ResponseEntity.status(400)
         .body("{\n"
-                  + "    \"error\" : " + exception.getMessage() + "\n"
+                  + "    \"error\" : \"" + exception.getMessage() + "\"\n"
                   + "}");
   }
 }
