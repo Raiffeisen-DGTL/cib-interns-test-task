@@ -7,8 +7,8 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
 import alaev.dev.raiffeisentesttask.controller.dto.SockDto;
-import alaev.dev.raiffeisentesttask.exception.InvalidCottonPart;
-import alaev.dev.raiffeisentesttask.exception.InvalidQuantity;
+import alaev.dev.raiffeisentesttask.exception.InvalidCottonPartException;
+import alaev.dev.raiffeisentesttask.exception.InvalidQuantityException;
 import alaev.dev.raiffeisentesttask.service.SockService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,7 +40,7 @@ class ControllerTest {
   void shouldThrowInvalidCottonPartException() {
     assertThatThrownBy(
         () -> controller.registerArrivalSocks(new SockDto("", INVALID_COTTON_PART, QUANTITY)))
-        .isInstanceOf(InvalidCottonPart.class);
+        .isInstanceOf(InvalidCottonPartException.class);
 
     verify(service, times(0))
         .addSock(any(), any(), any());
@@ -50,7 +50,7 @@ class ControllerTest {
   void shouldThrowInvalidQuantityException() {
     assertThatThrownBy(
         () -> controller.registerArrivalSocks(new SockDto("", COTTON_PART, INVALID_QUANTITY)))
-        .isInstanceOf(InvalidQuantity.class);
+        .isInstanceOf(InvalidQuantityException.class);
 
     verify(service, times(0))
         .addSock(any(), any(), any());
