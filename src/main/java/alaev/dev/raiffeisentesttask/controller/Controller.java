@@ -1,11 +1,12 @@
 package alaev.dev.raiffeisentesttask.controller;
 
 import alaev.dev.raiffeisentesttask.controller.dto.SockDto;
-import alaev.dev.raiffeisentesttask.exception.InvalidCottonPart;
-import alaev.dev.raiffeisentesttask.exception.InvalidQuantity;
+import alaev.dev.raiffeisentesttask.exception.InvalidCottonPartException;
+import alaev.dev.raiffeisentesttask.exception.InvalidQuantityException;
 import alaev.dev.raiffeisentesttask.service.SockService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -32,11 +33,11 @@ public class Controller {
 
   private void checkingInput(Integer cottonPart, Integer quantity) {
     if (cottonPart < 0 || cottonPart > 100) {
-      throw new InvalidCottonPart(String.valueOf(cottonPart));
+      throw new InvalidCottonPartException(String.valueOf(cottonPart));
     }
 
-    if (quantity < 0) {
-      throw new InvalidQuantity(String.valueOf(quantity));
+    if (quantity <= 0) {
+      throw new InvalidQuantityException(String.valueOf(quantity));
     }
   }
 
@@ -45,5 +46,23 @@ public class Controller {
                                             @RequestParam("cottonPart") Integer cottonPart,
                                             @RequestParam("quantity") Integer quantity) {
     return ResponseEntity.ok().build();
+  }
+
+
+  @ExceptionHandler(value = InvalidCottonPartException.class)
+  public ResponseEntity<String> handleInvalidCottonPartException(
+      InvalidCottonPartException exception) {
+    return ResponseEntity.status(400)
+        .body("{\n"
+                  + "    \"error\" : " + exception.getMessage() + "\n"
+                  + "}");
+  }
+
+  @ExceptionHandler(value = InvalidQuantityException.class)
+  public ResponseEntity<String> handleInvalidQuantityException(InvalidQuantityException exception) {
+    return ResponseEntity.status(400)
+        .body("{\n"
+                  + "    \"error\" : " + exception.getMessage() + "\n"
+                  + "}");
   }
 }
