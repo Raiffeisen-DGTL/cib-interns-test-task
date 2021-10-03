@@ -1,6 +1,21 @@
 # Тестовое задание
 
-## Что нужно сделать
+## Как развернуть
+
+```
+git clone https://github.com/alaev-dev/Raiffeisen-test-task.git
+cd Raiffeisen-test-task/
+docker-compose up -d
+```
+
+## Тест API
+
+POST: http://91.142.77.205:8080/api/socks/income
+POST: http://91.142.77.205:8080/api/socks/outcome
+GET: http://91.142.77.205:8080/api/socks?color=red&operation=lessThan&cottonPart=100
+
+
+## Что было нужно сделать
 
 Реализовать приложение для автоматизации учёта носков на складе магазина. Кладовщик должен иметь возможность:
 
