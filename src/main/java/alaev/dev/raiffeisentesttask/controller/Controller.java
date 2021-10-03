@@ -32,7 +32,7 @@ public class Controller {
     return ResponseEntity.status(200).build();
   }
 
-  @PostMapping
+  @PostMapping("/api/socks/outcome")
   public ResponseEntity<String> releaseSocks(@RequestBody SockDto sockDto) {
     checkingInput(sockDto.cottonPart, sockDto.quantity);
 
@@ -40,7 +40,7 @@ public class Controller {
     return ResponseEntity.status(200).build();
   }
 
-  @GetMapping
+  @GetMapping("/api/socks")
   public ResponseEntity<String> getAllSocks(@RequestParam("color") String color,
                                             @RequestParam("cottonPart") Integer cottonPart,
                                             @RequestParam("quantity") Integer quantity) {
