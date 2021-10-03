@@ -48,15 +48,25 @@ public class SockService {
 
   public String getSockByParameters(String color, Integer cottonPart, String operation) {
     if (Objects.equals(operation, "moreThan")) {
-      return String.valueOf(
-          repository.getTotalNumberByColorAndCottonPartMoreThan(color, cottonPart));
+      Long number = repository.getTotalNumberByColorAndCottonPartMoreThan(color, cottonPart);
+
+      return ifNullReturn0(number);
+
     } else if (Objects.equals(operation, "lessThan")) {
-      return String.valueOf(
-          repository.getTotalNumberByColorAndCottonPartLessThan(color, cottonPart));
+      Long number = repository.getTotalNumberByColorAndCottonPartLessThan(color, cottonPart);
+
+      return ifNullReturn0(number);
+
     } else if (Objects.equals(operation, "equal")) {
-      return String.valueOf(repository.getTotalNumberByColorAndCottonPartEqual(color, cottonPart));
+      Long number = repository.getTotalNumberByColorAndCottonPartEqual(color, cottonPart);
+
+      return ifNullReturn0(number);
     }
 
     throw new InvalidOperationException(operation);
+  }
+
+  private String ifNullReturn0(Long number) {
+    return number == null ? "0" : String.valueOf(number);
   }
 }
