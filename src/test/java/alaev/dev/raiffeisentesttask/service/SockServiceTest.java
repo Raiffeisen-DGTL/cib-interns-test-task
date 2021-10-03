@@ -7,6 +7,7 @@ import static org.mockito.Mockito.when;
 
 import alaev.dev.raiffeisentesttask.domain.Sock;
 import alaev.dev.raiffeisentesttask.repository.SockRepository;
+import java.util.Optional;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -27,8 +28,8 @@ class SockServiceTest {
 
   @Test
   void shouldSaveOriginalPairColorAndCottonPart() {
-    when(repository.existsByColorAndCottonPart(COLOR_NAME, COTTON_PART))
-        .thenReturn(false);
+    when(repository.findSockByColorAndCottonPart(COLOR_NAME, COTTON_PART))
+        .thenReturn(Optional.empty());
 
     service.addSock(COLOR_NAME, COTTON_PART, QUANTITY);
 
@@ -38,10 +39,8 @@ class SockServiceTest {
 
   @Test
   void shouldAddQuantityToExistPair() {
-    when(repository.existsByColorAndCottonPart(COLOR_NAME, COTTON_PART))
-        .thenReturn(true);
-    when(repository.getSockByColorAndCottonPart(COLOR_NAME, COTTON_PART))
-        .thenReturn(new Sock(ID, COLOR_NAME, COTTON_PART, QUANTITY));
+    when(repository.findSockByColorAndCottonPart(COLOR_NAME, COTTON_PART))
+        .thenReturn(Optional.of(new Sock(ID, COLOR_NAME, COTTON_PART, QUANTITY)));
 
     service.addSock(COLOR_NAME, COTTON_PART, QUANTITY);
 
