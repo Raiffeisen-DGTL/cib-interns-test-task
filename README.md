@@ -11,7 +11,9 @@ docker-compose up -d
 ## Тест API
 
 POST: http://91.142.77.205:8080/api/socks/income
+
 POST: http://91.142.77.205:8080/api/socks/outcome
+
 GET: http://91.142.77.205:8080/api/socks?color=red&operation=lessThan&cottonPart=100
 
 
