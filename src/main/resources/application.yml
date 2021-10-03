@@ -1,16 +1,11 @@
 spring:
   datasource:
-    password: test-task
-    username: postgres
-    url: jdbc:postgresql://localhost:5432/postgres
+    driver-class-name: ${DB_DRIVER}
+    url: ${DB_URL}
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
   sql:
     init:
       mode: always
   jpa:
-    generate-ddl: on
-    hibernate:
-      ddl-auto: update
-    show-sql: true
-    properties:
-      hibernate:
-        format_sql: true
+    generate-ddl: true
