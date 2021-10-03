@@ -52,7 +52,7 @@ class SockServiceTest {
 
   @Test
   void shouldThrowNotEnoughSocksException() {
-    when(repository.findSockByColorAndCottonPartAndQuantityIsLessThanEqual(any(), any(), any()))
+    when(repository.findSockByColorAndCottonPartAndQuantityIsGreaterThanEqual(any(), any(), any()))
         .thenReturn(Optional.empty());
 
     assertThatThrownBy(() -> service.releaseSocks(COLOR_NAME, COTTON_PART, QUANTITY))
@@ -64,7 +64,7 @@ class SockServiceTest {
 
   @Test
   void shouldReduceQuantityToExistPair() {
-    when(repository.findSockByColorAndCottonPartAndQuantityIsLessThanEqual(any(), any(), any()))
+    when(repository.findSockByColorAndCottonPartAndQuantityIsGreaterThanEqual(any(), any(), any()))
         .thenReturn(Optional.of(new Sock(ID, COLOR_NAME, COTTON_PART, QUANTITY)));
 
     service.releaseSocks(COLOR_NAME, COTTON_PART, QUANTITY);
