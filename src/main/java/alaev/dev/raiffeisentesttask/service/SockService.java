@@ -1,8 +1,10 @@
 package alaev.dev.raiffeisentesttask.service;
 
 import alaev.dev.raiffeisentesttask.domain.Sock;
+import alaev.dev.raiffeisentesttask.exception.InvalidOperationException;
 import alaev.dev.raiffeisentesttask.exception.NotEnoughSocksException;
 import alaev.dev.raiffeisentesttask.repository.SockRepository;
+import java.util.Objects;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -42,5 +44,19 @@ public class SockService {
 
     sock.setQuantity(sock.getQuantity() - quantity);
     repository.save(sock);
+  }
+
+  public String getSockByParameters(String color, Integer cottonPart, String operation) {
+    if (Objects.equals(operation, "moreThan")) {
+      return String.valueOf(
+          repository.getTotalNumberByColorAndCottonPartMoreThan(color, cottonPart));
+    } else if (Objects.equals(operation, "lessThan")) {
+      return String.valueOf(
+          repository.getTotalNumberByColorAndCottonPartLessThan(color, cottonPart));
+    } else if (Objects.equals(operation, "equal")) {
+      return String.valueOf(repository.getTotalNumberByColorAndCottonPartEqual(color, cottonPart));
+    }
+
+    throw new InvalidOperationException(operation);
   }
 }
