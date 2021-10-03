@@ -34,5 +34,13 @@ public class SockService {
   public void releaseSocks(String color, Integer cottonPart, Integer quantity)
       throws NotEnoughSocksException {
 
+    Optional<Sock> sockOptional = repository.findSockByColorAndCottonPartAndQuantityIsLessThanEqual(
+        color, cottonPart, quantity);
+
+    Sock sock = sockOptional.orElseThrow(
+        () -> new NotEnoughSocksException(String.valueOf(quantity)));
+
+    sock.setQuantity(sock.getQuantity() - quantity);
+    repository.save(sock);
   }
 }

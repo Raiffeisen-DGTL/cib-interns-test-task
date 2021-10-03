@@ -1,11 +1,13 @@
 package alaev.dev.raiffeisentesttask.service;
 
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import alaev.dev.raiffeisentesttask.domain.Sock;
+import alaev.dev.raiffeisentesttask.exception.NotEnoughSocksException;
 import alaev.dev.raiffeisentesttask.repository.SockRepository;
 import java.util.Optional;
 import org.junit.jupiter.api.Test;
@@ -34,7 +36,7 @@ class SockServiceTest {
     service.addSock(COLOR_NAME, COTTON_PART, QUANTITY);
 
     verify(repository, times(1))
-        .save(new Sock(any(), COLOR_NAME, COTTON_PART, QUANTITY));
+        .save(new Sock(null, COLOR_NAME, COTTON_PART, QUANTITY));
   }
 
   @Test
@@ -46,5 +48,28 @@ class SockServiceTest {
 
     verify(repository, times(1)).
         save(new Sock(ID, COLOR_NAME, COTTON_PART, 2 * QUANTITY));
+  }
+
+  @Test
+  void shouldThrowNotEnoughSocksException() {
+    when(repository.findSockByColorAndCottonPartAndQuantityIsLessThanEqual(any(), any(), any()))
+        .thenReturn(Optional.empty());
+
+    assertThatThrownBy(() -> service.releaseSocks(COLOR_NAME, COTTON_PART, QUANTITY))
+        .isInstanceOf(NotEnoughSocksException.class);
+
+    verify(repository, times(0))
+        .save(new Sock(ID, COLOR_NAME, COTTON_PART, QUANTITY));
+  }
+
+  @Test
+  void shouldReduceQuantityToExistPair() {
+    when(repository.findSockByColorAndCottonPartAndQuantityIsLessThanEqual(any(), any(), any()))
+        .thenReturn(Optional.of(new Sock(ID, COLOR_NAME, COTTON_PART, QUANTITY)));
+
+    service.releaseSocks(COLOR_NAME, COTTON_PART, QUANTITY);
+
+    verify(repository, times(1))
+        .save(new Sock(ID, COLOR_NAME, COTTON_PART, 0));
   }
 }
