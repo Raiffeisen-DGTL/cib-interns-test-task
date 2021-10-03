@@ -3,6 +3,7 @@ package alaev.dev.raiffeisentesttask.controller;
 import alaev.dev.raiffeisentesttask.controller.dto.SockDto;
 import alaev.dev.raiffeisentesttask.exception.InvalidCottonPartException;
 import alaev.dev.raiffeisentesttask.exception.InvalidQuantityException;
+import alaev.dev.raiffeisentesttask.exception.NotEnoughSocksException;
 import alaev.dev.raiffeisentesttask.service.SockService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -31,6 +32,21 @@ public class Controller {
     return ResponseEntity.status(200).build();
   }
 
+  @PostMapping
+  public ResponseEntity<String> releaseSocks(@RequestBody SockDto sockDto) {
+    checkingInput(sockDto.cottonPart, sockDto.quantity);
+
+    service.releaseSocks(sockDto.color, sockDto.cottonPart, sockDto.quantity);
+    return ResponseEntity.status(200).build();
+  }
+
+  @GetMapping
+  public ResponseEntity<String> getAllSocks(@RequestParam("color") String color,
+                                            @RequestParam("cottonPart") Integer cottonPart,
+                                            @RequestParam("quantity") Integer quantity) {
+    return ResponseEntity.ok().build();
+  }
+
   private void checkingInput(Integer cottonPart, Integer quantity) {
     if (cottonPart < 0 || cottonPart > 100) {
       throw new InvalidCottonPartException(String.valueOf(cottonPart));
@@ -41,25 +57,13 @@ public class Controller {
     }
   }
 
-  @GetMapping
-  public ResponseEntity<String> getAllSocks(@RequestParam("color") String color,
-                                            @RequestParam("cottonPart") Integer cottonPart,
-                                            @RequestParam("quantity") Integer quantity) {
-    return ResponseEntity.ok().build();
-  }
-
-
-  @ExceptionHandler(value = InvalidCottonPartException.class)
+  @ExceptionHandler(value = {
+      InvalidQuantityException.class,
+      InvalidCottonPartException.class,
+      NotEnoughSocksException.class
+  })
   public ResponseEntity<String> handleInvalidCottonPartException(
-      InvalidCottonPartException exception) {
-    return ResponseEntity.status(400)
-        .body("{\n"
-                  + "    \"error\" : \"" + exception.getMessage() + "\"\n"
-                  + "}");
-  }
-
-  @ExceptionHandler(value = InvalidQuantityException.class)
-  public ResponseEntity<String> handleInvalidQuantityException(InvalidQuantityException exception) {
+      RuntimeException exception) {
     return ResponseEntity.status(400)
         .body("{\n"
                   + "    \"error\" : \"" + exception.getMessage() + "\"\n"
