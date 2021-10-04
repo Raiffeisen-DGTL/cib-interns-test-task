@@ -23,7 +23,7 @@ public class Sock {
     @Column
     private Integer quantity;
 
-    /*
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -36,5 +36,5 @@ public class Sock {
     public int hashCode() {
         return Objects.hash(id);
     }
-    */
+
 }
