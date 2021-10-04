@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.ValidationException;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 
@@ -60,6 +61,12 @@ public class Controller {
         return ResponseEntity.ok().body("{\n" +
                 "\"quantity\" : " +
                 "\n}");
+    }
+
+    //Обработка ошибок валидации данных из базы данных
+    @ExceptionHandler(value = ValidationException.class)
+    public ResponseEntity<String> validationException (RuntimeException exception) {
+        return ResponseEntity.status(400).body("{\n" + "    \"error\" : \"" + exception.getMessage() + "\"\n" + "}");
     }
 
 }

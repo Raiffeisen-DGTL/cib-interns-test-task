@@ -19,17 +19,18 @@ public class Sock {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private Integer id;
 
-    @Column
+    @Column(name = "color")
     private String color;
 
-    @Column
+    @Column(name = "cottonpart")
     @Min(value = 0, message = "Warning! Cotton part should be more than 0%")
     @Max(value = 100, message = "Warning! Cotton part should be less or equal than 100%")
     private Integer cottonPart;
 
-    @Column
+    @Column(name = "quantity")
     @Min(value = 1, message = "Warning! The quantity cannot be less than 1")
     private Integer quantity;
 

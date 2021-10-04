@@ -1,6 +1,7 @@
 package com.raiffeisen.task.service;
 
 import com.raiffeisen.task.domain.Sock;
+import com.raiffeisen.task.exception.ValidationException;
 import com.raiffeisen.task.repository.SockRepository;
 import org.springframework.stereotype.Service;
 
@@ -34,11 +35,12 @@ public class SockService {
                 repository.save(sock);
             }
                 else {
-
+                throw new  ValidationException("Warning! An attempt to write off more socks (" + quantity +
+                        ") than there are in stock (" + sock.getQuantity() + ")");
             }
 
         } else {
-
+            throw new  ValidationException("Warning!Such socks were not found!");
         }
     }
 
