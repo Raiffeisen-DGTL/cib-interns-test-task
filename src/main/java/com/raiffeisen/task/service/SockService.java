@@ -1,7 +1,11 @@
 package com.raiffeisen.task.service;
 
+import com.raiffeisen.task.domain.Sock;
 import com.raiffeisen.task.repository.SockRepository;
 import org.springframework.stereotype.Service;
+
+
+import java.util.Optional;
 
 @Service
 public class SockService {
@@ -12,11 +16,30 @@ public class SockService {
     }
 
     public void addSocks(String color, Integer cottonPart, Integer quantity){
-
+        Optional<Sock> requestAnswer = repository.findSockByColorAndCottonPart(color, cottonPart);
+        if(requestAnswer.isPresent()) {
+            requestAnswer.get().setQuantity(requestAnswer.get().getQuantity() + quantity);
+            repository.save(requestAnswer.get());
+        } else {
+            repository.save(new Sock(null, color, cottonPart, quantity));
+        }
     }
 
     public void removeSocks(String color, Integer cottonPart, Integer quantity){
+        Optional<Sock> requestAnswer = repository.findSockByColorAndCottonPart(color, cottonPart);
+        if(requestAnswer.isPresent()) {
+            Sock sock = requestAnswer.get();
+            if (sock.getQuantity() - quantity >= 0) {
+                sock.setQuantity(sock.getQuantity() - quantity);
+                repository.save(sock);
+            }
+                else {
 
+            }
+
+        } else {
+
+        }
     }
 
     public String getTotalSocksByParam(String color, Integer cottonPart, String operation) {

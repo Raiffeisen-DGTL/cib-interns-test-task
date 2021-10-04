@@ -2,6 +2,7 @@ package com.raiffeisen.task.controller;
 
 import com.raiffeisen.task.dto.SockDto;
 import com.raiffeisen.task.service.SockService;
+import lombok.extern.java.Log;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -11,6 +12,7 @@ import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 
 @RestController
+@Log
 @Validated
 @RequestMapping("/api")
 public class Controller {
@@ -27,6 +29,7 @@ public class Controller {
 
     @PostMapping("/socks/income")
     public ResponseEntity<String> incomeSocks(@RequestBody SockDto sockDto){
+        log.info("Income " + sockDto);
         sockService.addSocks(sockDto.getColor(), sockDto.getCottonPart(), sockDto.getQuantity());
         return ResponseEntity.ok("Successful addition of socks!");
     }
@@ -36,6 +39,7 @@ public class Controller {
 
     @PostMapping("/socks/outcome")
     public ResponseEntity<String> outcomeSocks(@RequestBody SockDto sockDto){
+        log.info("Outcome " + sockDto);
         sockService.removeSocks(sockDto.getColor(), sockDto.getCottonPart(), sockDto.getQuantity());
         return ResponseEntity.ok("Successful removal of socks!");
     }
@@ -51,6 +55,7 @@ public class Controller {
     public ResponseEntity<String> returnTotalNumberSocks (@RequestParam("color") String color,
                                                           @RequestParam("operation") String operation,
                                                           @RequestParam("cottonPart") @Min(0) @Max(100) Integer cottonPart) {
+        log.info("Get operation: " + color + " : " + operation + " : " + cottonPart);
         sockService.getTotalSocksByParam(color,cottonPart, operation);
         return ResponseEntity.ok().body("{\n" +
                 "\"quantity\" : " +
