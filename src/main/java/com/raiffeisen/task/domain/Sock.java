@@ -5,22 +5,30 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 import javax.persistence.*;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import java.util.Objects;
 
 @Entity(name = "socks")
-// @Table()
 @Data
 @ToString
 @NoArgsConstructor
 public class Sock {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+
     @Column
     private String color;
+
     @Column
+    @Min(value = 0, message = "Warning! Cotton part should be more than 0%")
+    @Max(value = 100, message = "Warning! Cotton part should be less or equal than 100%")
     private Integer cottonPart;
+
     @Column
+    @Min(value = 1, message = "Warning! The quantity cannot be less than 1")
     private Integer quantity;
 
 
