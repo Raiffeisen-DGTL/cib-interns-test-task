@@ -18,7 +18,10 @@ GET: http://91.142.77.205:8080/api/socks?color=red&operation=lessThan&cottonPart
 
 ## Тест БД (Postgres)
 
-Connect to: 91.142.77.205:5432
+```
+psql -h 91.142.77.205 -p 5432 -d socks -U postgres -W
+```
+password: postgres
 
 ## Что было нужно сделать
 
