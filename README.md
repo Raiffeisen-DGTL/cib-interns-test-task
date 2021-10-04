@@ -16,6 +16,9 @@ POST: http://91.142.77.205:8080/api/socks/outcome
 
 GET: http://91.142.77.205:8080/api/socks?color=red&operation=lessThan&cottonPart=100
 
+## Тест БД (Postgres)
+
+Connect to: 91.142.77.205:5432
 
 ## Что было нужно сделать
 
