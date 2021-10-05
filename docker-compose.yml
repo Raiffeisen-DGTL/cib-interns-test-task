@@ -1,0 +1,30 @@
+version: '3.1'
+
+services:
+  spring:
+    image: 'spring-boot-mysql:latest'
+    build:
+      context: .
+    container_name: spring
+    depends_on:
+      - db
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:mysql://db:${DB_PORT}/${DB_NAME}
+      - SPRING_DATASOURCE_USERNAME=${DB_USERNAME}
+      - SPRING_DATASOURCE_PASSWORD=${DB_PASSWORD}
+    ports:
+      - "8080:8080"
+    expose:
+       - '8080'
+  db:
+    image: 'mysql:5.7'
+    container_name: db
+    environment:
+      - MYSQL_USER=${DB_USERNAME}
+      - MYSQL_PASSWORD=${DB_PASSWORD}
+      - MYSQL_DATABASE=${DB_NAME}
+      - MYSQL_ROOT_PASSWORD=root
+    ports:
+      - "${DB_PORT}:${DB_PORT}"
+    expose:
+       - '${DB_PORT}'
