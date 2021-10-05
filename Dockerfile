@@ -1,7 +1,7 @@
 FROM gradle:7.2.0-jdk11-openj9 AS build
 COPY --chown=gradle:gradle . /home/gradle/src
 WORKDIR /home/gradle/src
-RUN gradle build -x test
+RUN gradle build
 
 FROM adoptopenjdk:11-jre-hotspot
 

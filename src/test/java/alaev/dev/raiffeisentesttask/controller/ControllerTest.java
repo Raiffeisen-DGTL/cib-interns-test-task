@@ -14,10 +14,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.context.annotation.Import;
 
-@Import({Controller.class, SockService.class})
-@SpringBootTest
+@SpringBootTest(classes = Controller.class)
 class ControllerTest {
 
   public static final int INVALID_COTTON_PART = 101;
