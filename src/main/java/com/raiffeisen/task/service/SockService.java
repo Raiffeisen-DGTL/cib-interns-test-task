@@ -45,7 +45,20 @@ public class SockService {
     }
 
     public String getTotalSocksByParam(String color, Integer cottonPart, String operation) {
-
-        return "test";
+        Integer total;
+        switch (operation){
+            case ("moreThan"):
+                total = repository.getTotalQuantityMore(color, cottonPart);
+                break;
+            case ("lessThan"):
+                total = repository.getTotalQuantityLess(color, cottonPart);
+                break;
+            case ("equal"):
+                total = repository.getTotalQuantityEquals(color, cottonPart);
+                break;
+            default:
+                throw new ValidationException("Warning! Invalid operation!");
+        }
+        return total == null ? "0" : total.toString();
     }
 }

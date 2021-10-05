@@ -57,16 +57,12 @@ public class Controller {
                                                           @RequestParam("operation") String operation,
                                                           @RequestParam("cottonPart") @Min(0) @Max(100) Integer cottonPart) {
         log.info("Get operation: " + color + " : " + operation + " : " + cottonPart);
-        sockService.getTotalSocksByParam(color,cottonPart, operation);
+        String s = sockService.getTotalSocksByParam(color,cottonPart, operation);
         return ResponseEntity.ok().body("{\n" +
-                "\"quantity\" : " +
-                "\n}");
+                "\"quantity\" : \"" + s + "\"\n}");
     }
 
-    //Обработка ошибок валидации данных из базы данных
-    @ExceptionHandler(value = ValidationException.class)
-    public ResponseEntity<String> validationException (RuntimeException exception) {
-        return ResponseEntity.status(400).body("{\n" + "    \"error\" : \"" + exception.getMessage() + "\"\n" + "}");
-    }
+
+
 
 }
