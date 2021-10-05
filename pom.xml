@@ -10,7 +10,7 @@
     </parent>
     <groupId>raineduc</groupId>
     <artifactId>raiffeisen-internship</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>0.0.1</version>
     <name>raiffeisen-internship</name>
     <description>raiffeisen-internship</description>
     <properties>
