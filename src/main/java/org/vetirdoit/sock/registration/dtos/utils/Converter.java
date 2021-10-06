@@ -1,5 +1,8 @@
 package org.vetirdoit.sock.registration.dtos.utils;
 
+import org.springframework.core.convert.ConversionFailedException;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.server.ResponseStatusException;
 import org.vetirdoit.sock.registration.domain.entities.SockType;
 import org.vetirdoit.sock.registration.dtos.SockTypeDto;
 
@@ -15,10 +18,14 @@ public class Converter {
     }
 
     public static SockType toSockType(SockTypeDto sockTypeDto) {
-        return SockType.createSockType(
-                sockTypeDto.getColor(),
-                sockTypeDto.getCottonPart(),
-                sockTypeDto.getQuantity()
-        );
+        try {
+            return SockType.createSockType(
+                    sockTypeDto.getColor(),
+                    sockTypeDto.getCottonPart(),
+                    sockTypeDto.getQuantity()
+            );
+        } catch (IllegalArgumentException e) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
+        }
     }
 }

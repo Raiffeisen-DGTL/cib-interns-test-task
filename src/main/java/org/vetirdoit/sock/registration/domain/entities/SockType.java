@@ -25,10 +25,8 @@ public class SockType {
     private Color color;
 
     @Column(name = "cotton_part")
-    @Min(0) @Max(100)
     private int cottonPart;
 
-    @Positive
     private int quantity;
 
     public static SockType createSockType(Color color, int cottonPart, int quantity) {
@@ -48,7 +46,7 @@ public class SockType {
 
     public void setCottonPart(int cottonPart) {
         if (cottonPart < 0 || cottonPart > 100)
-            throw new IllegalArgumentException("Cotton proportion must be between 0 and 100!");
+            throw new IllegalArgumentException("Cotton proportion must lie between 0 and 100!");
         this.cottonPart = cottonPart;
     }
 

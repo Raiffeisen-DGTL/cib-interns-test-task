@@ -1,11 +1,10 @@
-version: '3.1'
+version: '3.8'
 
 services:
   spring:
-    image: 'spring-boot-mysql:latest'
     build:
       context: .
-    container_name: spring
+    container_name: spring-boot-app
     depends_on:
       - db
     environment:
@@ -16,9 +15,11 @@ services:
       - "8080:8080"
     expose:
        - '8080'
+    stdin_open: true
   db:
     image: 'mysql:5.7'
     container_name: db
+    restart: unless-stopped
     environment:
       - MYSQL_USER=${DB_USERNAME}
       - MYSQL_PASSWORD=${DB_PASSWORD}
@@ -28,3 +29,7 @@ services:
       - "${DB_PORT}:${DB_PORT}"
     expose:
        - '${DB_PORT}'
+    volumes:
+      - db:/var/lib/mysql
+volumes:
+  db:

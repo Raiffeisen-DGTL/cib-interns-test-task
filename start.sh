@@ -10,11 +10,10 @@ mvn clean package
 docker-compose stop
 
 # Add environment variables
-export DB_USERNAME=prod_sock_store_db_user
+export DB_USERNAME=VetirDoIt
 export DB_PASSWORD=Papa9IgeNiy666GUCCi3mkb
 export DB_NAME=sock_store_db
 export DB_PORT=3306
-#export WEB_PORT=8080
 
 # Start new deployment
-docker-compose up --build -d
+docker-compose -f  up --build -d

@@ -3,18 +3,14 @@ package org.vetirdoit.sock.registration.services;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.validation.annotation.Validated;
 import org.vetirdoit.sock.registration.domain.BiPredicate;
 import org.vetirdoit.sock.registration.domain.Color;
 import org.vetirdoit.sock.registration.domain.entities.SockType;
 import org.vetirdoit.sock.registration.repositories.SockRepository;
 import org.vetirdoit.sock.registration.services.exceptions.InvalidOperationException;
 
-import javax.validation.Valid;
-
 
 @Service
-@Validated
 public class SockRegistrationService {
 
     private final SockRepository sockRepository;
@@ -26,22 +22,14 @@ public class SockRegistrationService {
 
     @Transactional(readOnly = true)
     public long countRequiredSocks(Color color, BiPredicate operation, int cottonPartValue) {
-        long count = 0;
-        switch (operation) {
-            case GREATER_THAN:
-                count = sockRepository.countSockTypesWhenCottonPartGreaterThan(color, cottonPartValue);
-                break;
-            case EQUAL:
-                count = sockRepository.countSockTypesWhenCottonPartEqual(color, cottonPartValue);
-                break;
-            case LESS_THAN:
-                count = sockRepository.countSockTypesWhenCottonPartLessThan(color, cottonPartValue);
-                break;
-        }
-        return count;
+        return switch (operation) {
+            case GREATER_THAN -> sockRepository.countSockTypesWhenCottonPartGreaterThan(color, cottonPartValue);
+            case EQUAL -> sockRepository.countSockTypesWhenCottonPartEqual(color, cottonPartValue);
+            case LESS_THAN -> sockRepository.countSockTypesWhenCottonPartLessThan(color, cottonPartValue);
+        };
     }
     @Transactional
-    public void registerOutgoingSocks(@Valid SockType outgoingSockType) throws InvalidOperationException {
+    public void registerOutgoingSocks(SockType outgoingSockType) throws InvalidOperationException {
 
         SockType sockType = sockRepository
                 .findSockTypeByColorAndCottonPart(outgoingSockType.getColor(), outgoingSockType.getCottonPart())
@@ -59,7 +47,7 @@ public class SockRegistrationService {
     }
 
     @Transactional
-    public void registerIncomingSocks(@Valid SockType incomingSockType) {
+    public void registerIncomingSocks(SockType incomingSockType) {
 
         sockRepository
                 .findSockTypeByColorAndCottonPart( incomingSockType.getColor(), incomingSockType.getCottonPart() )
