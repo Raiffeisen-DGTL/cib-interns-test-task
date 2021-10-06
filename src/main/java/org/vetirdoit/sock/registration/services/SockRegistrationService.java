@@ -8,8 +8,7 @@ import org.vetirdoit.sock.registration.domain.BiPredicate;
 import org.vetirdoit.sock.registration.domain.Color;
 import org.vetirdoit.sock.registration.domain.entities.SockType;
 import org.vetirdoit.sock.registration.repositories.SockRepository;
-import org.vetirdoit.sock.registration.dtos.utils.DtoConverter;
-import org.vetirdoit.sock.registration.dtos.SockTypeDto;
+import org.vetirdoit.sock.registration.services.exceptions.InvalidOperationException;
 
 import javax.validation.Valid;
 
@@ -26,7 +25,7 @@ public class SockRegistrationService {
     }
 
     @Transactional(readOnly = true)
-    public long getCountOfRequiredSocks(Color color, BiPredicate operation, int cottonPartValue) {
+    public long countRequiredSocks(Color color, BiPredicate operation, int cottonPartValue) {
         long count = 0;
         switch (operation) {
             case GREATER_THAN:
@@ -41,44 +40,35 @@ public class SockRegistrationService {
         }
         return count;
     }
-
     @Transactional
-    public boolean registerOutgoingSocks(@Valid SockTypeDto sockTypeDto) {
+    public void registerOutgoingSocks(@Valid SockType outgoingSockType) throws InvalidOperationException {
 
-        var maybeSockType = sockRepository
-                .findSockTypeByColorAndCottonPart(sockTypeDto.getColor(), sockTypeDto.getCottonPart());
+        SockType sockType = sockRepository
+                .findSockTypeByColorAndCottonPart(outgoingSockType.getColor(), outgoingSockType.getCottonPart())
+                .orElseThrow( () -> new InvalidOperationException("No such sock type!") );
 
-        if (maybeSockType.isPresent()) {
-
-            SockType sockType = maybeSockType.get();
-            int newQuantity = sockType.getQuantity() - sockTypeDto.getQuantity();
-
-            if (newQuantity < 0) {
-                return false;
-            } else if (newQuantity == 0) {
-                sockRepository.delete(sockType);
-                return  true;
-            } else {
-                sockType.setQuantity( newQuantity );
-                sockRepository.save(sockType);
-                return true;
-            }
+        int newQuantity = sockType.getQuantity() - outgoingSockType.getQuantity();
+        if (newQuantity < 0) {
+            throw new InvalidOperationException("You have registered too many socks!");
+        } else if (newQuantity == 0) {
+            sockRepository.delete(sockType);
+        } else {
+            sockType.setQuantity( newQuantity );
+            sockRepository.save(sockType);
         }
-        return false;
     }
 
     @Transactional
-    public void registerIncomingSocks(@Valid SockTypeDto sockTypeDto) {
+    public void registerIncomingSocks(@Valid SockType incomingSockType) {
 
-        var maybeSockType = sockRepository
-                .findSockTypeByColorAndCottonPart(sockTypeDto.getColor(), sockTypeDto.getCottonPart());
-
-        maybeSockType.ifPresentOrElse(
-                sockType -> {
-                    sockType.setQuantity( sockType.getQuantity() + sockTypeDto.getQuantity() );
-                    sockRepository.save(sockType);
-                },
-                () -> sockRepository.save( DtoConverter.toSockType(sockTypeDto) )
+        sockRepository
+                .findSockTypeByColorAndCottonPart( incomingSockType.getColor(), incomingSockType.getCottonPart() )
+                .ifPresentOrElse(
+                        sockType -> {
+                            sockType.setQuantity( sockType.getQuantity() + incomingSockType.getQuantity() );
+                            sockRepository.save(sockType);
+                            },
+                        () -> sockRepository.save( incomingSockType )
         );
     }
 }

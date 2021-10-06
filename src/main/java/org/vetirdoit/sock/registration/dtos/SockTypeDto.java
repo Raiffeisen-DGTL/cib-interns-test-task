@@ -11,12 +11,13 @@ import javax.validation.constraints.Positive;
 @Getter @AllArgsConstructor
 public class SockTypeDto {
 
-    private Color color;
-
+    private final ColorDto color;
     @Min(0) @Max(100)
-    private int cottonPart;
-
+    private final int cottonPart;
     @Positive
-    private int quantity;
+    private final int quantity;
 
+    public Color getColor() {
+        return color.getColor();
+    }
 }

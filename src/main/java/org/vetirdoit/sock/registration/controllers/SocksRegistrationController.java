@@ -1,17 +1,17 @@
 package org.vetirdoit.sock.registration.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.convert.converter.ConverterRegistry;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
-import org.vetirdoit.sock.registration.domain.BiPredicate;
-import org.vetirdoit.sock.registration.domain.Color;
-import org.vetirdoit.sock.registration.dtos.utils.DtoConverter;
+import org.vetirdoit.sock.registration.dtos.BiPredicateDto;
+import org.vetirdoit.sock.registration.dtos.ColorDto;
 import org.vetirdoit.sock.registration.dtos.SockTypeDto;
+import org.vetirdoit.sock.registration.dtos.utils.Converter;
 import org.vetirdoit.sock.registration.services.SockRegistrationService;
+import org.vetirdoit.sock.registration.services.exceptions.InvalidOperationException;
 
-@RestController("/api")
+@RestController
 public class SocksRegistrationController {
     private final SockRegistrationService sockRegistrationService;
 
@@ -20,31 +20,27 @@ public class SocksRegistrationController {
         this.sockRegistrationService = sockRegistrationService;
     }
 
-    @InitBinder
-    protected void initBinder(ConverterRegistry registry) {
-        registry.addConverter(new DtoConverter.StringToBiPredicateConverter());
-        registry.addConverter(new DtoConverter.StringToColorConverter());
-    }
-
-    @PostMapping("/socks/income")
+    @PostMapping("/api/socks/income")
     public void registerIncomingSocks(@RequestBody SockTypeDto sockTypeDto) {
 
-        sockRegistrationService.registerIncomingSocks( sockTypeDto );
+        sockRegistrationService.registerIncomingSocks( Converter.toSockType(sockTypeDto) );
     }
 
-    @PostMapping("/socks/outcome")
+    @PostMapping("/api/socks/outcome")
     public void registerOutgoingSocks(@RequestBody SockTypeDto sockTypeDto) {
 
-        boolean isSuccessful = sockRegistrationService.registerOutgoingSocks( sockTypeDto );
-            if ( !isSuccessful )
-                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "You requested too many socks!");
+        try {
+            sockRegistrationService.registerOutgoingSocks( Converter.toSockType(sockTypeDto) );
+        } catch (InvalidOperationException e) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
+        }
     }
 
-    @GetMapping("/socks")
-    public long getAllRequiredSocks(@RequestParam Color color,
-                                    @RequestParam("operation") BiPredicate operation,
+    @GetMapping("/api/socks")
+    public long getAllRequiredSocks(@RequestParam ColorDto color,
+                                    @RequestParam BiPredicateDto operation,
                                     @RequestParam int cottonPart) {
 
-        return sockRegistrationService.getCountOfRequiredSocks(color, operation, cottonPart);
+        return sockRegistrationService.countRequiredSocks(color.getColor(), operation.getOperation(), cottonPart);
     }
 }

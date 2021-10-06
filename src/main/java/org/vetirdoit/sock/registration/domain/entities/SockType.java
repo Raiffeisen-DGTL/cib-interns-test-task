@@ -7,6 +7,9 @@ import lombok.Setter;
 import org.vetirdoit.sock.registration.domain.Color;
 
 import javax.persistence.*;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.Positive;
 
 @Entity
 @Table(name = "sock_types")
@@ -22,8 +25,10 @@ public class SockType {
     private Color color;
 
     @Column(name = "cotton_part")
+    @Min(0) @Max(100)
     private int cottonPart;
 
+    @Positive
     private int quantity;
 
     public static SockType createSockType(Color color, int cottonPart, int quantity) {
