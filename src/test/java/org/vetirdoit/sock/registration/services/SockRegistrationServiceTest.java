@@ -32,7 +32,7 @@ class SockRegistrationServiceTest {
         int cottonPartValue = 50;
         var expectedValues = Map.of(
                 BiPredicate.EQUAL, 10L,
-                BiPredicate.GREATER_THAN, 20L,
+                BiPredicate.MORE_THAN, 20L,
                 BiPredicate.LESS_THAN, 30L
         );
         given(sockRepository.countSockTypesWhenCottonPartEqual(color, cottonPartValue)).willReturn(10L);

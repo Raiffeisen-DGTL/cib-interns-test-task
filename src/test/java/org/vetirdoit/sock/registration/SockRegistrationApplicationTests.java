@@ -53,7 +53,7 @@ class SockRegistrationApplicationTests {
 
     @Test
     void doTests() throws Exception {
-        assertThat(countRequiredSocksByGetRequest("greaterThan", "0"))
+        assertThat(countRequiredSocksByGetRequest("moreThan", "0"))
                 .isEqualTo(0);
         var sock1 = Map.of(
                 "color", color,
@@ -80,7 +80,7 @@ class SockRegistrationApplicationTests {
         registerSocksByPostRequest("/api/socks/income", sock3, status().isOk());
         registerSocksByPostRequest("/api/socks/income", invalidSock, status().isBadRequest());
 
-        assertThat(countRequiredSocksByGetRequest("greaterThan", "-1"))
+        assertThat(countRequiredSocksByGetRequest("moreThan", "-1"))
                 .isEqualTo(160);
         assertThat(countRequiredSocksByGetRequest("equal", "0"))
                 .isEqualTo(10);
@@ -88,7 +88,7 @@ class SockRegistrationApplicationTests {
                 .isEqualTo(60);
 
         registerSocksByPostRequest("/api/socks/outcome", sock3, status().isOk());
-        assertThat(countRequiredSocksByGetRequest("greaterThan", "-1"))
+        assertThat(countRequiredSocksByGetRequest("moreThan", "-1"))
                 .isEqualTo(60);
 
         registerSocksByPostRequest("/api/socks/outcome", sock3, status().isBadRequest());
@@ -98,7 +98,7 @@ class SockRegistrationApplicationTests {
                 "quantity", "100"
         );
         registerSocksByPostRequest("/api/socks/outcome", tooManySock2, status().isBadRequest());
-        assertThat(countRequiredSocksByGetRequest("greaterThan", "-1"))
+        assertThat(countRequiredSocksByGetRequest("moreThan", "-1"))
                 .isEqualTo(60);
     }
 

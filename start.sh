@@ -4,7 +4,7 @@
 #git pull
 
 # Prepare Jar
-mvn clean package
+mvn clean package -Dmaven.test.skip=true
 
 # Ensure, that docker-compose stopped
 docker-compose stop
@@ -13,7 +13,6 @@ docker-compose stop
 export DB_USERNAME=VetirDoIt
 export DB_PASSWORD=Papa9IgeNiy666GUCCi3mkb
 export DB_NAME=sock_store_db
-export DB_PORT=3306
 
 # Start new deployment
-docker-compose -f  up --build -d
+docker-compose -f docker-compose.yml up --build -d

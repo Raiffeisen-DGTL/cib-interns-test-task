@@ -8,13 +8,13 @@ services:
     depends_on:
       - db
     environment:
-      - SPRING_DATASOURCE_URL=jdbc:mysql://db:${DB_PORT}/${DB_NAME}
+      - SPRING_DATASOURCE_URL=jdbc:mysql://db:3306/${DB_NAME}
       - SPRING_DATASOURCE_USERNAME=${DB_USERNAME}
       - SPRING_DATASOURCE_PASSWORD=${DB_PASSWORD}
     ports:
       - "8080:8080"
     expose:
-       - '8080'
+      - '8080'
     stdin_open: true
   db:
     image: 'mysql:5.7'
@@ -26,9 +26,9 @@ services:
       - MYSQL_DATABASE=${DB_NAME}
       - MYSQL_ROOT_PASSWORD=root
     ports:
-      - "${DB_PORT}:${DB_PORT}"
+      - "3306:3306"
     expose:
-       - '${DB_PORT}'
+      - '3306'
     volumes:
       - db:/var/lib/mysql
 volumes:

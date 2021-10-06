@@ -1,4 +1,4 @@
-FROM adoptopenjdk:11-jre-hotspot
+FROM adoptopenjdk:16-jdk-hotspot
 ARG JAR_FILE=target/*.jar
 ENV SPRING_DATASOURCE_URL=aaaaaa
 ENV SPRING_DATASOURCE_USERNAME=bbbbb

@@ -23,7 +23,7 @@ public class SockRegistrationService {
     @Transactional(readOnly = true)
     public long countRequiredSocks(Color color, BiPredicate operation, int cottonPartValue) {
         return switch (operation) {
-            case GREATER_THAN -> sockRepository.countSockTypesWhenCottonPartGreaterThan(color, cottonPartValue);
+            case MORE_THAN -> sockRepository.countSockTypesWhenCottonPartGreaterThan(color, cottonPartValue);
             case EQUAL -> sockRepository.countSockTypesWhenCottonPartEqual(color, cottonPartValue);
             case LESS_THAN -> sockRepository.countSockTypesWhenCottonPartLessThan(color, cottonPartValue);
         };

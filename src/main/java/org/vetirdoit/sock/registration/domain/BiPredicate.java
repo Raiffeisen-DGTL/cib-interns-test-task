@@ -1,7 +1,7 @@
 package org.vetirdoit.sock.registration.domain;
 
 public enum BiPredicate {
-    GREATER_THAN,
+    MORE_THAN,
     LESS_THAN,
     EQUAL;
 }
