@@ -12,9 +12,10 @@ public class SocksDtoFactory {
 
     public SocksDto makeSocksDto(SocksEntity entity) {
         return SocksDto.builder()
-                .id(entity.getId())
+                //.id(entity.getId())
                 .color(entity.getColor())
-                .cotton(entity.getCotton())
+                .cottonPart(entity.getCottonPart())
+                .quantity(entity.getQuantity())
                 .build();
     }
 }

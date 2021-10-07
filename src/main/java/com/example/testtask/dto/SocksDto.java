@@ -5,6 +5,7 @@ import lombok.*;
 import lombok.experimental.FieldDefaults;
 
 import javax.persistence.FieldResult;
+import java.time.Instant;
 
 @Data
 @NoArgsConstructor
@@ -13,8 +14,8 @@ import javax.persistence.FieldResult;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class SocksDto {
 
-    @NonNull
-    Long id;
+//    @NonNull
+//    Long id;
 
     @NonNull
     //@JsonProperty("color")
@@ -22,5 +23,11 @@ public class SocksDto {
 
     @NonNull
     //@JsonProperty("cotton")
-    Double cotton;
+    Integer cottonPart;
+
+//    //@JsonProperty("created_at")
+//    Instant createdAt;
+
+    @NonNull
+    Long quantity ;
 }
