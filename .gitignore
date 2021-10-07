@@ -4,6 +4,7 @@ target/
 !**/src/main/**/target/
 !**/src/test/**/target/
 secrets/
+docker-compose_azure.yml
 
 ### STS ###
 .apt_generated
