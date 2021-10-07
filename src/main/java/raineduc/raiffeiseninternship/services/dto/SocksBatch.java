@@ -10,10 +10,10 @@ public class SocksBatch {
     @Min(0)
     @Max(100)
     @NotNull
-    private byte cottonPart;
+    private Byte cottonPart;
     @Positive
     @NotNull
-    private int quantity;
+    private Integer quantity;
 
     public String getColor() {
         return color;

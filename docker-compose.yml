@@ -1,16 +1,6 @@
 version: "3.8"
 
 services:
-  app:
-    build:
-      context: ./
-    image: raif:app
-    ports:
-      - "3000:8080"
-    env_file:
-      - "./secrets/postgres.env"
-    depends_on: [postgres-db]
-
   postgres-db:
     image: postgres
     volumes:
@@ -19,5 +9,20 @@ services:
       - "5432:5432"
     env_file:
       - "./secrets/postgres.env"
+
+  app:
+    build:
+      context: ./
+    image: raif:app
+    volumes:
+      - ./:/app
+    ports:
+      - "3000:8080"
+    restart: always
+    env_file:
+      - "./secrets/postgres.env"
+    environment:
+      - POSTGRES_HOST=postgres-db
+    depends_on: [ postgres-db ]
 volumes:
   postgres-data:
