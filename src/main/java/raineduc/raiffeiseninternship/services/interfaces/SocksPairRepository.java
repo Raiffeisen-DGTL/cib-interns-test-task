@@ -1,13 +1,13 @@
 package raineduc.raiffeiseninternship.services.interfaces;
 
 import org.springframework.data.repository.CrudRepository;
-import raineduc.raiffeiseninternship.entities.SocksPair;
+import raineduc.raiffeiseninternship.entities.Socks;
 
 import java.util.List;
 
-public interface SocksPairRepository extends CrudRepository<SocksPair, Long> {
-    List<SocksPair> findAllByColorAndCottonPart(String color, byte cottonPart);
-    int countByColorAndCottonPartGreaterThan(String color, byte cottonPart);
-    int countByColorAndCottonPartEquals(String color, byte cottonPart);
-    int countByColorAndCottonPartLessThan(String color, byte cottonPart);
+public interface SocksPairRepository extends CrudRepository<Socks, Long> {
+    Socks findSocksByColorAndCottonPart(String color, byte cottonPart);
+    List<Socks> findAllByColorAndCottonPartGreaterThan(String color, byte cottonPart);
+    List<Socks> findAllByColorAndCottonPartEquals(String color, byte cottonPart);
+    List<Socks> findAllByColorAndCottonPartLessThan(String color, byte cottonPart);
 }

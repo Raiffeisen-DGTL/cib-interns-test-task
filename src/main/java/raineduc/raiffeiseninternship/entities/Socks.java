@@ -3,10 +3,11 @@ package raineduc.raiffeiseninternship.entities;
 import javax.persistence.*;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
+import javax.validation.constraints.Positive;
 import javax.validation.constraints.Size;
 
 @Entity
-public class SocksPair {
+public class Socks {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
@@ -18,11 +19,20 @@ public class SocksPair {
     @Column(name="cotton_part", nullable = false)
     private Byte cottonPart;
 
-    public SocksPair() {};
+    @Column(nullable = false)
+    @Min(0)
+    private Integer quantity;
 
-    public SocksPair(String color, byte cottonPart) {
+    public Socks() {};
+
+    public Socks(String color, byte cottonPart, int quantity) {
         this.color = color;
         this.cottonPart = cottonPart;
+        this.quantity = quantity;
+    }
+
+    public Integer getQuantity() {
+        return quantity;
     }
 
     public String getColor() {
@@ -43,5 +53,9 @@ public class SocksPair {
 
     public void setCottonPart(Byte cottonPart) {
         this.cottonPart = cottonPart;
+    }
+
+    public void setQuantity(Integer quantity) {
+        this.quantity = quantity;
     }
 }

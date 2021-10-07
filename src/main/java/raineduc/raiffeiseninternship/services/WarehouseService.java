@@ -1,11 +1,9 @@
 package raineduc.raiffeiseninternship.services;
 
-import net.bytebuddy.matcher.EqualityMatcher;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
-import raineduc.raiffeiseninternship.entities.SocksPair;
+import raineduc.raiffeiseninternship.entities.Socks;
 import raineduc.raiffeiseninternship.services.dto.SocksBatch;
 import raineduc.raiffeiseninternship.services.dto.SocksRequest;
 import raineduc.raiffeiseninternship.services.exceptions.NotEnoughSocksException;
@@ -30,39 +28,40 @@ public class WarehouseService {
     }
 
     public void registerSocksIncome(@Valid SocksBatch socksBatch) {
-        ArrayList<SocksPair> socksPairs = new ArrayList<>();
+        Socks socks = socksPairRepository.findSocksByColorAndCottonPart(socksBatch.getColor(), socksBatch.getCottonPart());
 
-        for (int i = 0; i < socksBatch.getQuantity(); i++) {
-            socksPairs.add(new SocksPair(socksBatch.getColor(), socksBatch.getCottonPart()));
+        if (socks != null) {
+            socks.setQuantity(socks.getQuantity() + socksBatch.getQuantity());
+        } else {
+            socks = new Socks(socksBatch.getColor(), socksBatch.getCottonPart(), socksBatch.getQuantity());
         }
-
-        socksPairRepository.saveAll(socksPairs);
+        socksPairRepository.save(socks);
     }
 
     public void registerSocksOutcome(@Valid SocksBatch socksBatch) {
-        List<SocksPair> socksPairs = socksPairRepository.findAllByColorAndCottonPart(
-                socksBatch.getColor(), socksBatch.getCottonPart());
+        Socks socks = socksPairRepository.findSocksByColorAndCottonPart(socksBatch.getColor(), socksBatch.getCottonPart());
 
-        if (socksPairs.size() < socksBatch.getQuantity())
+        if (socks == null || socks.getQuantity() < socksBatch.getQuantity())
             throw new NotEnoughSocksException();
 
-        List<SocksPair> socksToBeRemoved = socksPairs.subList(0, socksBatch.getQuantity());
-        socksPairRepository.deleteAll(socksToBeRemoved);
+        socks.setQuantity(socks.getQuantity() - socksBatch.getQuantity());
+        socksPairRepository.save(socks);
     }
 
     public int getSocksCount(@Valid SocksRequest socksRequest) {
         String op = socksRequest.getOperation();
         String color = socksRequest.getColor();
         byte cottonPart = socksRequest.getCottonPart();
+        List<Socks> socks = new ArrayList<>();
         if (op.equals(EQUAL_OP)) {
-            return socksPairRepository.countByColorAndCottonPartEquals(color, cottonPart);
+            socks = socksPairRepository.findAllByColorAndCottonPartEquals(color, cottonPart);
         }
         if (op.equals(MORE_THAN_OP)) {
-            return socksPairRepository.countByColorAndCottonPartGreaterThan(color, cottonPart);
+            socks = socksPairRepository.findAllByColorAndCottonPartGreaterThan(color, cottonPart);
         }
         if (op.equals(LESS_THAN_OP)) {
-            return socksPairRepository.countByColorAndCottonPartLessThan(color, cottonPart);
+            socks = socksPairRepository.findAllByColorAndCottonPartLessThan(color, cottonPart);
         }
-        return 0;
+        return socks.stream().reduce(0, (x, y) -> x + y.getQuantity(), Integer::sum);
     }
 }
