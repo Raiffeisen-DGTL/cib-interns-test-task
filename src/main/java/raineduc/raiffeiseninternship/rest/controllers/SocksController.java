@@ -1,4 +1,4 @@
-package raineduc.raiffeiseninternship.controllers;
+package raineduc.raiffeiseninternship.rest.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
