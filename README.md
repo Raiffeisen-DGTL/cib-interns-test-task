@@ -5,3 +5,7 @@
 * Используется Flyway для версионирования БД
 * Приложение поднимается в Docker Compose
 * Развернуто на Azure
+
+
+## Ссылка
+https://raif-raineduc.azurewebsites.net
