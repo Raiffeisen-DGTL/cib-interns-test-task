@@ -4,10 +4,13 @@ import com.raiffeisen.task.dto.SockDto;
 import com.raiffeisen.task.service.SockService;
 import lombok.extern.java.Log;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.ConstraintViolationException;
+import javax.validation.Valid;
 import javax.validation.ValidationException;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
@@ -29,7 +32,7 @@ public class Controller {
 //    Регистрирует приход носков на склад.
 
     @PostMapping("/socks/income")
-    public ResponseEntity<String> incomeSocks(@RequestBody SockDto sockDto){
+    public ResponseEntity<String> incomeSocks(@RequestBody @Valid SockDto sockDto){
         log.info("Income " + sockDto);
         sockService.addSocks(sockDto.getColor(), sockDto.getCottonPart(), sockDto.getQuantity());
         return ResponseEntity.ok("Successful addition of socks!");
@@ -39,7 +42,7 @@ public class Controller {
 //    но общее количество носков указанного цвета и состава не увеличивается, а уменьшается.
 
     @PostMapping("/socks/outcome")
-    public ResponseEntity<String> outcomeSocks(@RequestBody SockDto sockDto){
+    public ResponseEntity<String> outcomeSocks(@RequestBody @Valid SockDto sockDto){
         log.info("Outcome " + sockDto);
         sockService.removeSocks(sockDto.getColor(), sockDto.getCottonPart(), sockDto.getQuantity());
         return ResponseEntity.ok("Successful removal of socks!");
@@ -63,6 +66,10 @@ public class Controller {
     }
 
 
-
+    @ExceptionHandler(ConstraintViolationException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ResponseEntity<String> handleConstraintViolationException(ConstraintViolationException e) {
+        return new ResponseEntity<>("{\n \"exception\" : \"" + e.getMessage() + "\"\n}", HttpStatus.BAD_REQUEST);
+    }
 
 }
