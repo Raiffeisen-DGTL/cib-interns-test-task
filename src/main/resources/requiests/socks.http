@@ -1,0 +1,16 @@
+### 200
+GET http://localhost:8080/api/socks?color=black&operation=moreThan&cottonPart=40
+Content-Type: application/json
+
+### 200
+GET http://localhost:8080/api/socks?color=black&operation=lessThan&cottonPart=70
+Content-Type: application/json
+
+### 400
+GET http://localhost:8080/api/socks?color=black&operation=moreThan&cottonPart=q
+Content-Type: application/json
+
+### 500
+GET http://localhost:8080/api/socks?color=error&operation=moreThan&cottonPart=50
+Content-Type: application/json
+

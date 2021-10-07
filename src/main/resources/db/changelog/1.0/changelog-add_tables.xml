@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+
+    <changeSet id="1_add-socks" author="live">
+        <createTable tableName="socks">
+            <column name="id" type="int">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="color" type="varchar"/>
+            <column name="cotton_part" type="decimal"/>
+            <column name="quantity" type="int"/>
+        </createTable>
+
+        <sql>
+            CREATE SEQUENCE hibernate_sequence;
+
+            INSERT INTO socks (id, color, cotton_part, quantity) VALUES ('1', 'black', '40', '30');
+            INSERT INTO socks (id, color, cotton_part, quantity) VALUES ('2', 'black', '60', '15');
+            INSERT INTO socks (id, color, cotton_part, quantity) VALUES ('3', 'red', '50', '45');
+            INSERT INTO socks (id, color, cotton_part, quantity) VALUES ('4', 'red', '90', '20');
+            INSERT INTO socks (id, color, cotton_part, quantity) VALUES ('5', 'yellow', '5', '50');
+        </sql>
+
+    </changeSet>
+</databaseChangeLog>
