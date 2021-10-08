@@ -1,0 +1,34 @@
+language: java
+jdk:
+  - openjdk11
+
+services:
+  - docker
+
+script:
+  - ./mvnw test javadoc:javadoc -B
+
+notifications:
+  email:
+    recipients:
+      - danilarassokhin@gmail.com
+    on_success: never
+    on_failure: always
+
+after_success: |
+  if [ -n "$GITHUB_API_KEY" ]; then
+    cd "$TRAVIS_BUILD_DIR"
+    mkdir apidocs
+    mkdir apidocs/docs
+    cd apidocs
+    git init
+    git checkout -b apidocs
+    git pull https://github.com/CrissNamon/raiffeisen-socks-test.git apidocs
+    cp -r ../target/site/apidocs/. ./docs/
+    git add .
+    git -c user.name='travis' -c user.email='travis' commit -m 'Update docs'
+    git remote add origin https://github.com/CrissNamon/raiffeisen-socks-test.git
+    git remote -v
+    git push -q https://CrissNamon:$GITHUB_API_KEY@github.com/CrissNamon/raiffeisen-socks-test.git apidocs &>/dev/null
+    cd "$TRAVIS_BUILD_DIR"
+  fi
