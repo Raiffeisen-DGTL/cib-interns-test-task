@@ -7,7 +7,7 @@
 - Mapstruct
 - Travis CI
 - Javadoc доступен в [Github pages](https://crissnamon.github.io/raiffeisen-socks-test/)
-- Приложение развернуто в Heroku
+- Приложение развернуто в [Heroku](https://danilarassokhin-raiffeisen.herokuapp.com/)
 
 ## Тестовое задание для Java стажеров
 
