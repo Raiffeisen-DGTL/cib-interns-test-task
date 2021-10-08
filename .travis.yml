@@ -1,21 +1,18 @@
 language: java
 jdk:
-  - openjdk11
-
+- openjdk11
 services:
-  - docker
-
+- docker
 script:
-  - ./mvnw test javadoc:javadoc -B
-
+- "./mvnw test javadoc:javadoc -B"
 notifications:
   email:
     recipients:
-      - danilarassokhin@gmail.com
+    - danilarassokhin@gmail.com
     on_success: never
     on_failure: always
-
-after_success: |
+after_success: |-
+  bash <(curl -s https://codecov.io/bash)
   if [ -n "$GITHUB_API_KEY" ]; then
     cd "$TRAVIS_BUILD_DIR"
     mkdir apidocs
@@ -32,3 +29,10 @@ after_success: |
     git push -q https://CrissNamon:$GITHUB_API_KEY@github.com/CrissNamon/raiffeisen-socks-test.git apidocs &>/dev/null
     cd "$TRAVIS_BUILD_DIR"
   fi
+
+deploy:
+  provider: heroku
+  app: danilarassokhin-raiffeisen
+  strategy: git
+  api_key:
+    secure: RatDFTzxRm07ClV1LJfsE0r3FHwo54DdZPh1NCmMawePnVe9o50OhEmWqV47Zvvf37WSYTBsZ7ZTUHIXxgu2NP96vUtKtFbKiI1dv+1TeBbJbaReznV0bOXl9qwjYP/UXxsdoRPz1cuCqXgMiIgLWMl7/DZtq0ti7t9VftOLeVnIJn1zKeFORfpXnqe/bIt9H+ns2WC8dETDYpbqIidaamM/irESBjP4X2KpQlBbgKxZybOqaqWRm4VH4O+s9pomjP7Oa82gK4EjxFW9QJhvwxwnFJQ7pXABGKYveK5JypBQxF3DUmtVz5OY2i25ysABIlV8SJHQKlp7XYS+wTibIZ0/zBQHMyQ8hkFAlUAxIHGbSQdEX41frWiOGu9cYKALoB2rso8XQXtoopsBMNmxKnqzwQh2ieu5G9YoCxqSDMKUXBdckZFNlT/LX4ot27euZ8mRWHj4lP4keS0I2jR3qrE9SIh4S7MSPNX/waB9OOIqzF2w9wC1JQ7bijDSpiXTVyEaw05GRdesUDwqR2sxfBxg0S7BckFul1PGiGPuSeRt5072BvI9RVjXVLeJAP81TX6KexjQxPklM6IKnweLIxnYG/XdQPwz5BrT6eyIjqm6N1b7MDzCcOUHEIb7XkHNJHcQ80cgXk4Ky5tbrCESF52sYwxvM6I6EmmdTGN1HBs=

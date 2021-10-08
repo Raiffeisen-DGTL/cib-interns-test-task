@@ -5,7 +5,7 @@
 - Docker (compose + dockerfile) для быстрого развертывания
 - Embedded postgresql для тестов в Docker контейнере
 - Mapstruct
-- Gson
+- Travis CI
 
 
 ## Тестовое задание для Java стажеров
