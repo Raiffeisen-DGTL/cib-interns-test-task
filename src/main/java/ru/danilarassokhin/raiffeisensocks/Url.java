@@ -8,7 +8,6 @@ public interface Url {
         String ENDPOINT = "/socks";
         String INCOME = "/income";
         String OUTCOME = "/outcome";
-        String ALL_COLORS = "/colors";
     }
 
 }

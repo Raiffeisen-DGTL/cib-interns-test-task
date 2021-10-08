@@ -4,12 +4,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
 import ru.danilarassokhin.raiffeisensocks.dto.ResponseDto;
 import ru.danilarassokhin.raiffeisensocks.dto.SocksIncomeDto;
 import ru.danilarassokhin.raiffeisensocks.dto.SocksOutcomeDto;
 import ru.danilarassokhin.raiffeisensocks.exception.DataNotExistsException;
 import ru.danilarassokhin.raiffeisensocks.exception.DataValidityException;
+import ru.danilarassokhin.raiffeisensocks.exception.InternalException;
 import ru.danilarassokhin.raiffeisensocks.service.SocksService;
 
 import javax.validation.ConstraintViolationException;
@@ -32,31 +34,57 @@ public class SockController {
 
     @PostMapping(SOCKS.INCOME)
     @ResponseStatus(HttpStatus.OK)
-    public ResponseDto<String> incomeSocks(@RequestBody @Valid SocksIncomeDto socksIncomeDto)
-            throws DataValidityException {
-        sockService.income(socksIncomeDto);
-        return new ResponseDto<>("Success");
+    public ResponseDto<SocksIncomeDto> incomeSocks(@RequestBody @Valid SocksIncomeDto socksIncomeDto)
+            throws DataValidityException, InternalException {
+        return new ResponseDto<>("Success",
+                sockService.income(socksIncomeDto)
+        );
     }
 
     @PostMapping(SOCKS.OUTCOME)
     @ResponseStatus(HttpStatus.OK)
-    public ResponseDto<String> outcomeSocks(@RequestBody @Valid SocksOutcomeDto socksOutcomeDto)
-            throws DataValidityException, DataNotExistsException {
-        sockService.outcome(socksOutcomeDto);
-        return new ResponseDto<>("Success");
+    public ResponseDto<SocksOutcomeDto> outcomeSocks(@RequestBody @Valid SocksOutcomeDto socksOutcomeDto)
+            throws DataValidityException, DataNotExistsException, InternalException {
+        return new ResponseDto<>("Success",
+                sockService.outcome(socksOutcomeDto)
+        );
     }
 
-    @ExceptionHandler(value = {ConstraintViolationException.class, DataValidityException.class,
-            HttpMessageNotReadableException.class})
+    @ExceptionHandler(MethodArgumentNotValidException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    private ResponseDto<String> handleConstraintViolationException(Exception exception) {
-        return new ResponseDto<>("Error occurred", exception.getMessage());
+    public ResponseDto<String> handleConstraintViolationException(MethodArgumentNotValidException exception) {
+        return new ResponseDto<>("Error", exception.getFieldError().getDefaultMessage());
     }
 
-    @ExceptionHandler(value = DataNotExistsException.class)
-    @ResponseStatus(HttpStatus.NOT_FOUND)
-    private ResponseDto<String> handleDataNotExistsException(DataNotExistsException e) {
-        return new ResponseDto<>("Error occurred", e.getMessage());
+    @ExceptionHandler(ConstraintViolationException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ResponseDto<String> handleConstraintViolationException(ConstraintViolationException exception) {
+        return new ResponseDto<>("Error", exception.getMessage());
+    }
+
+
+    @ExceptionHandler(DataValidityException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ResponseDto<String> handleDataValidityException(DataValidityException exception) {
+        return new ResponseDto<>("Error", exception.getMessage());
+    }
+
+    @ExceptionHandler(HttpMessageNotReadableException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ResponseDto<String> handleHttpMessageNotReadableException(HttpMessageNotReadableException exception) {
+        return new ResponseDto<>("Error", exception.getMessage());
+    }
+
+    @ExceptionHandler(DataNotExistsException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ResponseDto<String> handleDataNotExistsException(DataNotExistsException exception) {
+        return new ResponseDto<>("Error", exception.getMessage());
+    }
+
+    @ExceptionHandler(InternalException.class)
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    public ResponseDto<String> handleInternalException(InternalException exception) {
+        return new ResponseDto<>("Error", exception.getMessage());
     }
 
 }
