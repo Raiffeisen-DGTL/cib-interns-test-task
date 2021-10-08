@@ -23,7 +23,7 @@ import java.util.*;
 @RequestMapping("/api/socks")
 public class SocksController {
 
-  //private final SocksService socksService;
+
   private SocksRepository socksRepository;
   private SocksDtoFactory socksDtoFactory = new SocksDtoFactory();
   private static final String SOCKS_INCOME = "/income";
@@ -51,7 +51,7 @@ public class SocksController {
       socks.setId(id);
     }
     socks.setCreatedAt(LocalDateTime.now());
-    var savedSocks = socksRepository.saveAndFlush(socks);
+    SocksEntity savedSocks = socksRepository.saveAndFlush(socks);
     return socksDtoFactory.makeSocksDto(savedSocks);
   }
 
@@ -73,7 +73,7 @@ public class SocksController {
     socks.setCottonPart(socksDto.getCottonPart());
     socks.setQuantity(socks.getQuantity() - socksDto.getQuantity());
     if (socks.getId() == 0) {
-      var time = LocalDateTime.now();
+      LocalDateTime time = LocalDateTime.now();
       int id = time.getYear() + time.getMonthValue() + time.getMinute() + time.getNano();
       socks.setId(id);
     }
@@ -82,7 +82,7 @@ public class SocksController {
     if (socks.getQuantity() < 0) {
       throw new NotFoundException("Socks quantity can not be a negative value");
     }
-    var savedSocks = socksRepository.saveAndFlush(socks);
+    SocksEntity savedSocks = socksRepository.saveAndFlush(socks);
     return socksDtoFactory.makeSocksDto(savedSocks);
   }
 
