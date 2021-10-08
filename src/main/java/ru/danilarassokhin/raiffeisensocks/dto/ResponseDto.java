@@ -1,5 +1,9 @@
 package ru.danilarassokhin.raiffeisensocks.dto;
 
+/**
+ * Represents response for request
+ * @param <O> Response data type
+ */
 public class ResponseDto<O> {
 
     private String message;

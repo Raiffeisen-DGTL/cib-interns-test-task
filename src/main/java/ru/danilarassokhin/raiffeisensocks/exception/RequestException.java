@@ -2,6 +2,9 @@ package ru.danilarassokhin.raiffeisensocks.exception;
 
 import org.springframework.http.HttpStatus;
 
+/**
+ * Represents abstract exception of some request
+ */
 public class RequestException extends Exception{
 
     private HttpStatus responseStatus;

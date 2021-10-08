@@ -2,6 +2,9 @@ package ru.danilarassokhin.raiffeisensocks.model;
 
 import java.io.Serializable;
 
+/**
+ * Represents composite primary key for {@link ru.danilarassokhin.raiffeisensocks.model.Socks}
+ */
 public class SocksId implements Serializable {
 
     private Long id;

@@ -18,7 +18,6 @@ import ru.danilarassokhin.raiffeisensocks.service.SocksService;
 import ru.danilarassokhin.raiffeisensocks.util.ValidationUtils;
 
 import java.util.Arrays;
-import java.util.Set;
 
 @Service
 public class SocksServiceImpl implements SocksService {
@@ -28,16 +27,6 @@ public class SocksServiceImpl implements SocksService {
     @Autowired
     public SocksServiceImpl(SocksRepository socksRepository) {
         this.socksRepository = socksRepository;
-    }
-
-    @Override
-    public Set<Socks> findByColorAndCottonPartGreaterThan(String color, byte cottonPart) {
-        return socksRepository.findByColorAndCottonPartGreaterThan(color, cottonPart);
-    }
-
-    @Override
-    public Set<Socks> findByColorAndCottonPartLessThan(String color, byte cottonPart) {
-        return socksRepository.findByColorAndCottonPartLessThan(color, cottonPart);
     }
 
     @Override

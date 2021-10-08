@@ -3,6 +3,9 @@ package ru.danilarassokhin.raiffeisensocks.object;
 import javax.validation.ConstraintViolation;
 import java.util.Set;
 
+/**
+ * Represents result of {@link ru.danilarassokhin.raiffeisensocks.util.ValidationUtils#validate(Object)}
+ */
 public class ValidationResult {
 
     private final Set<ConstraintViolation<Object>> violations;

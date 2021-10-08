@@ -13,17 +13,17 @@ import ru.danilarassokhin.raiffeisensocks.dto.SocksSearchDto;
 import ru.danilarassokhin.raiffeisensocks.exception.DataNotExistsException;
 import ru.danilarassokhin.raiffeisensocks.exception.DataValidityException;
 import ru.danilarassokhin.raiffeisensocks.exception.InternalException;
-import ru.danilarassokhin.raiffeisensocks.model.Socks;
 import ru.danilarassokhin.raiffeisensocks.service.SocksService;
 
 import javax.validation.ConstraintViolationException;
 import javax.validation.Valid;
 
-import java.util.Set;
-
 import static ru.danilarassokhin.raiffeisensocks.Url.API_ENDPOINT;
 import static ru.danilarassokhin.raiffeisensocks.Url.SOCKS;
 
+/**
+ * Controller for operations with {@link ru.danilarassokhin.raiffeisensocks.model.Socks}
+ */
 @RestController
 @RequestMapping(API_ENDPOINT + SOCKS.ENDPOINT)
 @Validated
@@ -36,6 +36,13 @@ public class SockController {
         this.sockService = sockService;
     }
 
+    /**
+     * Adds new socks to stock
+     * @param socksIncomeDto Income data {@link ru.danilarassokhin.raiffeisensocks.dto.SocksIncomeDto}
+     * @return Response with current quantity of given socks color and cotton part
+     * @throws DataValidityException If request data is not valid
+     * @throws InternalException If internal exception occurred
+     */
     @PostMapping(SOCKS.INCOME)
     @ResponseStatus(HttpStatus.OK)
     public ResponseDto<SocksIncomeDto> incomeSocks(@RequestBody @Valid SocksIncomeDto socksIncomeDto)
@@ -45,6 +52,14 @@ public class SockController {
         );
     }
 
+    /**
+     * Removes some socks from stock
+     * @param socksOutcomeDto Outcome data {@link ru.danilarassokhin.raiffeisensocks.dto.SocksOutcomeDto}
+     * @return Response with current quantity of given socks color and cotton part
+     * @throws DataValidityException If request data is not valid
+     * @throws DataNotExistsException If socks of given color and cotton part is not exists
+     * @throws InternalException If internal exception occurredd
+     */
     @PostMapping(SOCKS.OUTCOME)
     @ResponseStatus(HttpStatus.OK)
     public ResponseDto<SocksOutcomeDto> outcomeSocks(@RequestBody @Valid SocksOutcomeDto socksOutcomeDto)
@@ -54,9 +69,15 @@ public class SockController {
         );
     }
 
+    /**
+     * Counts socks of given color and cotton part condition
+     * @param socksSearchDto Counting data {@link ru.danilarassokhin.raiffeisensocks.dto.SocksSearchDto}
+     * @return Number of socks in stock for given condition
+     * @throws DataValidityException If counting data is not valid
+     */
     @PostMapping
     @ResponseStatus(HttpStatus.OK)
-    public ResponseDto<Long> searchSocks(@RequestBody @Valid SocksSearchDto socksSearchDto)
+    public ResponseDto<Long> countSocks(@RequestBody @Valid SocksSearchDto socksSearchDto)
             throws DataValidityException {
         return new ResponseDto<>("Success",
                 sockService.countSocks(socksSearchDto)

@@ -5,6 +5,9 @@ import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 
+/**
+ * Represents socks entity in database
+ */
 @Entity(name = "socks")
 @IdClass(SocksId.class)
 public class Socks {

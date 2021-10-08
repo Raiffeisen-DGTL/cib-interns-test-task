@@ -1,4 +1,4 @@
 /**
  * Contains custom exceptions
  */
-package ru.hiddenproject.feelmeserver.exception;
+package ru.danilarassokhin.raiffeisensocks.exception;
