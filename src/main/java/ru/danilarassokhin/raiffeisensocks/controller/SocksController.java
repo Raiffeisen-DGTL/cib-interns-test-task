@@ -3,8 +3,7 @@ package ru.danilarassokhin.raiffeisensocks.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.converter.HttpMessageNotReadableException;
-import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.*;
 import ru.danilarassokhin.raiffeisensocks.dto.ResponseDto;
 import ru.danilarassokhin.raiffeisensocks.dto.SocksIncomeDto;
@@ -13,10 +12,11 @@ import ru.danilarassokhin.raiffeisensocks.dto.SocksSearchDto;
 import ru.danilarassokhin.raiffeisensocks.exception.DataNotExistsException;
 import ru.danilarassokhin.raiffeisensocks.exception.DataValidityException;
 import ru.danilarassokhin.raiffeisensocks.exception.InternalException;
+import ru.danilarassokhin.raiffeisensocks.object.ValidationResult;
 import ru.danilarassokhin.raiffeisensocks.service.SocksService;
+import ru.danilarassokhin.raiffeisensocks.util.ValidationUtils;
 
 import javax.validation.ConstraintViolationException;
-import javax.validation.Valid;
 
 import static ru.danilarassokhin.raiffeisensocks.Url.API_ENDPOINT;
 import static ru.danilarassokhin.raiffeisensocks.Url.SOCKS;
@@ -26,10 +26,9 @@ import static ru.danilarassokhin.raiffeisensocks.Url.SOCKS;
  */
 @RestController
 @RequestMapping(API_ENDPOINT + SOCKS.ENDPOINT)
-@Validated
 public class SocksController {
 
-    private SocksService sockService;
+    private final SocksService sockService;
 
     @Autowired
     public SocksController(SocksService sockService) {
@@ -45,8 +44,12 @@ public class SocksController {
      */
     @PostMapping(SOCKS.INCOME)
     @ResponseStatus(HttpStatus.OK)
-    public ResponseDto<SocksIncomeDto> incomeSocks(@RequestBody @Valid SocksIncomeDto socksIncomeDto)
+    public ResponseDto<SocksIncomeDto> incomeSocks(@RequestBody SocksIncomeDto socksIncomeDto)
             throws DataValidityException, InternalException {
+        ValidationResult validationResult = ValidationUtils.validate(socksIncomeDto);
+        if(!validationResult.isValid()) {
+            throw new DataValidityException(validationResult.getFirstErrorMessage());
+        }
         return new ResponseDto<>("Success",
                 sockService.income(socksIncomeDto)
         );
@@ -62,8 +65,12 @@ public class SocksController {
      */
     @PostMapping(SOCKS.OUTCOME)
     @ResponseStatus(HttpStatus.OK)
-    public ResponseDto<SocksOutcomeDto> outcomeSocks(@RequestBody @Valid SocksOutcomeDto socksOutcomeDto)
+    public ResponseDto<SocksOutcomeDto> outcomeSocks(@RequestBody SocksOutcomeDto socksOutcomeDto)
             throws DataValidityException, DataNotExistsException, InternalException {
+        ValidationResult validationResult = ValidationUtils.validate(socksOutcomeDto);
+        if(!validationResult.isValid()) {
+            throw new DataValidityException(validationResult.getFirstErrorMessage());
+        }
         return new ResponseDto<>("Success",
                 sockService.outcome(socksOutcomeDto)
         );
@@ -71,31 +78,35 @@ public class SocksController {
 
     /**
      * Counts socks of given color and cotton part condition
-     * @param socksSearchDto Counting data {@link ru.danilarassokhin.raiffeisensocks.dto.SocksSearchDto}
+     * @param color Socks color to count
+     * @param operation Condition to use
+     * @param cottonPart Cotton part to use in condition
      * @return Number of socks in stock for given condition
      * @throws DataValidityException If counting data is not valid
      */
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    public ResponseDto<Long> countSocks(@RequestBody @Valid SocksSearchDto socksSearchDto)
+    public ResponseDto<Long> countSocks(@RequestParam("color") String color, @RequestParam("operation") String operation,
+                                        @RequestParam("cottonPart") byte cottonPart)
             throws DataValidityException {
+        SocksSearchDto socksSearchDto = new SocksSearchDto();
+        socksSearchDto.setColor(color);
+        socksSearchDto.setCottonPart(cottonPart);
+        socksSearchDto.setOperation(operation);
+        ValidationResult validationResult = ValidationUtils.validate(socksSearchDto);
+        if(!validationResult.isValid()) {
+            throw new DataValidityException(validationResult.getFirstErrorMessage());
+        }
         return new ResponseDto<>("Success",
                 sockService.countSocks(socksSearchDto)
         );
     }
 
-    @ExceptionHandler(MethodArgumentNotValidException.class)
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public ResponseDto<String> handleConstraintViolationException(MethodArgumentNotValidException exception) {
-        return new ResponseDto<>("Error", exception.getFieldError().getDefaultMessage());
-    }
-
     @ExceptionHandler(ConstraintViolationException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ResponseDto<String> handleConstraintViolationException(ConstraintViolationException exception) {
-        return new ResponseDto<>("Error", exception.getMessage());
+        return new ResponseDto<>("Constraint violation error", exception.getMessage());
     }
-
 
     @ExceptionHandler(DataValidityException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
@@ -106,7 +117,7 @@ public class SocksController {
     @ExceptionHandler(HttpMessageNotReadableException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ResponseDto<String> handleHttpMessageNotReadableException(HttpMessageNotReadableException exception) {
-        return new ResponseDto<>("Error", exception.getMessage());
+        return new ResponseDto<>("Error", "Check your request data. May be it's null or empty? Well, it shouldn't be");
     }
 
     @ExceptionHandler(DataNotExistsException.class)
@@ -118,6 +129,12 @@ public class SocksController {
     @ExceptionHandler(InternalException.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public ResponseDto<String> handleInternalException(InternalException exception) {
+        return new ResponseDto<>("Internal error", exception.getMessage());
+    }
+
+    @ExceptionHandler(MissingServletRequestParameterException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ResponseDto<String> handleRequestParameterException(MissingServletRequestParameterException exception) {
         return new ResponseDto<>("Error", exception.getMessage());
     }
 

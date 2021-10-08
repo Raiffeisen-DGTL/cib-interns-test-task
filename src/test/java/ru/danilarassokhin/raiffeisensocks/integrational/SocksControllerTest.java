@@ -170,17 +170,11 @@ public class SocksControllerTest extends IntegrationTest{
 
     @Test
     public void validSocksCountEqualsExisting() throws Exception {
-        SocksSearchDto socksSearchDto = new SocksSearchDto();
-        socksSearchDto.setColor("red");
-        socksSearchDto.setOperation("equal");
-        socksSearchDto.setCottonPart((byte) 10);
-
-        String json = new Gson().toJson(socksSearchDto);
-
         mockMvc.perform(
                 get(API_ENDPOINT + SOCKS.ENDPOINT)
-                .content(json)
-                .contentType(MediaType.APPLICATION_JSON)
+                .param("color", "red")
+                        .param("operation", "equal")
+                        .param("cottonPart", "10")
         )
                 .andExpect(
                         status().isOk()
@@ -192,17 +186,11 @@ public class SocksControllerTest extends IntegrationTest{
 
     @Test
     public void validSocksCountEqualsNotExisting() throws Exception {
-        SocksSearchDto socksSearchDto = new SocksSearchDto();
-        socksSearchDto.setColor("yellow");
-        socksSearchDto.setOperation("equal");
-        socksSearchDto.setCottonPart((byte) 10);
-
-        String json = new Gson().toJson(socksSearchDto);
-
         mockMvc.perform(
                 get(API_ENDPOINT + SOCKS.ENDPOINT)
-                        .content(json)
-                        .contentType(MediaType.APPLICATION_JSON)
+                        .param("color", "yellow")
+                        .param("operation", "equal")
+                        .param("cottonPart", "10")
         )
                 .andExpect(
                         status().isOk()

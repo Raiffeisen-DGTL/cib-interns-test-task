@@ -3,7 +3,9 @@ package ru.danilarassokhin.raiffeisensocks.dto;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
+@NotNull(message = "Search data can't be null")
 public class SocksSearchDto {
 
     @NotBlank(message = "Socks color can't be empty")

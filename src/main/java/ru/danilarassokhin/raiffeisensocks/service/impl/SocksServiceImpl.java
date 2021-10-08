@@ -116,7 +116,7 @@ public class SocksServiceImpl implements SocksService {
                 return socksRepository.countByColorAndCottonPartGreaterThan(
                         socksSearchDto.getColor(),
                         socksSearchDto.getCottonPart()
-                );
+                ).orElse(0L);
             case equal:
                 Socks result = findByColorAndCottonPartIs(
                         socksSearchDto.getColor(),
@@ -130,7 +130,7 @@ public class SocksServiceImpl implements SocksService {
                 return socksRepository.countByColorAndCottonPartLessThan(
                         socksSearchDto.getColor(),
                         socksSearchDto.getCottonPart()
-                );
+                ).orElse(0L);
         }
         return 0L;
     }

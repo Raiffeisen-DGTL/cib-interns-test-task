@@ -1,3 +1,5 @@
+![TravisCI](https://app.travis-ci.com/CrissNamon/raiffeisen-socks-test.svg?branch=main)
+[![codecov](https://codecov.io/gh/CrissNamon/raiffeisen-socks-test/branch/main/graph/badge.svg?token=s6b4EsXqhR)](https://codecov.io/gh/CrissNamon/raiffeisen-socks-test)
 ## Использовано
 - Spring Boot (Data JPA, Web)
 - PostgreSQL + Flyway для хранения данных и миграций
@@ -5,9 +7,9 @@
 - Docker (compose + dockerfile) для быстрого развертывания
 - Embedded postgresql для тестов в Docker контейнере
 - Mapstruct
-- Travis CI
+- Travis CI для тестов и загрузки javadoc в github pages
 - Javadoc доступен в [Github pages](https://crissnamon.github.io/raiffeisen-socks-test/)
-- Приложение развернуто в [Heroku](https://danilarassokhin-raiffeisen.herokuapp.com/)
+- Приложение развернуто в [Heroku](https://danilarassokhin-raiffeisen.herokuapp.com/) (Развертывается автоматически после успешных тестов в Travis CI)
 
 ## Тестовое задание для Java стажеров
 
