@@ -19,6 +19,9 @@ import ru.danilarassokhin.raiffeisensocks.util.ValidationUtils;
 
 import java.util.Arrays;
 
+/**
+ * Implementation of {@link ru.danilarassokhin.raiffeisensocks.service.SocksService}
+ */
 @Service
 public class SocksServiceImpl implements SocksService {
 
@@ -125,7 +128,7 @@ public class SocksServiceImpl implements SocksService {
                 if(result == null) {
                     return 0L;
                 }
-                return 1L;
+                return result.getQuantity();
             case lessThan:
                 return socksRepository.countByColorAndCottonPartLessThan(
                         socksSearchDto.getColor(),

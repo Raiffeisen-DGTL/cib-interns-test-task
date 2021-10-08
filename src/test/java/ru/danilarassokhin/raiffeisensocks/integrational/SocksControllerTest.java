@@ -12,7 +12,6 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import ru.danilarassokhin.raiffeisensocks.dto.SocksIncomeDto;
 import ru.danilarassokhin.raiffeisensocks.dto.SocksOutcomeDto;
-import ru.danilarassokhin.raiffeisensocks.dto.SocksSearchDto;
 import ru.danilarassokhin.raiffeisensocks.exception.DataValidityException;
 import ru.danilarassokhin.raiffeisensocks.exception.InternalException;
 import ru.danilarassokhin.raiffeisensocks.repository.SocksRepository;
@@ -210,6 +209,22 @@ public class SocksControllerTest extends IntegrationTest{
         )
                 .andExpect(
                         status().isBadRequest()
+                );
+    }
+
+    @Test
+    public void countSocksEqualMustReturnQuantity() throws Exception {
+        mockMvc.perform(
+                get(API_ENDPOINT + SOCKS.ENDPOINT)
+                        .param("color", "red")
+                        .param("operation", "equal")
+                        .param("cottonPart", "10")
+        )
+                .andExpect(
+                        status().isOk()
+                )
+                .andExpect(
+                        jsonPath("$.data").value(1)
                 );
     }
 
