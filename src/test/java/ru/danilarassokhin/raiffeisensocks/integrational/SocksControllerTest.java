@@ -200,4 +200,17 @@ public class SocksControllerTest extends IntegrationTest{
                 );
     }
 
+    @Test
+    public void socksCountInvalidOperation() throws Exception {
+        mockMvc.perform(
+                get(API_ENDPOINT + SOCKS.ENDPOINT)
+                        .param("color", "yellow")
+                        .param("operation", "wrong")
+                        .param("cottonPart", "10")
+        )
+                .andExpect(
+                        status().isBadRequest()
+                );
+    }
+
 }
