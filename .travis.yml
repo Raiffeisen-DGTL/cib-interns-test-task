@@ -30,10 +30,14 @@ after_success: |-
     cd "$TRAVIS_BUILD_DIR"
   fi
 
+before_install:
+  - wget -qO- https://toolbelt.heroku.com/install.sh | sh #installed heroku CLI
+  - docker login -u "$HEROKU_USERNAME" --password=$(heroku auth:token) registry.heroku.com #logged in
+
 deploy:
-  provider: heroku
-  app: danilarassokhin-raiffeisen
-  strategy: git
+  provider: script
+  script:
+    heroku container:release raiffeisen-socks --app danilarassokhin-raiffeisen
   on:
     branch: main
   api_key:

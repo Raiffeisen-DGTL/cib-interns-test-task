@@ -1,4 +1,4 @@
-## Использовано:
+## Использовано
 - Spring Boot (Data JPA, Web)
 - PostgreSQL + Flyway для хранения данных и миграций
 - Bean validation API для проверки DTO
@@ -6,7 +6,8 @@
 - Embedded postgresql для тестов в Docker контейнере
 - Mapstruct
 - Travis CI
-
+- Javadoc доступен в [Github pages](https://crissnamon.github.io/raiffeisen-socks-test/)
+- Приложение развернуто в Heroku
 
 ## Тестовое задание для Java стажеров
 
