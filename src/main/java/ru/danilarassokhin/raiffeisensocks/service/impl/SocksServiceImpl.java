@@ -3,6 +3,7 @@ package ru.danilarassokhin.raiffeisensocks.service.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.danilarassokhin.raiffeisensocks.dto.SocksIncomeDto;
+import ru.danilarassokhin.raiffeisensocks.dto.SocksOutcomeDto;
 import ru.danilarassokhin.raiffeisensocks.exception.DataNotExistsException;
 import ru.danilarassokhin.raiffeisensocks.exception.DataValidityException;
 import ru.danilarassokhin.raiffeisensocks.mapper.SocksMapper;
@@ -58,7 +59,26 @@ public class SocksServiceImpl implements SocksService {
     }
 
     @Override
-    public void outcome(SocksIncomeDto socksIncomeDto) throws DataValidityException, DataNotExistsException {
-
+    public void outcome(SocksOutcomeDto socksOutcomeDto) throws DataValidityException, DataNotExistsException {
+        ValidationResult validationResult = ValidationUtils.validate(socksOutcomeDto);
+        if(!validationResult.isValid()) {
+            throw new DataValidityException(validationResult.getFirstErrorMessage());
+        }
+        Socks result = socksRepository.findByColorAndCottonPartIs(
+                socksOutcomeDto.getColor(),
+                socksOutcomeDto.getCottonPart()
+        ).orElse(null);
+        if(result == null) {
+            throw new DataNotExistsException("There is no socks exists with given color (" + socksOutcomeDto.getColor()
+            + ") and cotton part (" + socksOutcomeDto.getCottonPart() + ")!");
+        }
+        if(result.getQuantity() <= 0) {
+            throw new DataNotExistsException("There is no socks left with give color (" + socksOutcomeDto.getColor()
+                    + ") and cotton part (" + socksOutcomeDto.getCottonPart() + ")!");
+        }
+        result.addQuantity(
+                -socksOutcomeDto.getQuantity()
+        );
+        socksRepository.save(result);
     }
 }

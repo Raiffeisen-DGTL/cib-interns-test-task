@@ -7,7 +7,6 @@ public class ResponseDto<O> {
 
     public ResponseDto(String message) {
         this.message = message;
-        this.data = null;
     }
 
     public ResponseDto(O data) {

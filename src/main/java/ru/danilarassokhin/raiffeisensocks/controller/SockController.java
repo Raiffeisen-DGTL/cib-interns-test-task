@@ -7,6 +7,8 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import ru.danilarassokhin.raiffeisensocks.dto.ResponseDto;
 import ru.danilarassokhin.raiffeisensocks.dto.SocksIncomeDto;
+import ru.danilarassokhin.raiffeisensocks.dto.SocksOutcomeDto;
+import ru.danilarassokhin.raiffeisensocks.exception.DataNotExistsException;
 import ru.danilarassokhin.raiffeisensocks.exception.DataValidityException;
 import ru.danilarassokhin.raiffeisensocks.service.SocksService;
 
@@ -30,16 +32,31 @@ public class SockController {
 
     @PostMapping(SOCKS.INCOME)
     @ResponseStatus(HttpStatus.OK)
-    public void incomeSocks(@RequestBody @Valid SocksIncomeDto socksIncomeDto) throws DataValidityException {
+    public ResponseDto<String> incomeSocks(@RequestBody @Valid SocksIncomeDto socksIncomeDto)
+            throws DataValidityException {
         sockService.income(socksIncomeDto);
+        return new ResponseDto<>("Success");
     }
 
+    @PostMapping(SOCKS.OUTCOME)
+    @ResponseStatus(HttpStatus.OK)
+    public ResponseDto<String> outcomeSocks(@RequestBody @Valid SocksOutcomeDto socksOutcomeDto)
+            throws DataValidityException, DataNotExistsException {
+        sockService.outcome(socksOutcomeDto);
+        return new ResponseDto<>("Success");
+    }
 
     @ExceptionHandler(value = {ConstraintViolationException.class, DataValidityException.class,
             HttpMessageNotReadableException.class})
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     private ResponseDto<String> handleConstraintViolationException(Exception exception) {
         return new ResponseDto<>("Error occurred", exception.getMessage());
+    }
+
+    @ExceptionHandler(value = DataNotExistsException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    private ResponseDto<String> handleDataNotExistsException(DataNotExistsException e) {
+        return new ResponseDto<>("Error occurred", e.getMessage());
     }
 
 }
