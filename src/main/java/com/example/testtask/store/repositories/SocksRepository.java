@@ -29,9 +29,7 @@ public interface SocksRepository extends JpaRepository<SocksEntity,Long> {
             "AND s.cottonPart < :cottonPart")
     List<SocksEntity> findAllByColorAndLessCottonPart(Optional<String> color, Optional<Integer> cottonPart);
 
-    @Query("SELECT s FROM SocksEntity s " +
-            "WHERE s.color = :color " +
-            "AND s.cottonPart > :cottonPart")
+    @Query("SELECT s FROM SocksEntity s WHERE s.color = :color AND s.cottonPart > :cottonPart")
     List<SocksEntity> findAllByColorAndMoreCottonPart(Optional<String> color, Optional<Integer> cottonPart);
 
     @Query("SELECT s FROM SocksEntity s " +

@@ -28,7 +28,8 @@ public class SocksEntity {
     //@GeneratedValue(strategy = GenerationType.SEQUENCE)
     //@GeneratedValue(strategy=GenerationType.AUTO)
     @Id
-    private Integer id;
+    @Builder.Default
+    private Integer id=0;
 
     @Builder.Default
     private Long quantity = 0l;
