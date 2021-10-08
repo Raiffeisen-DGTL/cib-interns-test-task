@@ -7,12 +7,12 @@ import javax.persistence.*;
 public class Socks {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     @Id
     @Column(name = "color")
-    private SocksColor socksColor;
+    private String color;
 
     @Id
     @Column(name = "cotton_part")
@@ -20,7 +20,6 @@ public class Socks {
 
     @Column(name = "quantity")
     private Long quantity;
-
 
     public Long getId() {
         return id;
@@ -30,12 +29,12 @@ public class Socks {
         this.id = id;
     }
 
-    public SocksColor getSockColor() {
-        return socksColor;
+    public String getColor() {
+        return color;
     }
 
-    public void setSockColor(SocksColor socksColor) {
-        this.socksColor = socksColor;
+    public void setColor(String color) {
+        this.color = color;
     }
 
     public byte getCottonPart() {
@@ -52,5 +51,9 @@ public class Socks {
 
     public void setQuantity(Long quantity) {
         this.quantity = quantity;
+    }
+
+    public void addQuantity(Long quantity) {
+        this.quantity += quantity;
     }
 }

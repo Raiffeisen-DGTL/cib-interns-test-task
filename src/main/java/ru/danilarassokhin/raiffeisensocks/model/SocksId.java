@@ -6,16 +6,16 @@ public class SocksId implements Serializable {
 
     private Long id;
 
-    private SocksColor socksColor;
+    private String color;
 
     private byte cottonPart;
 
-    public SocksColor getSocksColor() {
-        return socksColor;
+    public String getColor() {
+        return color;
     }
 
-    public void setSocksColor(SocksColor socksColor) {
-        this.socksColor = socksColor;
+    public void setColor(String color) {
+        this.color = color;
     }
 
     public byte getCottonPart() {

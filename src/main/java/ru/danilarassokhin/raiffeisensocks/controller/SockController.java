@@ -2,16 +2,16 @@ package ru.danilarassokhin.raiffeisensocks.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import ru.danilarassokhin.raiffeisensocks.dto.ResponseDto;
 import ru.danilarassokhin.raiffeisensocks.dto.SocksIncomeDto;
-import ru.danilarassokhin.raiffeisensocks.model.SocksColor;
+import ru.danilarassokhin.raiffeisensocks.exception.DataValidityException;
 import ru.danilarassokhin.raiffeisensocks.service.SocksService;
 
 import javax.validation.ConstraintViolationException;
 import javax.validation.Valid;
-import java.util.Set;
 
 import static ru.danilarassokhin.raiffeisensocks.Url.API_ENDPOINT;
 import static ru.danilarassokhin.raiffeisensocks.Url.SOCKS;
@@ -28,26 +28,18 @@ public class SockController {
         this.sockService = sockService;
     }
 
-    @GetMapping(SOCKS.ALL_COLORS)
-    @ResponseStatus(HttpStatus.OK)
-    public ResponseDto<Set<SocksColor>> getAllSocksColors() {
-        return new ResponseDto<>(
-                Set.of(
-                        SocksColor.values()
-                )
-        );
-    }
-
     @PostMapping(SOCKS.INCOME)
     @ResponseStatus(HttpStatus.OK)
-    public void incomeSocks(@RequestBody @Valid SocksIncomeDto socksIncomeDto) {
+    public void incomeSocks(@RequestBody @Valid SocksIncomeDto socksIncomeDto) throws DataValidityException {
         sockService.income(socksIncomeDto);
     }
 
 
-    @ExceptionHandler(value = ConstraintViolationException.class)
-    private void handleConstraintViolationException(ConstraintViolationException exception) {
-
+    @ExceptionHandler(value = {ConstraintViolationException.class, DataValidityException.class,
+            HttpMessageNotReadableException.class})
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    private ResponseDto<String> handleConstraintViolationException(Exception exception) {
+        return new ResponseDto<>("Error occurred", exception.getMessage());
     }
 
 }
