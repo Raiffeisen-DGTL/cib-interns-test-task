@@ -78,7 +78,7 @@ public class SocksServiceImpl implements SocksService {
             throw new DataNotExistsException("There is no socks exists with given color (" + socksOutcomeDto.getColor()
             + ") and cotton part (" + socksOutcomeDto.getCottonPart() + ")!");
         }
-        if(result.getQuantity() <= 0 || result.getQuantity() < socksOutcomeDto.getQuantity()) {
+        if(result.getQuantity() < socksOutcomeDto.getQuantity()) {
             throw new DataNotExistsException("There is no socks left with give color (" + socksOutcomeDto.getColor()
                     + ") and cotton part (" + socksOutcomeDto.getCottonPart() + ")! "
             + "Socks in stock: " + result.getQuantity() + ", tried to outcome: " +

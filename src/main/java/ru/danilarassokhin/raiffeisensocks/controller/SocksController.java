@@ -27,12 +27,12 @@ import static ru.danilarassokhin.raiffeisensocks.Url.SOCKS;
 @RestController
 @RequestMapping(API_ENDPOINT + SOCKS.ENDPOINT)
 @Validated
-public class SockController {
+public class SocksController {
 
     private SocksService sockService;
 
     @Autowired
-    public SockController(SocksService sockService) {
+    public SocksController(SocksService sockService) {
         this.sockService = sockService;
     }
 
@@ -75,7 +75,7 @@ public class SockController {
      * @return Number of socks in stock for given condition
      * @throws DataValidityException If counting data is not valid
      */
-    @PostMapping
+    @GetMapping
     @ResponseStatus(HttpStatus.OK)
     public ResponseDto<Long> countSocks(@RequestBody @Valid SocksSearchDto socksSearchDto)
             throws DataValidityException {
