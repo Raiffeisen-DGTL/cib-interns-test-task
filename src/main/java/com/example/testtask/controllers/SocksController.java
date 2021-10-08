@@ -1,13 +1,11 @@
 package com.example.testtask.controllers;
 
-//import com.example.testtask.store.repositories.SocksRepository;
 
 import com.example.testtask.dto.SocksDto;
 import com.example.testtask.exceptions.BadRequestException;
 import com.example.testtask.exceptions.InternalServerError;
 import com.example.testtask.exceptions.NotFoundException;
 import com.example.testtask.factories.SocksDtoFactory;
-import com.example.testtask.services.SocksService;
 import com.example.testtask.store.entities.SocksEntity;
 import com.example.testtask.store.repositories.SocksRepository;
 import lombok.RequiredArgsConstructor;
@@ -17,7 +15,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
 import java.util.*;
-import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @FieldDefaults(makeFinal = true)
