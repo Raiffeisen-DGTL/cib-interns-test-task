@@ -3,8 +3,10 @@ package ru.danilarassokhin.raiffeisensocks.service.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
+import ru.danilarassokhin.raiffeisensocks.dto.CottonPartEqualityOperations;
 import ru.danilarassokhin.raiffeisensocks.dto.SocksIncomeDto;
 import ru.danilarassokhin.raiffeisensocks.dto.SocksOutcomeDto;
+import ru.danilarassokhin.raiffeisensocks.dto.SocksSearchDto;
 import ru.danilarassokhin.raiffeisensocks.exception.DataNotExistsException;
 import ru.danilarassokhin.raiffeisensocks.exception.DataValidityException;
 import ru.danilarassokhin.raiffeisensocks.exception.InternalException;
@@ -14,6 +16,9 @@ import ru.danilarassokhin.raiffeisensocks.object.ValidationResult;
 import ru.danilarassokhin.raiffeisensocks.repository.SocksRepository;
 import ru.danilarassokhin.raiffeisensocks.service.SocksService;
 import ru.danilarassokhin.raiffeisensocks.util.ValidationUtils;
+
+import java.util.Arrays;
+import java.util.Set;
 
 @Service
 public class SocksServiceImpl implements SocksService {
@@ -26,18 +31,18 @@ public class SocksServiceImpl implements SocksService {
     }
 
     @Override
-    public Socks findByColorAndCottonPartGreaterThan(String color, byte cottonPart) {
-        return null;
+    public Set<Socks> findByColorAndCottonPartGreaterThan(String color, byte cottonPart) {
+        return socksRepository.findByColorAndCottonPartGreaterThan(color, cottonPart);
     }
 
     @Override
-    public Socks findByColorAndCottonPartLessThan(String color, byte cottonPart) {
-        return null;
+    public Set<Socks> findByColorAndCottonPartLessThan(String color, byte cottonPart) {
+        return socksRepository.findByColorAndCottonPartLessThan(color, cottonPart);
     }
 
     @Override
     public Socks findByColorAndCottonPartIs(String color, byte cottonPart) {
-        return null;
+        return socksRepository.findByColorAndCottonPartIs(color, cottonPart).orElse(null);
     }
 
     @Override
@@ -102,5 +107,42 @@ public class SocksServiceImpl implements SocksService {
         }catch (DataAccessException e) {
             throw new InternalException("Internal error has occurred");
         }
+    }
+
+    @Override
+    public Long countSocks(SocksSearchDto socksSearchDto) throws DataValidityException {
+        ValidationResult validationResult = ValidationUtils.validate(socksSearchDto);
+        if(!validationResult.isValid()) {
+            throw new DataValidityException(validationResult.getFirstErrorMessage());
+        }
+        CottonPartEqualityOperations operations;
+        try{
+            operations = Enum.valueOf(CottonPartEqualityOperations.class, socksSearchDto.getOperation());
+        }catch (IllegalArgumentException e) {
+            throw new DataValidityException("Operation " + socksSearchDto.getOperation() + " doesn't exists! "
+            + "Correct operations are: " + Arrays.toString(CottonPartEqualityOperations.values()));
+        }
+        switch (operations) {
+            case moreThan:
+                return socksRepository.countByColorAndCottonPartGreaterThan(
+                        socksSearchDto.getColor(),
+                        socksSearchDto.getCottonPart()
+                );
+            case equal:
+                Socks result = findByColorAndCottonPartIs(
+                        socksSearchDto.getColor(),
+                        socksSearchDto.getCottonPart()
+                );
+                if(result == null) {
+                    return 0L;
+                }
+                return 1L;
+            case lessThan:
+                return socksRepository.countByColorAndCottonPartLessThan(
+                        socksSearchDto.getColor(),
+                        socksSearchDto.getCottonPart()
+                );
+        }
+        return 0L;
     }
 }

@@ -9,13 +9,17 @@ import org.springframework.web.bind.annotation.*;
 import ru.danilarassokhin.raiffeisensocks.dto.ResponseDto;
 import ru.danilarassokhin.raiffeisensocks.dto.SocksIncomeDto;
 import ru.danilarassokhin.raiffeisensocks.dto.SocksOutcomeDto;
+import ru.danilarassokhin.raiffeisensocks.dto.SocksSearchDto;
 import ru.danilarassokhin.raiffeisensocks.exception.DataNotExistsException;
 import ru.danilarassokhin.raiffeisensocks.exception.DataValidityException;
 import ru.danilarassokhin.raiffeisensocks.exception.InternalException;
+import ru.danilarassokhin.raiffeisensocks.model.Socks;
 import ru.danilarassokhin.raiffeisensocks.service.SocksService;
 
 import javax.validation.ConstraintViolationException;
 import javax.validation.Valid;
+
+import java.util.Set;
 
 import static ru.danilarassokhin.raiffeisensocks.Url.API_ENDPOINT;
 import static ru.danilarassokhin.raiffeisensocks.Url.SOCKS;
@@ -47,6 +51,15 @@ public class SockController {
             throws DataValidityException, DataNotExistsException, InternalException {
         return new ResponseDto<>("Success",
                 sockService.outcome(socksOutcomeDto)
+        );
+    }
+
+    @PostMapping
+    @ResponseStatus(HttpStatus.OK)
+    public ResponseDto<Long> searchSocks(@RequestBody @Valid SocksSearchDto socksSearchDto)
+            throws DataValidityException {
+        return new ResponseDto<>("Success",
+                sockService.countSocks(socksSearchDto)
         );
     }
 

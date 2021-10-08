@@ -38,4 +38,18 @@ public class SocksId implements Serializable {
     public int hashCode() {
         return id.intValue();
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if(this == obj) {
+            return true;
+        }
+        if(obj == null || obj.getClass() != this.getClass()) {
+            return false;
+        }
+        SocksId socksId = (SocksId) obj;
+        return socksId.getId().equals(this.getId())
+                && socksId.getColor().equals(this.getColor())
+                && socksId.getCottonPart() == this.getCottonPart();
+    }
 }
