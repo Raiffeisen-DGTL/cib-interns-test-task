@@ -7,7 +7,6 @@ import ru.danilarassokhin.raiffeisensocks.model.SocksColor;
 import ru.danilarassokhin.raiffeisensocks.model.SocksId;
 
 import java.util.List;
-import java.util.Set;
 
 @Repository
 public interface SocksRepository extends JpaRepository<Socks, SocksId> {

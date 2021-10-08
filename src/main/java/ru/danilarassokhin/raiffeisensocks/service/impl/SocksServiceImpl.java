@@ -9,7 +9,6 @@ import ru.danilarassokhin.raiffeisensocks.repository.SocksRepository;
 import ru.danilarassokhin.raiffeisensocks.service.SocksService;
 
 import java.util.List;
-import java.util.Set;
 
 @Service
 public class SocksServiceImpl implements SocksService {

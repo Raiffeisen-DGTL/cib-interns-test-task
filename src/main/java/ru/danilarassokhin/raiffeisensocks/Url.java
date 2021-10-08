@@ -4,7 +4,7 @@ public interface Url {
 
     String API_ENDPOINT = "/api";
 
-    interface SOCK {
+    interface SOCKS {
         String ENDPOINT = "/socks";
         String INCOME = "/income";
         String ALL_COLORS = "/colors";
