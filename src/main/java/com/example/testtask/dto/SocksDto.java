@@ -14,20 +14,16 @@ import java.time.Instant;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class SocksDto {
 
-//    @NonNull
-//    Long id;
 
-    @NonNull
-    //@JsonProperty("color")
-    String color;
+  @NonNull
+  @JsonProperty("color")
+  String color;
 
-    @NonNull
-    //@JsonProperty("cotton")
-    Integer cottonPart;
+  @NonNull
+  @JsonProperty("cottonPart")
+  Integer cottonPart;
 
-//    //@JsonProperty("created_at")
-//    Instant createdAt;
-
-    @NonNull
-    Long quantity ;
+  @NonNull
+  @JsonProperty("quantity")
+  Long quantity;
 }

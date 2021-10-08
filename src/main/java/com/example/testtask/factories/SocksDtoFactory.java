@@ -10,12 +10,11 @@ import lombok.experimental.FieldDefaults;
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class SocksDtoFactory {
 
-    public SocksDto makeSocksDto(SocksEntity entity) {
-        return SocksDto.builder()
-                //.id(entity.getId())
-                .color(entity.getColor())
-                .cottonPart(entity.getCottonPart())
-                .quantity(entity.getQuantity())
-                .build();
-    }
+  public SocksDto makeSocksDto(SocksEntity entity) {
+    return SocksDto.builder()
+        .color(entity.getColor())
+        .cottonPart(entity.getCottonPart())
+        .quantity(entity.getQuantity())
+        .build();
+  }
 }

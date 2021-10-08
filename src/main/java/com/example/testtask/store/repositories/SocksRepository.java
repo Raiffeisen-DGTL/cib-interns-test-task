@@ -11,29 +11,27 @@ import java.util.stream.Stream;
 
 public interface SocksRepository extends JpaRepository<SocksEntity,Long> {
 
-    Stream<SocksEntity> streamFindByColor(String color);
-
-    @Override
-    List<SocksEntity> findAllById(Iterable<Long> longs);
 
 
-    //List<SocksEntity> findAll(String color);
+    Optional<List<SocksEntity>> findSocksEntitiesByCottonPartGreaterThanAndColorEquals(
+        Integer cottonPart, String color);
+    Optional<List<SocksEntity>> findSocksEntitiesByCottonPartLessThanAndColorEquals(Integer cottonPart, String color);
 
-    //Optional<SocksEntity> findByColor(String color);
-    //Stream<SocksEntity> streamAll();
+    Optional<List<SocksEntity>> findSocksEntitiesByCottonPartEqualsAndColorEquals(Integer cottonPart, String color);
 
-    //Stream<SocksEntity> streamAllByCottonPart(Double cottonPart);
+    Optional<SocksEntity> findSocksEntityByColorAndCottonPart(String color, Integer cottonPart);
 
-    @Query("SELECT s FROM SocksEntity s " +
-            "WHERE s.color = :color " +
-            "AND s.cottonPart < :cottonPart")
-    List<SocksEntity> findAllByColorAndLessCottonPart(Optional<String> color, Optional<Integer> cottonPart);
 
-    @Query("SELECT s FROM SocksEntity s WHERE s.color = :color AND s.cottonPart > :cottonPart")
-    List<SocksEntity> findAllByColorAndMoreCottonPart(Optional<String> color, Optional<Integer> cottonPart);
-
-    @Query("SELECT s FROM SocksEntity s " +
-            "WHERE s.color = :color " +
-            "AND s.cottonPart = :cottonPart")
-    Optional<SocksEntity> findAllByColorAndEqualCottonPart(Optional<String> color, Optional<Integer> cottonPart);
+//    @Query("SELECT s FROM SocksEntity s " +
+//            "WHERE s.color = :color " +
+//            "AND s.cottonPart < :cottonPart")
+//    List<SocksEntity> findAllByColorAndLessCottonPart(Optional<String> color, Optional<Integer> cottonPart);
+//
+//    @Query("SELECT s FROM SocksEntity s WHERE s.color = :color AND s.cottonPart > :cottonPart")
+//    List<SocksEntity> findAllByColorAndMoreCottonPart(Optional<String> color, Optional<Integer> cottonPart);
+//
+//    @Query("SELECT s FROM SocksEntity s " +
+//            "WHERE s.color = :color " +
+//            "AND s.cottonPart = :cottonPart")
+//    Optional<SocksEntity> findAllByColorAndEqualCottonPart(Optional<String> color, Optional<Integer> cottonPart);
 }

@@ -17,25 +17,21 @@ import java.util.UUID;
 @Table(name = "socks")
 public class SocksEntity {
 
-    //@Builder.Default
-    @Builder.Default
-    private String color = "";
+  @Builder.Default
+  private String color = "";
 
-    //@Builder.Default
-    @Builder.Default
-    private Integer cottonPart = 0;
+  @Builder.Default
+  private Integer cottonPart = 0;
 
-    //@GeneratedValue(strategy = GenerationType.SEQUENCE)
-    //@GeneratedValue(strategy=GenerationType.AUTO)
-    @Id
-    @Builder.Default
-    private Integer id=0;
+  @Id
+  @Builder.Default
+  private Integer id = 0;
 
-    @Builder.Default
-    private Long quantity = 0l;
+  @Builder.Default
+  private Long quantity = 0l;
 
-    @Builder.Default
-    private LocalDateTime createdAt = LocalDateTime.now();
+  @Builder.Default
+  private LocalDateTime createdAt = LocalDateTime.now();
 
 
 }
