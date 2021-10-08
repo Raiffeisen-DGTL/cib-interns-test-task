@@ -4,6 +4,7 @@ package com.example.testtask.controllers;
 
 import com.example.testtask.dto.SocksDto;
 import com.example.testtask.exceptions.BadRequestException;
+import com.example.testtask.exceptions.InternalServerError;
 import com.example.testtask.exceptions.NotFoundException;
 import com.example.testtask.factories.SocksDtoFactory;
 import com.example.testtask.services.SocksService;
@@ -11,9 +12,9 @@ import com.example.testtask.store.entities.SocksEntity;
 import com.example.testtask.store.repositories.SocksRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
-import javax.transaction.Transactional;
 import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -25,103 +26,99 @@ import java.util.stream.Collectors;
 @RequestMapping("/api/socks")
 public class SocksController {
 
-    private final SocksService socksService;
-    SocksRepository socksRepository;
-    //SocksDtoFactory socksDtoFactory;
-    private static final String SOCKS_INCOME = "/api/socks/income";
-    private static final String SOCKS_OUTCOME = "/api/socks/outcome";
-    private static final String GET_SOCKS = "/api/socks";
+  //private final SocksService socksService;
+  private SocksRepository socksRepository;
+  private SocksDtoFactory socksDtoFactory = new SocksDtoFactory();
+  private static final String SOCKS_INCOME = "/income";
+  private static final String SOCKS_OUTCOME = "/outcome";
 
-    @PostMapping("/income")
-    public SocksEntity incomeSocks(@RequestBody Optional<SocksDto> optionalSocks) {
-//        if (optionalSocks.get().getColor().isEmpty()) {
-//            //throw new BadRequestException(" ");
-//        }
-//        SocksEntity socks = socksRepository.saveAllAndFlush(
-//                SocksEntity.builder()
-//                .color()
-//        )\
-        Optional<String> socksColor = Optional.of(optionalSocks.get().getColor());
-        final SocksEntity socks = optionalSocks
-                .map(this::getSocksOrThrowException)
-                .orElseGet(() -> SocksEntity.builder().build());
-
-        socks.setColor(socksColor.get());
-        System.out.println(socks.getColor());
-        socks.setCottonPart(optionalSocks.get().getCottonPart());
-        socks.setQuantity(socks.getQuantity() + optionalSocks.get().getQuantity());
-        socks.setId(new Random().nextInt());
-        socks.setCreatedAt(LocalDateTime.now());
-//        socksColor
-//                .ifPresent(color -> {
-//                    socksRepository
-//                            .findAll(color)
-//                            .stream()
-//                            .filter(anotherSocks -> !Objects.equals(anotherSocks.getColor(), socks.getColor()))
-//                            .
-//                    socks.setColor(color);
-//                });
-//        final SocksEntity savedSocks = socksRepository.saveAndFlush(socks);//socksService.save(socks);
-//        return savedSocks;//socksService.save(socks);
-        return socksRepository.saveAndFlush(socks);
+  @PostMapping(SOCKS_INCOME)
+  public SocksDto incomeSocks(@RequestBody SocksDto socksDto) {
+    if (socksDto.getQuantity() <= 0 || socksDto.getColor().trim().isEmpty()
+        || socksDto.getCottonPart() < 0 || socksDto.getCottonPart() > 100) {
+      throw new BadRequestException("Invalid parameters");
     }
 
-    private SocksEntity getSocksOrThrowException(/*Optional<String> color, Optional<Integer> cottonPart*/SocksDto socks) {
-        var color = Optional.of(socks.getColor());
-        var cottonPart = Optional.of(socks.getCottonPart());
-        return socksRepository
-                .findAllByColorAndEqualCottonPart(color, cottonPart)//.get();
-                .orElseGet(() -> SocksEntity.builder().build());
-        //.orElseThrow(() -> new NotFoundException(String.format("Socks with %s color do not exist", color)));
+    Optional<String> socksColor = Optional.of(socksDto.getColor());
+    SocksEntity socks = socksRepository
+        .findSocksEntityByColorAndCottonPart(socksDto.getColor(),
+            socksDto.getCottonPart())
+        .orElseGet(() -> SocksEntity.builder().build());
+
+    socks.setColor(socksColor.get());
+    socks.setCottonPart(socksDto.getCottonPart());
+    socks.setQuantity(socks.getQuantity() + socksDto.getQuantity());
+    if (socks.getId() == 0) {
+      var time = LocalDateTime.now();
+      int id = time.getYear() + time.getMonthValue() + time.getMinute() + time.getNano();
+      socks.setId(id);
+    }
+    socks.setCreatedAt(LocalDateTime.now());
+    var savedSocks = socksRepository.saveAndFlush(socks);
+    return socksDtoFactory.makeSocksDto(savedSocks);
+  }
+
+  @PostMapping(SOCKS_OUTCOME)
+  public SocksDto outcomeSocks(@RequestBody SocksDto socksDto) {
+    if (socksDto.getQuantity() <= 0 || socksDto.getColor().trim().isEmpty()
+        || socksDto.getCottonPart() < 0) {
+      throw new BadRequestException("Invalid parameters");
+    }
+    SocksEntity socks = socksRepository
+        .findSocksEntityByColorAndCottonPart(socksDto.getColor(),
+            socksDto.getCottonPart())
+        .orElseThrow(() -> new InternalServerError("Socks with inserted params do not exist"));
+
+    Optional<String> socksColor = Optional.of(socksDto.getColor());
+
+    socks.setColor(socksColor.get());
+    System.out.println(socks.getColor());
+    socks.setCottonPart(socksDto.getCottonPart());
+    socks.setQuantity(socks.getQuantity() - socksDto.getQuantity());
+    if (socks.getId() == 0) {
+      var time = LocalDateTime.now();
+      int id = time.getYear() + time.getMonthValue() + time.getMinute() + time.getNano();
+      socks.setId(id);
     }
 
-    @GetMapping()
-    public String getSocks(@RequestParam("color") Optional<String> socksColor,
-                           @RequestParam("operation") Optional<String> operation,
-                           @RequestParam("cottonPart") Optional<Integer> socksCotton) {
-        //var filteredStream = socksCotton.map(socksRepository::streamAllByCottonPart);
-        //final List<SocksDto> temp = Collections.emptyList();
-        long count = 0;
-        List<SocksEntity> lst = null;
-        switch (operation.get()) {
-            case "moreThen":
-                lst = socksRepository.findAllByColorAndMoreCottonPart(socksColor, socksCotton);
-                break;
-            case "lessThen":
-                lst = socksRepository.findAllByColorAndLessCottonPart(socksColor, socksCotton);
-                break;
-            case "equals":
-                lst = socksRepository.findAllByColorAndEqualCottonPart(socksColor, socksCotton).stream().collect(Collectors.toList());
-                break;
-            default:
-                throw new BadRequestException("Invalid operation");
-        }
-        String res = String.valueOf(lst.stream().mapToLong(SocksEntity::getQuantity).sum());
-        return res;
-//        socksColor.ifPresent(color-> {
-//            final List<SocksEntity> temp =  socksRepository
-//                            .findAll()
-//                            .stream()
-//                            .filter(anotherSocks -> {
-//                                switch (operation.get()) {
-//                                    case "moreThen":
-//                                        return socks.getCottonPart() > anotherSocks.getCottonPart();
-//                                    case "lessThen":
-//                                        return socks.getCottonPart() < anotherSocks.getCottonPart();
-//                                    case "equals":
-//                                        return socks.getCottonPart().equals(anotherSocks.getCottonPart());
-//                                    default:
-//                                        throw new BadRequestException("Invalid operation");
-//                                }
-//                            }).collect(Collectors.toList());//map(socksDtoFactory::makeSocksDto).collect(Collectors.toList());
-//
-//              long cnt = temp.stream().mapToLong(SocksEntity::getQuantity).sum();
-//              socks.setQuantity(cnt);
-//        });
-
-        //var count = socksService.getAll();//socksRepository.findAll().size();
-        //return socks.getQuantity().toString();
+    socks.setCreatedAt(LocalDateTime.now());
+    if (socks.getQuantity() < 0) {
+      throw new NotFoundException("Socks quantity can not be a negative value");
     }
+    var savedSocks = socksRepository.saveAndFlush(socks);
+    return socksDtoFactory.makeSocksDto(savedSocks);
+  }
+
+  @GetMapping()
+  public String getSocks(@RequestParam("color") String socksColor,
+      @RequestParam("operation") String operation,
+      @RequestParam("cottonPart") Integer cottonPart) {
+    if (socksColor.trim().isEmpty()
+        || cottonPart < 0 || cottonPart > 100) {
+      throw new BadRequestException("Invalid parameters");
+    }
+    List<SocksEntity> lst;
+    switch (operation) {
+      case "moreThan":
+        lst = socksRepository
+            .findSocksEntitiesByCottonPartGreaterThanAndColorEquals(cottonPart, socksColor)
+            .orElseGet(ArrayList::new);
+        break;
+      case "lessThan":
+        lst = socksRepository
+            .findSocksEntitiesByCottonPartLessThanAndColorEquals(cottonPart, socksColor)
+            .orElseGet(ArrayList::new);
+        break;
+      case "equals":
+        lst = socksRepository
+            .findSocksEntitiesByCottonPartEqualsAndColorEquals(cottonPart, socksColor)
+            .orElseGet(ArrayList::new);
+        break;
+      default:
+        throw new BadRequestException("Invalid arguments");
+    }
+    return String.valueOf(lst.stream().mapToLong(SocksEntity::getQuantity).sum());
+  }
 
 
 }
