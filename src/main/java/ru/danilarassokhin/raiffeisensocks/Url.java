@@ -6,9 +6,7 @@ public interface Url {
 
     interface SOCK {
         String ENDPOINT = "/socks";
-
         String INCOME = "/income";
-
         String ALL_COLORS = "/colors";
     }
 

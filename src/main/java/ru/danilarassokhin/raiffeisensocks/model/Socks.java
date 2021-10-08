@@ -2,8 +2,9 @@ package ru.danilarassokhin.raiffeisensocks.model;
 
 import javax.persistence.*;
 
-@Entity(name = "sock")
-public class Sock {
+@Entity(name = "socks")
+@IdClass(SocksId.class)
+public class Socks {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -11,7 +12,7 @@ public class Sock {
 
     @Id
     @Column(name = "color")
-    private SockColor sockColor;
+    private SocksColor socksColor;
 
     @Id
     @Column(name = "cotton_part")
@@ -29,12 +30,12 @@ public class Sock {
         this.id = id;
     }
 
-    public SockColor getSockColor() {
-        return sockColor;
+    public SocksColor getSockColor() {
+        return socksColor;
     }
 
-    public void setSockColor(SockColor sockColor) {
-        this.sockColor = sockColor;
+    public void setSockColor(SocksColor socksColor) {
+        this.socksColor = socksColor;
     }
 
     public byte getCottonPart() {
