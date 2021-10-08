@@ -46,7 +46,7 @@ public class SocksController {
     socks.setCottonPart(socksDto.getCottonPart());
     socks.setQuantity(socks.getQuantity() + socksDto.getQuantity());
     if (socks.getId() == 0) {
-      var time = LocalDateTime.now();
+      LocalDateTime time = LocalDateTime.now();
       int id = time.getYear() + time.getMonthValue() + time.getMinute() + time.getNano();
       socks.setId(id);
     }
