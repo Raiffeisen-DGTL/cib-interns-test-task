@@ -1,7 +1,11 @@
 package ru.strelchm.raiffeisenchallenge.dto;
 
+import ru.strelchm.raiffeisenchallenge.exception.BadRequestException;
+
+import java.util.Arrays;
+
 public enum SockCompareOperation {
-    MORE_THAN("moreThan"),
+    GREATER_THAN("moreThan"),
     LESS_THAN("lessThan"),
     EQUAL("equal");
 
@@ -9,5 +13,9 @@ public enum SockCompareOperation {
         this.name = name;
     }
 
-    private String name;
+    private final String name;
+
+    public static SockCompareOperation getByName(String name) {
+        return Arrays.stream(values()).filter(v -> v.name.equals(name)).findFirst().orElseThrow(BadRequestException::new);
+    }
 }

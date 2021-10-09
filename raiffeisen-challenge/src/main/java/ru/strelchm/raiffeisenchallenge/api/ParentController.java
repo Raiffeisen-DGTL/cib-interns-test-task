@@ -4,36 +4,18 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
-import ru.strelchm.raiffeisenchallenge.exception.*;
+import ru.strelchm.raiffeisenchallenge.exception.BadRequestException;
 
 import javax.validation.constraints.NotNull;
 import java.util.HashMap;
+import java.util.Map;
 
 public class ParentController {
-    static final String USER_CONTEXT = "USER_CONTEXT";
     static final String NULL_ID_REQUEST_EXCEPTION = "Id cannot be null";
-
-    @ExceptionHandler({FileNotFoundException.class, NotFoundException.class})
-    @ResponseStatus(value = HttpStatus.NOT_FOUND)
-    public HashMap<String, String> handleNotFoundExceptions(Exception ex) {
-        return getResponseFromException(ex);
-    }
-
-    @ExceptionHandler({AccessDeniedException.class, org.springframework.security.access.AccessDeniedException.class})
-    @ResponseStatus(value = HttpStatus.FORBIDDEN)
-    public HashMap<String, String> handleAccessDeniedExceptions(Exception ex) {
-        return getResponseFromException(ex);
-    }
 
     @ExceptionHandler(BadRequestException.class)
     @ResponseStatus(value = HttpStatus.BAD_REQUEST)
     public HashMap<String, String> handleBadRequestExceptions(Exception ex) {
-        return getResponseFromException(ex);
-    }
-
-    @ExceptionHandler(AlreadyExistedException.class)
-    @ResponseStatus(value = HttpStatus.BAD_REQUEST)
-    public HashMap<String, String> handleAlreadyExistedExceptions(Exception ex) {
         return getResponseFromException(ex);
     }
 
@@ -48,7 +30,7 @@ public class ParentController {
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     @ResponseStatus(value = HttpStatus.BAD_REQUEST)
-    public HashMap<String, String> handleBadRequestExceptions(MethodArgumentNotValidException ex) {
+    public Map<String, String> handleBadRequestExceptions(MethodArgumentNotValidException ex) {
         HashMap<String, String> response = new HashMap<>();
         response.put("message", ex.getBindingResult().getAllErrors().get(0).getDefaultMessage());
         response.put("error", ex.getClass().getSimpleName());
@@ -58,7 +40,7 @@ public class ParentController {
 
     @ExceptionHandler(Exception.class)
     @ResponseStatus(value = HttpStatus.INTERNAL_SERVER_ERROR)
-    public HashMap<String, String> handleIntervalServerExceptions(Exception ex) {
+    public Map<String, String> handleIntervalServerExceptions(Exception ex) {
         return getResponseFromException(ex);
     }
 }

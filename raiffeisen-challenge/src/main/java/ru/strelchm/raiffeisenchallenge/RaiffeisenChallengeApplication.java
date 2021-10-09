@@ -6,8 +6,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class RaiffeisenChallengeApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(RaiffeisenChallengeApplication.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(RaiffeisenChallengeApplication.class, args);
+    }
 
 }

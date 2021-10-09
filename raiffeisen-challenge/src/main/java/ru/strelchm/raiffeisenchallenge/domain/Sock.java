@@ -5,10 +5,11 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
-import javax.validation.constraints.Size;
 
 @Entity
 @Data
@@ -17,20 +18,20 @@ import javax.validation.constraints.Size;
 @AllArgsConstructor
 @Table(name = "socks")
 public class Sock extends ParentEntity {
-    @NotNull
-    @Column(unique = true)
-    @Pattern(regexp = "\\S{3,50}")
-    private String login;
 
-    @NotNull
-    @Size(min = 8, max = 100)
-    private String password;
+    public Sock(SockColor color, Integer cottonPart) {
+        this.color = color;
+        this.cottonPart = cottonPart;
+        this.counter = 0;
+    }
 
-    @NotNull
     @Enumerated(EnumType.STRING)
-    private UserStatus status;
+    @NotNull
+    private SockColor color;
 
     @NotNull
-    @Enumerated(EnumType.STRING)
-    private UserAppRole userAppRole;
+    private Integer cottonPart;
+
+    @NotNull
+    private Integer counter;
 }

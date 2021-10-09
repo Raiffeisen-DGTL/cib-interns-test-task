@@ -2,93 +2,68 @@ package ru.strelchm.raiffeisenchallenge.api;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import ru.digital_mind.marketplace.domain.mongo.DataHubRequest;
-import ru.digital_mind.marketplace.domain.mongo.Dataset;
-import ru.digital_mind.marketplace.domain.mongo.RequestProperty;
-import ru.digital_mind.marketplace.dto.DataHubRequestDto;
-import ru.digital_mind.marketplace.dto.UserContext;
-import ru.digital_mind.marketplace.exception.NotFoundException;
-import ru.digital_mind.marketplace.service.StorageService;
-import ru.digital_mind.marketplace.service.UserService;
-import ru.digital_mind.marketplace.service.impl.*;
 import ru.strelchm.raiffeisenchallenge.domain.Sock;
+import ru.strelchm.raiffeisenchallenge.domain.SockColor;
 import ru.strelchm.raiffeisenchallenge.dto.InOutComeSockDto;
-import ru.strelchm.raiffeisenchallenge.service.impl.SockServiceImpl;
+import ru.strelchm.raiffeisenchallenge.dto.SockCompareOperation;
+import ru.strelchm.raiffeisenchallenge.dto.SockCriteria;
+import ru.strelchm.raiffeisenchallenge.exception.BadRequestException;
+import ru.strelchm.raiffeisenchallenge.service.SockService;
 
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import java.util.List;
+import java.util.logging.Logger;
 
 @RestController
 @Api("REST controller 4 DatahubRequest operations")
-@RequestMapping("/api/datahub")
+@RequestMapping("/api/socks")
 @Validated
-//@PreAuthorize("hasAnyRole()") todo - держать открытой регистрацию
 public class SocksController extends ParentController {
-    private final SockServiceImpl sockService;
-
-
-
-    .
-
-    Параметры запроса передаются в теле запроса в виде JSON-объекта со следующими атрибутами:
-
-    color — цвет носков, строка (например, black, red, yellow);
-    cottonPart — процентное содержание хлопка в составе носков, целое число от 0 до 100 (например, 30, 18, 42);
-    quantity — количество пар носков, целое число больше 0.
-
-    Результаты:
-
-    HTTP 200 — удалось добавить приход;
-    HTTP 400 — параметры запроса отсутствуют или имеют некорректный формат;
-    HTTP 500 — произошла ошибка, не зависящая от вызывающей стороны (например, база данных недоступна).
-
-
+    private static final Logger logger = Logger.getLogger(SocksController.class.getName());
+    private final SockService sockService;
 
     @Autowired
-    public SocksController(SockServiceImpl sockService) {
+    public SocksController(SockService sockService) {
         this.sockService = sockService;
     }
 
     @GetMapping
     @ApiOperation("Общее количество носков на складе, соответствующих переданным в параметрах критериям запроса")
-    public List<Sock> getSocksCount(
-            @NotNull(message = NULL_ID_REQUEST_EXCEPTION) @Validated @PathVariable InOutComeSockDto incomeSockDto,
-            @NotNull(message = NULL_ID_REQUEST_EXCEPTION) @Validated @PathVariable InOutComeSockDto incomeSockDto,
-            @NotNull(message = NULL_ID_REQUEST_EXCEPTION) @Validated @PathVariable InOutComeSockDto incomeSockDto
-
-                    color — цвет носков, строка;
-                    operation — оператор сравнения значения количества хлопка в составе носков, одно значение из: moreThan, lessThan, equal;
-                    cottonPart — значение процента хлопка в составе носков из сравнения.
-
-    ) {
-        return sockService.getAll();
+    public List<Sock> getSocksCount(@ApiParam(value = "Sock color, string") @Validated @RequestParam(required = false) SockColor color,
+                                    @ApiParam(value = "Cotton compare operator, " +
+                                            "one value of: moreThan, lessThan, equal")
+                                    @Validated @RequestParam(required = false) String compareOperation,
+                                    @ApiParam(value = "Cotton part") @Max(value = 100, message = "Cotton part can't be greater then 100%")
+                                    @Min(value = 0, message = "Cotton part can't be less then 0%") @Validated @RequestParam(required = false) Integer comparedCottonPart) {
+        if ((compareOperation == null && comparedCottonPart != null) || (compareOperation != null && comparedCottonPart == null)) {
+            throw new BadRequestException("Cotton part and compare operation must set together");
+        }
+        SockCriteria sockCriteria = new SockCriteria().setColor(color).setComparedCottonPart(comparedCottonPart)
+                .setCompareOperation(compareOperation == null ? null : SockCompareOperation.getByName(compareOperation));
+        return sockService.getAll(sockCriteria);
     }
 
     @PostMapping("/income")
     @ApiOperation("Регистрация прихода носков на склад")
-    public Sock sockOutcome(@NotNull(message = NULL_ID_REQUEST_EXCEPTION) @Validated @RequestBody InOutComeSockDto incomeSockDto) {
-        return sockService.createSock(new Sock(stringDto.getName()));
+    public Sock sockIncome(@NotNull(message = NULL_ID_REQUEST_EXCEPTION) @Validated @RequestBody InOutComeSockDto incomeSockDto) {
+        if (incomeSockDto.getQuantity() == 0) {
+            logger.warning("Income sock count is 0");
+        }
+        return sockService.sockOutcome(incomeSockDto);
     }
 
     @PostMapping("/outcome")
     @ApiOperation("Регистрация отпуска носков на склад")
-    public Sock sockIncome(@NotNull(message = NULL_ID_REQUEST_EXCEPTION) @Validated @RequestBody InOutComeSockDto outcomeSockDto) {
-        return sockService.createSock(new Sock(stringDto.getName()));
-    }
-
-    @GetMapping("/{id}")
-    public Sock getSockById(@NotNull(message = NULL_ID_REQUEST_EXCEPTION) @Validated @PathVariable String id) {
-        return sockService.getById(id).orElseThrow(() -> new NotFoundException("Sock with " + id + " not found"));
-    }
-
-    @DeleteMapping("/{id}")
-    @ResponseStatus(value = HttpStatus.NO_CONTENT)
-    public void deleteSock(@NotNull(message = NULL_ID_REQUEST_EXCEPTION) @Validated @PathVariable String id,
-                          @ModelAttribute(USER_CONTEXT) UserContext userContext) {
-        sockService.deleteSock(id);
+    public Sock sockOutcome(@NotNull(message = NULL_ID_REQUEST_EXCEPTION) @Validated @RequestBody InOutComeSockDto outcomeSockDto) {
+        if (outcomeSockDto.getQuantity() == 0) {
+            logger.warning("Outcome sock count is 0");
+        }
+        return sockService.sockIncome(outcomeSockDto);
     }
 }
