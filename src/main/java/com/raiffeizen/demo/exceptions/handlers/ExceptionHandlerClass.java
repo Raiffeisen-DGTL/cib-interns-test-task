@@ -8,10 +8,12 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
+import javax.validation.ConstraintViolationException;
+
 @ControllerAdvice
 public class ExceptionHandlerClass extends ResponseEntityExceptionHandler {
 
-    @ExceptionHandler(BadRequestException.class)
+    @ExceptionHandler({BadRequestException.class, ConstraintViolationException.class})
     protected ResponseEntity<String> handleBadRequestException(){
         return new ResponseEntity<>(
                 "Параметры запроса отсутствуют или имеют некорректный формат", HttpStatus.BAD_REQUEST);
@@ -22,4 +24,6 @@ public class ExceptionHandlerClass extends ResponseEntityExceptionHandler {
         return new ResponseEntity<>(
                 "Произошла ошибка, не зависящая от вызывающей стороны (например, база данных недоступна)", HttpStatus.INTERNAL_SERVER_ERROR);
     }
+
+
 }

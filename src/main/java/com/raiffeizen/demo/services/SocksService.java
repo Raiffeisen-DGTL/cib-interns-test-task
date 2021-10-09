@@ -19,32 +19,42 @@ public class SocksService {
     public long findByColorAndCottonPart(String color, String operation, int cottonPart) {
         switch (operation) {
             case "moreThan":
-                return socksDao.findByColorWithMoreThanCottonPart(color, cottonPart).orElse(0L);
+                return  socksDao.findQuantityByColorWithMoreThanCottonPart(color, cottonPart);
             case "lessThan":
-                return socksDao.findByColorWithLessThanCottonPart(color, cottonPart).orElse(0L);
+                return socksDao.findQuantityByColorWithLessThanCottonPart(color, cottonPart);
             case "equal":
-                return socksDao.findByColorWithEqualCottonPart(color, cottonPart).orElse(0L);
+                return socksDao.findQuantityByColorWithEqualCottonPart(color, cottonPart);
             default:
                 throw new BadRequestException();
         }
     }
 
     public void addSocks(Socks socks) {
-        long remainingSocks = socksDao.findByColorWithEqualCottonPart(socks.getColor(), socks.getCottonPart()).orElse(0L);
-        if (remainingSocks > 0) {
-            socks.setQuantity(socks.getQuantity() + remainingSocks);
-            socksDao.update(socks);
+        if (socks.getQuantity() < 0) {
+            throw new BadRequestException();
         }
-        socksDao.save(socks);
+        long quantityOfRemainingSocks =  socksDao.findQuantityByColorWithEqualCottonPart(socks.getColor(), socks.getCottonPart());
+        if (quantityOfRemainingSocks > 0) {
+            Socks remainingSocks = socksDao.findByColorAndCottonPart(socks.getColor(), socks.getCottonPart()).orElseThrow(InternalServerErrorException::new);
+            remainingSocks.setQuantity(socks.getQuantity() + remainingSocks.getQuantity());
+        } else {
+            socksDao.save(socks);
+        }
     }
 
     public void removeSocks(Socks socks) {
-        long remainingSocks = socksDao.findByColorWithEqualCottonPart(socks.getColor(), socks.getCottonPart()).orElse(0L);
-        if (remainingSocks >= socks.getQuantity()) {
-            socks.setQuantity(remainingSocks - socks.getQuantity());
-            socksDao.update(socks);
+        if (socks.getQuantity() < 0) {
+            throw new BadRequestException();
+        }
+        long quantityOfRemainingSocks = socksDao.findQuantityByColorWithEqualCottonPart(socks.getColor(), socks.getCottonPart());
+        if (quantityOfRemainingSocks >= socks.getQuantity()) {
+            Socks remainingSocks = socksDao.findByColorAndCottonPart(socks.getColor(), socks.getCottonPart()).orElseThrow(InternalServerErrorException::new);
+            remainingSocks.setQuantity(quantityOfRemainingSocks - socks.getQuantity());
+            if (remainingSocks.getQuantity() == 0) {
+                socksDao.delete(remainingSocks);
+            }
         } else {
-            throw new InternalServerErrorException();
+            throw new BadRequestException();
         }
     }
 }
