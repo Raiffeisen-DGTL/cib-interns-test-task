@@ -2,16 +2,5 @@
 <databaseChangeLog xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
                    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.9.xsd">
-    <changeSet id="1633800530399-4" author="strelchm (generated)">
-        <createSequence incrementBy="1" sequenceName="hibernate_sequence" startValue="1"/>
-    </changeSet>
-    <changeSet id="1633800530399-1" author="strelchm (generated)">
-        <dropNotNullConstraint columnDataType="varchar(255)" columnName="color" tableName="socks"/>
-    </changeSet>
-    <changeSet id="1633800530399-2" author="strelchm (generated)">
-        <dropNotNullConstraint columnDataType="int" columnName="cotton_part" tableName="socks"/>
-    </changeSet>
-    <changeSet id="1633800530399-3" author="strelchm (generated)">
-        <dropNotNullConstraint columnDataType="int" columnName="counter" tableName="socks"/>
-    </changeSet>
+    <include file="db/changelog/1.0/socks-db.xml"/>
 </databaseChangeLog>
