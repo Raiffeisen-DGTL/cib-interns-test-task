@@ -10,6 +10,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
+import ru.danilarassokhin.raiffeisensocks.EmbeddedTest;
 import ru.danilarassokhin.raiffeisensocks.dto.SocksIncomeDto;
 import ru.danilarassokhin.raiffeisensocks.dto.SocksOutcomeDto;
 import ru.danilarassokhin.raiffeisensocks.exception.DataValidityException;
@@ -27,7 +28,7 @@ import static ru.danilarassokhin.raiffeisensocks.Url.SOCKS;
 @SpringBootTest
 @ExtendWith(MockitoExtension.class)
 @AutoConfigureMockMvc
-public class SocksControllerTest extends IntegrationTest{
+public class SocksControllerTest extends EmbeddedTest {
 
     @Autowired
     private MockMvc mockMvc;
