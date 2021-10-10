@@ -12,3 +12,9 @@ spring:
     password: compose-postgres
     username: compose-postgres
 
+springfox:
+  documentation:
+    swagger:
+      v2:
+        use-model-v3: true
+

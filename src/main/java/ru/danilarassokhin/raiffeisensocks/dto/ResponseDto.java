@@ -1,12 +1,19 @@
 package ru.danilarassokhin.raiffeisensocks.dto;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+
 /**
  * Represents response for request
  * @param <O> Response data type
  */
+@ApiModel("Response")
 public class ResponseDto<O> {
 
+    @ApiModelProperty(name = "Response message", example = "Success")
     private String message;
+
+    @ApiModelProperty(name = "Response data")
     private O data;
 
     public ResponseDto(String message) {
