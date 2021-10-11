@@ -27,7 +27,7 @@ public class Socks{
 
     @Min(0)
     @Max(100)
-    @Column(updatable = false, name = "cottonPart")
+    @Column(updatable = false, name = "cotton_part")
     private int cottonPart;
 
     @Min(0)

@@ -21,20 +21,20 @@ public class SocksController {
     SocksService socksService;
 
     @GetMapping
-    public long findByColorAndCottonPart(@RequestParam("color") @NotEmpty String color, @RequestParam("operation") @NotEmpty String operation, @RequestParam("cottonPart")  @Min(0) @Max(100) int cottonPart){
+    public long findByColorAndCottonPart(@Valid @RequestParam("color") @NotEmpty String color, @Valid @RequestParam("operation") @NotEmpty String operation, @Valid @RequestParam("cottonPart")  @Min(0) @Max(100) int cottonPart){
         return socksService.findByColorAndCottonPart(color, operation, cottonPart);
     }
 
     @PostMapping(path = "/income")
     @ResponseStatus(HttpStatus.OK)
-    public void incomingSocks(@RequestBody Socks socks) {
+    public void incomingSocks(@Valid @RequestBody Socks socks) {
         System.out.println(socks.getCottonPart());
         socksService.addSocks(socks);
     }
 
     @PostMapping(path = "/outcome")
     @ResponseStatus(HttpStatus.OK)
-    public void outgoingSocks(@RequestBody Socks socks) {
+    public void outgoingSocks(@Valid @RequestBody Socks socks) {
         socksService.removeSocks(socks);
     }
 
