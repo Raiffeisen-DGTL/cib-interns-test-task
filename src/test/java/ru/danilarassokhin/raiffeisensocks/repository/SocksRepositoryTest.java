@@ -57,4 +57,47 @@ public class SocksRepositoryTest extends EmbeddedTest {
         Assertions.assertEquals(test, socksRepository.findById(socksId).orElse(null));
     }
 
+    @Test
+    public void testSocksEquality() {
+        Socks s1 = new Socks();
+        s1.setQuantity(1L);
+        s1.setCottonPart((byte) 10);
+        s1.setColor("yellow");
+
+        Socks s2 = new Socks();
+        s2.setQuantity(2L);
+        s2.setCottonPart((byte) 10);
+        s2.setColor("yellow");
+
+        SocksId s1Id = s1.getId();
+        SocksId s2Id = s2.getId();
+
+        Assertions.assertEquals(s1Id, s2Id);
+        Assertions.assertTrue(s1Id.equals(s2Id));
+
+        Assertions.assertEquals(s1, s2);
+        Assertions.assertTrue(s1.equals(s2));
+
+    }
+
+    @Test
+    public void testSocksHashcodeEquality() {
+        Socks s1 = new Socks();
+        s1.setQuantity(1L);
+        s1.setCottonPart((byte) 10);
+        s1.setColor("yellow");
+
+        Socks s2 = new Socks();
+        s2.setQuantity(2L);
+        s2.setCottonPart((byte) 10);
+        s2.setColor("yellow");
+
+        SocksId s1Id = s1.getId();
+        SocksId s2Id = s2.getId();
+
+        Assertions.assertEquals(s1Id.hashCode(), s2Id.hashCode());
+
+        Assertions.assertEquals(s1.hashCode(), s2.hashCode());
+    }
+
 }

@@ -55,6 +55,13 @@ public class Socks {
         this.quantity += quantity;
     }
 
+    public SocksId getId() {
+        SocksId socksId = new SocksId();
+        socksId.setCottonPart(getCottonPart());
+        socksId.setColor(getColor());
+        return socksId;
+    }
+
     @Override
     public int hashCode() {
         return getColor().hashCode() + getCottonPart();
