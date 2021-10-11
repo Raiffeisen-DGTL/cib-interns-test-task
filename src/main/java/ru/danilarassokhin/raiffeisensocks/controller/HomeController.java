@@ -7,6 +7,9 @@ import org.springframework.web.bind.annotation.RestController;
 import ru.danilarassokhin.raiffeisensocks.dto.HomePageDto;
 import ru.danilarassokhin.raiffeisensocks.dto.ResponseDto;
 
+/**
+ * Home page controller
+ */
 @RestController
 public class HomeController {
 

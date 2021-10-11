@@ -1,7 +1,12 @@
 package ru.danilarassokhin.raiffeisensocks.dto;
 
+/**
+ * Home page information
+ */
 public class HomePageDto {
+
     private String author;
+
     private String repo;
 
     public String getAuthor() {

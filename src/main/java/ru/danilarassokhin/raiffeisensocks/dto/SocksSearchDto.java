@@ -3,15 +3,18 @@ package ru.danilarassokhin.raiffeisensocks.dto;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 
-@NotNull(message = "Search data can't be null")
+/**
+ * Socks count information
+ */
 public class SocksSearchDto {
 
     @NotBlank(message = "Socks color can't be empty")
     private String color;
+
     @NotBlank(message = "Operation condition required")
     private String operation;
+
     @Min(value = 0, message = "Cotton part must be greater or equals to zero")
     @Max(value = 100, message = "Cotton part can't be greater than 100")
     private byte cottonPart;

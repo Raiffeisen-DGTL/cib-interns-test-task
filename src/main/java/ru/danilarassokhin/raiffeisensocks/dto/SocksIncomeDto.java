@@ -6,6 +6,9 @@ import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 
+/**
+ * Socks income information
+ */
 public class SocksIncomeDto {
 
     @ApiParam(name = "color", example = "yellow", required = true)

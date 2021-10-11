@@ -1,0 +1,1 @@
+ALTER TABLE socks DROP COLUMN id;

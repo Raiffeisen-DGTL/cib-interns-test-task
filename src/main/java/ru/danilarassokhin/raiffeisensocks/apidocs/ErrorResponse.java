@@ -4,6 +4,9 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import ru.danilarassokhin.raiffeisensocks.dto.ResponseDto;
 
+/**
+ * Error response
+ */
 @ApiModel("Error response")
 public class ErrorResponse extends ResponseDto<String> {
 

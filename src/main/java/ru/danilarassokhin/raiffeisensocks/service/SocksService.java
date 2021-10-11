@@ -8,6 +8,9 @@ import ru.danilarassokhin.raiffeisensocks.exception.DataValidityException;
 import ru.danilarassokhin.raiffeisensocks.exception.InternalException;
 import ru.danilarassokhin.raiffeisensocks.model.Socks;
 
+/**
+ * Service to operate with socks
+ */
 public interface SocksService {
 
     /**

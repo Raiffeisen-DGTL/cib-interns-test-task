@@ -13,10 +13,6 @@ import javax.validation.constraints.NotBlank;
 public class Socks {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
-
-    @Id
     @Column(name = "color")
     @NotBlank(message = "Socks color can't be empty!")
     private String color;
@@ -30,14 +26,6 @@ public class Socks {
     @Column(name = "quantity")
     @Min(value = 0, message = "Socks quantity can't be less than zero")
     private Long quantity;
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     public String getColor() {
         return color;
