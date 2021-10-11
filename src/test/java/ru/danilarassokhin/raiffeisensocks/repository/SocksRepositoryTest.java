@@ -8,6 +8,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.TransactionSystemException;
 import ru.danilarassokhin.raiffeisensocks.EmbeddedTest;
 import ru.danilarassokhin.raiffeisensocks.model.Socks;
+import ru.danilarassokhin.raiffeisensocks.model.SocksId;
 
 @SpringBootTest
 public class SocksRepositoryTest extends EmbeddedTest {
@@ -38,6 +39,22 @@ public class SocksRepositoryTest extends EmbeddedTest {
         test.setQuantity(-2L);
 
         Assertions.assertThrows(TransactionSystemException.class, () -> socksRepository.save(test));
+    }
+
+    @Test
+    public void testValidSocks() {
+        Socks test = new Socks();
+        test.setColor("red");
+        test.setCottonPart((byte) 1);
+        test.setQuantity(2L);
+
+        Assertions.assertDoesNotThrow(() -> socksRepository.save(test));
+
+        SocksId socksId = new SocksId();
+        socksId.setColor("red");
+        socksId.setCottonPart((byte) 1);
+
+        Assertions.assertEquals(test, socksRepository.findById(socksId).orElse(null));
     }
 
 }

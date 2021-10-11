@@ -54,4 +54,22 @@ public class Socks {
     public void addQuantity(Long quantity) {
         this.quantity += quantity;
     }
+
+    @Override
+    public int hashCode() {
+        return getColor().hashCode() + getCottonPart();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if(this == obj) {
+            return true;
+        }
+        if(obj == null || obj.getClass() != this.getClass()) {
+            return false;
+        }
+        Socks socks = (Socks) obj;
+        return socks.getColor().equals(this.getColor())
+                && socks.getCottonPart() == this.getCottonPart();
+    }
 }
