@@ -1,6 +1,8 @@
 Для запуска
 git clone https://github.com/Winogradov/task_socks.git
+
 cd task_socks/
+
 docker-compose up -d
 
 Тест API
