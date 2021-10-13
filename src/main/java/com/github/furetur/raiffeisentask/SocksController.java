@@ -18,11 +18,10 @@ public class SocksController {
     @GetMapping("/api/socks")
     public int countSocks(
             @RequestParam(name = "color") String color,
-            @RequestParam(name = "operation") String operation,
+            @RequestParam(name = "operation") OperationTypes operation,
             @RequestParam(name = "cottonPart") int cottonPart
     ) {
         if (color == null) return 0;
-        var sum = socksRepository.findAll().stream().filter(socks -> Objects.equals(socks.getColor(), color)).map(Socks::getQuantity).reduce(0, Integer::sum);
-        return sum;
+        return socksRepository.findAll().stream().filter(socks -> Objects.equals(socks.getColor(), color)).map(Socks::getQuantity).reduce(0, Integer::sum);
     }
 }
