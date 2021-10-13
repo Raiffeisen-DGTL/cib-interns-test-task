@@ -25,12 +25,3 @@ jobs:
             password: ${{ secrets.DOCKER_PASSWORD }}
             repository: olegidse/socks
             tags: latest, ${{ github.run_number }}
-
-      - name: Deploy to Heroku
-          id: heroku
-          uses: snithyanantham/docker-compose-multiple-apps-heroku-deploy@v1.0
-          with:
-            email: ${{ secrets.HEROKU_EMAIL }}
-            api_key: ${{ secrets.HEROKU_API_KEY }}
-            docker_compose_file: 'docker-compose.yml'
-            heroku_apps: '[{"imagename":"socks","appname":"socks","apptype":"web"},{"imagename":"app2","appname":"app2","apptype":"web"}]' # List of Docker Image name, Heroku app and Heroku app type
