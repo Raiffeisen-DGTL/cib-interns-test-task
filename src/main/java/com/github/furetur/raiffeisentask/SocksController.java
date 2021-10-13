@@ -9,7 +9,7 @@ import java.util.Objects;
 @RestController
 public class SocksController {
 
-    private SocksRepository socksRepository;
+    private final SocksRepository socksRepository;
 
     public SocksController(SocksRepository socksRepository) {
         this.socksRepository = socksRepository;
@@ -21,7 +21,10 @@ public class SocksController {
             @RequestParam(name = "operation") OperationTypes operation,
             @RequestParam(name = "cottonPart") int cottonPart
     ) {
-        if (color == null) return 0;
-        return socksRepository.findAll().stream().filter(socks -> Objects.equals(socks.getColor(), color)).map(Socks::getQuantity).reduce(0, Integer::sum);
+        return switch (operation) {
+            case EQUAL -> socksRepository.countByColorAndCottonPart(color, cottonPart);
+            case LESS_THAN -> socksRepository.countByColorAndCottonPartLessThan(color, cottonPart);
+            case MORE_THAN -> socksRepository.countByColorAndCottonPartGreaterThan(color, cottonPart);
+        };
     }
 }
