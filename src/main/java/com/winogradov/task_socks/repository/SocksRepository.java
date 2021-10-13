@@ -8,9 +8,9 @@ import java.util.Optional;
 
 public interface SocksRepository extends CrudRepository<Socks, Long> {
 
-    Optional<Socks> findSocksByColorAndAndCottonPart(String color, Integer cottonPart);
+    Optional<Socks> findSocksByColorAndCottonPart(String color, Integer cottonPart);
 
-    Optional<Socks> findSocksByColorAndCottonPartAAndQuantityIsGreaterThanEqual(String color,
+    Optional<Socks> findSocksByColorAndCottonPartAndQuantityIsGreaterThanEqual(String color,
                                                                                 Integer cottonPart,
                                                                                 Integer quantity);
 

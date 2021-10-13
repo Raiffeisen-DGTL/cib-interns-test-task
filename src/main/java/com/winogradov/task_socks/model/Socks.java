@@ -1,6 +1,7 @@
 package com.winogradov.task_socks.model;
 
 import lombok.*;
+import org.springframework.context.annotation.ComponentScan;
 
 import javax.persistence.*;
 import java.util.Objects;
@@ -11,6 +12,7 @@ import java.util.Objects;
 @ToString
 @AllArgsConstructor
 @NoArgsConstructor
+@ComponentScan
 public class Socks {
 
     @Id
