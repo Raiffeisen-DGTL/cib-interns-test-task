@@ -4,26 +4,16 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "socks")
+@IdClass(SocksId.class)
 public class Socks {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false)
-    private Integer id;
 
+    @Id
     private String color;
 
-    @Column(name = "cotton_part", nullable = false)
+    @Id
     private Integer cottonPart;
 
     private Integer quantity;
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
 
     protected Socks() {}
 
