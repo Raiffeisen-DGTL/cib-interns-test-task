@@ -86,7 +86,7 @@ public class SocksController {
     * HTTP 400 — параметры запроса отсутствуют или имеют некорректный формат;
     * HTTP 500 — произошла ошибка, не зависящая от вызывающей стороны (например, база данных недоступна).
     * */
-    @RequestMapping(value = "/socks", method = RequestMethod.GET)
+    @RequestMapping(value = "/socks/count", method = RequestMethod.GET)
     public ResponseEntity<Integer> socks(@RequestParam("color") String color,
                                          @RequestParam("operation") String operation,
                                          @RequestParam("cottonPart") String cottonPart) {
