@@ -1,10 +1,11 @@
 package com.github.furetur.raiffeisentask;
 
 
-import com.sun.istack.NotNull;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.lang.Nullable;
+import org.springframework.stereotype.Component;
 
+@Component
 public class StringToOperationTypeConverter implements Converter<String, OperationTypes> {
     @Override
     @Nullable
