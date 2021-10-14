@@ -12,8 +12,12 @@ import javax.validation.constraints.Min;
 public class SocksTransaction {
 
     private Long id;
+
+    private Long colorId;
     private SockColor color;
-    private OperationType operation;
+
+    private Long transactionTypeId;
+    private Transaction transactionType;
 
     @Min(0)
     @Max(100)

@@ -1,6 +1,43 @@
 databaseChangeLog:
   - logicalFilePath: db/chanhelog/db.changelog-master.yaml
   - changeSet:
+      id: create_sock_colors_table
+      author: p.karanda
+      changes:
+        - createSequence:
+            sequenceName: seq_sock_color_id
+        - createTable:
+            tableName: sock_colors
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: color
+                  type: varchar(100)
+
+  - changeSet:
+      id: create_transaction_types_table
+      author: p.karanda
+      changes:
+        - createSequence:
+            sequenceName: seq_transaction_type_id
+        - createTable:
+            tableName: transaction_types
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: transaction_type
+                  type: varchar(100)
+  - changeSet:
       id: create_socks_transactions_table
       author: p.karanda
       changes:
@@ -16,11 +53,27 @@ databaseChangeLog:
                     primaryKey: true
                     nullable: false
               - column:
-                  name: login
-                  type: varchar(50)
+                  name: color_id
+                  type: BIGINT
               - column:
-                  name: password
-                  type: varchar(50)
+                  name: transaction_type_id
+                  type: BIGINT
               - column:
-                  name: phone
-                  type: varchar(15)
+                  name: quantity
+                  type: INT
+  - changeSet:
+      id: create_fk_for_socks_transactions_table
+      author: p.karanda
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: color_id
+            baseTableName: socks_transactions
+            constraintName: fk_color_id
+            referencedTableName: sock_colors
+            referencedColumnNames: id
+        - addForeignKeyConstraint:
+            baseColumnNames: transaction_type_id
+            baseTableName: socks_transactions
+            constraintName: fk_transaction_type_id
+            referencedTableName: transaction_types
+            referencedColumnNames: id
