@@ -1,2 +1,26 @@
 databaseChangeLog:
   - logicalFilePath: db/chanhelog/db.changelog-master.yaml
+  - changeSet:
+      id: create_socks_transactions_table
+      author: p.karanda
+      changes:
+        - createSequence:
+            sequenceName: seq_socks_transaction_id
+        - createTable:
+            tableName: socks_transactions
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: login
+                  type: varchar(50)
+              - column:
+                  name: password
+                  type: varchar(50)
+              - column:
+                  name: phone
+                  type: varchar(15)

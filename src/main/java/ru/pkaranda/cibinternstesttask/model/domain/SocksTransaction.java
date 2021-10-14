@@ -2,7 +2,6 @@ package ru.pkaranda.cibinternstesttask.model.domain;
 
 import lombok.Builder;
 import lombok.Data;
-import org.springframework.beans.factory.annotation.Value;
 
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
