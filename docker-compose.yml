@@ -1,0 +1,21 @@
+version: "3.7"
+services:
+  api_service:
+    build: .
+    ports:
+      - "8080:8080"
+    depends_on:
+      - mysql_db
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql_db:3306/Socks
+      SPRING_FLYWAY_URL: jdbc:mysql://mysql_db:3306/Socks
+  mysql_db:
+    image: "mysql:8.0"
+    restart: always
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_DATABASE: Socks
+      MYSQL_USER: nezhov
+      MYSQL_PASSWORD: 220501
+      MYSQL_ROOT_PASSWORD: root

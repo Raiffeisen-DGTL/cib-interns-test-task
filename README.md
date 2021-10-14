@@ -2,81 +2,125 @@
 
 Привет!
 
-Мы ищем стажера, который в перспективе станет Junior Java-разработчиком в нашей команде.
-Чтобы понять, что мы подходим друг другу, предлагаем вам написать простое web-приложение. Такое задание поможет нам понять, что вы:
+А я тут задание для Java разработчиков сделал.
 
-* можете понимать поставленную задачу;
-* умеете находить необходимую техническую информацию для реализации решения;
-* просто умеете кодить.
+## API
 
-На задание у вас уйдет ориентировочно один-два вечера. Главное условие — решение должно быть написано с использованием платформы JVM. Библиотеки и фреймворки можно выбирать на свой вкус.
+URL, куда приходят запросы:
 
-## Что нужно сделать
+http://socks-application.herokuapp.com
 
-Реализовать приложение для автоматизации учёта носков на складе магазина. Кладовщик должен иметь возможность:
+Пример GET запроса:
 
-* учесть приход и отпуск носков;
-* узнать общее количество носков определенного цвета и состава в данный момент времени.
+http://socks-application.herokuapp.com/api/socks?color=yellow&operation=equal&cottonPart=80
 
-Внешний интерфейс приложения представлен в виде HTTP API (REST, если хочется).
+POST Income:
 
-## Список URL HTTP-методов
+http://socks-application.herokuapp.com/api/socks/income
 
-### POST /api/socks/income
+POST Outcome:
 
-Регистрирует приход носков на склад.
+http://socks-application.herokuapp.com/api/socks/outcome
 
-Параметры запроса передаются в теле запроса в виде JSON-объекта со следующими атрибутами:
+Пример body для POST income/outcome запросов (в случае income quantity добавляет указанное кол-во 
+носков, в случае outcome убавляет):
 
-* color — цвет носков, строка (например, black, red, yellow);
-* cottonPart — процентное содержание хлопка в составе носков, целое число от 0 до 100 (например, 30, 18, 42);
-* quantity — количество пар носков, целое число больше 0.
+```json
+{
+    "color":"yellow",
+    "cottonPart":80,
+    "quantity":2000
+}
+```
 
-Результаты:
+## Список URL HTTP-методов есть в task.md
 
-* HTTP 200 — удалось добавить приход;
-* HTTP 400 — параметры запроса отсутствуют или имеют некорректный формат;
-* HTTP 500 — произошла ошибка, не зависящая от вызывающей стороны (например, база данных недоступна).
+[task.md](task.md)
 
-### POST /api/socks/outcome
+## Как это сделано?
 
-Регистрирует отпуск носков со склада. Здесь параметры и результаты аналогичные, но общее количество носков указанного цвета и состава не увеличивается, а уменьшается.
 
-### GET /api/socks
+Из самого основного: Java8 + MySQL (8.0, на heroku 5.6) + Spring Boot + Web + JPA. (+Flyway, но на heroku его нет, о чём ниже)
 
-Возвращает общее количество носков на складе, соответствующих переданным в параметрах критериям запроса.
+В качестве реляционной базы данных был использован MySQL, сама БД состоит из одной таблицы. 
 
-Параметры запроса передаются в URL:
+Схема БД:
 
-* color — цвет носков, строка;
-* operation — оператор сравнения значения количества хлопка в составе носков, одно значение из: moreThan, lessThan, equal;
-* cottonPart — значение процента хлопка в составе носков из сравнения.
+![alt text](DB.jpg "Title")
 
-Результаты:
+[SQL скрипт инициализации БД](src/main/resources/db/migration/V1__Init_DB.sql)
 
-* HTTP 200 — запрос выполнен, результат в теле ответа в виде строкового представления целого числа;
-* HTTP 400 — параметры запроса отсутствуют или имеют некорректный формат;
-* HTTP 500 — произошла ошибка, не зависящая от вызывающей стороны (например, база данных недоступна).
+Для версионирования БД был использован фреймворк Flyway, но при развёртывании на Heroku оказалось, что там стоит слишком 
+старая версия MySQL. В любом случае, Flyway можно включить, изменив application.properties с этого:
 
-Примеры запросов:
+```properties
+spring.datasource.url=${JDBC_DATABASE_URL:jdbc:mysql://localhost:3306/Socks}
+spring.datasource.username=${JDBC_DATABASE_USERNAME:nezhov}
+spring.datasource.password=${JDBC_DATABASE_PASSWORD:220501}
+spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
+#logging.level.root=debug
 
-* /api/socks?color=red&operation=moreThan&cottonPart=90 — должен вернуть общее количество красных носков с долей хлопка более 90%;
-* /api/socks?color=black&operation=lessThan?cottonPart=10 — должен вернуть общее количество черных носков с долей хлопка менее 10%.
+spring.jpa.database=MYSQL
+spring.jpa.show-sql=true
 
-Для хранения данных системы можно использовать любую реляционную базу данных. Схему БД желательно хранить в репозитории в любом удобном виде.
 
-## Как это сделать
+#when first time booting with jpa use string below, 
+# but no need if using flyway
+spring.jpa.hibernate.ddl-auto=create
 
-Мы ждем, что решение будет:
 
-* написано на языке Java;
-* standalone - состоять из одного выполняемого компонента верхнего уровня;
-* headless - без UI;
-* оформлено как форк к репозитарию и создан пул реквест.
+#spring.jpa.hibernate.ddl-auto=validate
+spring.flyway.enabled=false
+server.port=${PORT:8080}
+#uncomment if true,requires MySQL 5.7 or higher
+#spring.flyway.url=jdbc:mysql://localhost:3306/Socks
+#spring.flyway.user=nezhov
+#spring.flyway.password=220501
 
-Будет плюсом, если:
 
-* приложение будет основано на Spring(Boot) Framework;
-* для версионирования схемы базы данных будет использоваться Liquibase или Flyway;
-* база данных будет подниматься рядом с приложением в докер-контейнере;
-* приложение будет развернуто на любом облачном сервисе, например Heroku, и его API будет доступно для вызова.
+```
+
+На это:
+```properties
+spring.datasource.url=${JDBC_DATABASE_URL:jdbc:mysql://localhost:3306/Socks}
+spring.datasource.username=${JDBC_DATABASE_USERNAME:nezhov}
+spring.datasource.password=${JDBC_DATABASE_PASSWORD:220501}
+spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
+#logging.level.root=debug
+
+spring.jpa.database=MYSQL
+spring.jpa.show-sql=true
+
+
+#when first time booting with jpa use string below, but no need if using flyway
+#spring.jpa.hibernate.ddl-auto=create
+
+
+spring.jpa.hibernate.ddl-auto=validate
+spring.flyway.enabled=true
+server.port=${PORT:8080}
+#uncomment if true,requires MySQL 5.7 or higher
+spring.flyway.url=jdbc:mysql://localhost:3306/Socks
+spring.flyway.user=nezhov
+spring.flyway.password=220501
+
+```
+
+После этого для запуска докер контейнеров требуется ввести следующие команды:
+
+```bash
+sudo systemctl start mysql
+mvn package
+sudo systemctl stop mysql
+docker-compose build
+docker-compose up
+```
+
+
+## Почему на Heroku нет Flyway?
+
+Для развёртывания на Heroku я установил аддон ClearDB MySQL, но оказалось, что там стоит версия MySQL 5.6. 
+
+При развёртывании же на настоящем сервере был написан docker-compose.yml (в нём уже можно использовать Flyway), который 
+был протестирован на локальной машине (оба контейнера поднимались корректно и без проблем, главное не забыть пересобрать 
+пакет через maven после изменения application.properties).
