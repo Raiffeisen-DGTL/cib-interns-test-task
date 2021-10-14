@@ -1,0 +1,62 @@
+databaseChangeLog:
+  - logicalFilePath: db/changelog/db.changelog-socks.yaml
+  - changeSet:
+      id: 1
+      author: valentina_simonova
+      changes:
+        - createTable:
+            tableName: socks
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: color
+                  type: varchar(50)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: cotton_part
+                  type: integer
+                  constraints:
+                    nullable: false
+              - column:
+                  name: quantity
+                  type: integer
+  - changeSet:
+      id: 2
+      author: valentina_simonova
+      comment: "create existing socks"
+      changes:
+        - insert:
+            tableName: socks
+            columns:
+              - column:
+                  name: color
+                  value: "red"
+              - column:
+                  name: cotton_part
+                  value: 50
+              - column:
+                  name: quantity
+                  value: 5
+        - insert:
+            tableName: socks
+            columns:
+              - column:
+                  name: color
+                  value: "green"
+              - column:
+                  name: cotton_part
+                  value: 100
+              - column:
+                  name: quantity
+                  value: 15
+      rollback:
+        - delete:
+            tableName: socks
+            where: color in ('red', 'green')
