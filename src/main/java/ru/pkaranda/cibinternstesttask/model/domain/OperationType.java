@@ -13,4 +13,13 @@ public enum OperationType {
     public String getValue(){
         return this.value;
     }
+
+//    public static OperationType valueOfLabel(String label) {
+//        for (OperationType e : values()) {
+//            if (e.value.equals(label)) {
+//                return e;
+//            }
+//        }
+//        return null;
+//    }
 }

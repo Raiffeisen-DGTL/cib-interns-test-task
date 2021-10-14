@@ -10,4 +10,6 @@ import java.util.Optional;
 public interface SockColorRepository extends JpaRepository<SockColor, Long> {
 
     Optional<SockColor> getSockColorById(Long id);
+
+    Optional<SockColor> getSockColorByColor(String color);
 }
