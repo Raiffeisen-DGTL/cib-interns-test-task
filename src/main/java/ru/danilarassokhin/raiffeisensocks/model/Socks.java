@@ -64,7 +64,7 @@ public class Socks {
 
     @Override
     public int hashCode() {
-        return getColor().hashCode() + getCottonPart();
+        return 0;
     }
 
     @Override
