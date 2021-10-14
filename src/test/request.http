@@ -1,0 +1,77 @@
+GET http://localhost:8080/api/socks/all
+
+###
+
+GET http://localhost:8080/api/socks?color=red&operation=moreThan&cottonPart=10
+
+###
+
+POST http://localhost:8080/api/socks/income
+Content-Type: application/json
+
+{
+  "color": "blue",
+  "cottonPart": 50,
+  "quantity": 10
+}
+
+###
+
+POST http://localhost:8080/api/socks/income
+Content-Type: application/json
+
+{
+  "color": "blue",
+  "cottonPart": 50,
+  "quantity": 10
+}
+
+###
+
+POST http://localhost:8080/api/socks/income
+Content-Type: application/json
+
+{
+  "color": "red",
+  "cottonPart": 50,
+  "quantity": 10
+}
+
+###
+
+POST http://localhost:8080/api/socks/outcome
+Content-Type: application/json
+
+{
+  "color": "red",
+  "cottonPart": 50,
+  "quantity": 5
+}
+
+
+###
+
+GET http://localhost:8080/api/socks?color=red&operation=equal&cottonPart=50
+
+###
+
+GET http://localhost:8080/api/socks?color=red&operation=lessThan&cottonPart=50
+
+###
+
+GET http://localhost:8080/api/socks?color=blue&cottonPart=50
+
+###
+
+POST https://socks-storage.herokuapp.com/api/socks/income
+Content-Type: application/json
+
+{
+  "color": "blue",
+  "cottonPart": 50,
+  "quantity": 10
+}
+
+###
+
+

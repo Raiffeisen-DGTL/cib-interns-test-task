@@ -1,0 +1,32 @@
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+
+    <changeSet author="andrey" id="add_socks_storage_table">
+        <createTable tableName="socks_storage">
+            <column name="id" type="bigint(20)" autoIncrement="true">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="color" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="cotton_part" type="int(11)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="quantity" type="bigint(20)"></column>
+            <column name="version" type="bigint(20)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet author="andrey" id="add_unique_constraint_socks_storage_table">
+        <addUniqueConstraint tableName="socks_storage"
+                             constraintName="unique_constraint_socks_storage"
+                             columnNames="color, cotton_part"
+                             />
+    </changeSet>
+
+</databaseChangeLog>
