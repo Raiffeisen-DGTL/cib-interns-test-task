@@ -1,0 +1,11 @@
+spring:
+  datasource:
+    driver-class-name: ${DB_DRIVER}
+    url: ${DB_URL}
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
+  sql:
+    init:
+      mode: always
+  jpa:
+    generate-ddl: true
