@@ -1,0 +1,28 @@
+version: '3.8'
+
+services:
+  postgres:
+    build:
+      context: services/postgres
+      dockerfile: Dockerfile
+    ports:
+      - "5434:5432"
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_DB=socks
+      - POSTGRES_PASSWORD=123
+#    volumes:
+#      - ./init:/docker-entrypoint-initdb.d/
+
+  app:
+    build:
+      context: services/app
+      dockerfile: Dockerfile
+    environment:
+      - PORT=8091
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres/socks
+    image: 'my-java-application'
+    ports:
+      - 8081:8081
+    depends_on:
+      - postgres
