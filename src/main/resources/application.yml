@@ -1,0 +1,20 @@
+spring:
+  datasource:
+    url: ${SPRING_DATASOURCE_USERNAME:jdbc:my_postgres_db://localhost:5432/postgres}
+    username: ${JDBC_DATABASE_USERNAME:bestuser}
+    password: ${JDBC_DATABASE_PASSWORD:bestuser}
+
+  jpa:
+    generate-ddl: false
+    hibernate:
+      ddl-auto: none
+    show-sql: true
+
+logging:
+  level:
+    ROOT: ERROR
+
+server:
+  error:
+    include-message: always
+  port: ${PORT:8080}
