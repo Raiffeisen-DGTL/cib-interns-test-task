@@ -1,5 +1,5 @@
 package ru.danilarassokhin.raiffeisensocks.functional;
 
-public interface OneParamFunctional {
-    void action(Object param);
+public interface OneParamFunctional<V> {
+    void action(V param);
 }

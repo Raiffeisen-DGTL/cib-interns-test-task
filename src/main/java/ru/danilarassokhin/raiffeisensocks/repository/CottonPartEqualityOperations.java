@@ -3,6 +3,7 @@ package ru.danilarassokhin.raiffeisensocks.repository;
 import org.slf4j.LoggerFactory;
 import ru.danilarassokhin.raiffeisensocks.functional.NoParamFunctional;
 import ru.danilarassokhin.raiffeisensocks.functional.OneParamFunctional;
+import ru.danilarassokhin.raiffeisensocks.service.impl.LoggerService;
 
 /**
  * Contains operations for cotton part comparison
@@ -15,18 +16,26 @@ public enum CottonPartEqualityOperations {
             (count) -> LoggerFactory.getLogger(CottonPartEqualityOperations.class)
                     .info("Found " + count + " socks by countWhereCottonPartMoreThan named query")
     ),
-    lessThan("countWhereCottonPartLessThan"),
-    equal("countWhereCottonPartIs")
+    lessThan("countWhereCottonPartLessThan", LoggerService::warn),
+    equal("countWhereCottonPartIs", LoggerService::info)
     ;
 
     /**
      * Name of named query in {@link ru.danilarassokhin.raiffeisensocks.model.Socks}
      */
     private final String queryName;
-    private final NoParamFunctional before;
-    private final OneParamFunctional after;
 
-    CottonPartEqualityOperations(NoParamFunctional before, String queryName, OneParamFunctional after) {
+    /**
+     * Called before socks counting
+     */
+    private final NoParamFunctional before;
+
+    /**
+     * Called after socks counting with socks count param if
+     */
+    private final OneParamFunctional<Long> after;
+
+    CottonPartEqualityOperations(NoParamFunctional before, String queryName, OneParamFunctional<Long> after) {
         this.queryName = queryName;
         this.before = before;
         this.after = after;
@@ -44,7 +53,7 @@ public enum CottonPartEqualityOperations {
         this.after = null;
     }
 
-    CottonPartEqualityOperations(String queryName, OneParamFunctional after) {
+    CottonPartEqualityOperations(String queryName, OneParamFunctional<Long> after) {
         this.queryName = queryName;
         this.before = null;
         this.after = after;

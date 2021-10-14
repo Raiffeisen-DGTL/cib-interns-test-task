@@ -112,7 +112,7 @@ public class SocksServiceImpl implements SocksService {
         if(!validationResult.isValid()) {
             throw new DataValidityException(validationResult.getFirstErrorMessage());
         }
-        CottonPartEqualityOperations operation;
+        CottonPartEqualityOperations operation = null;
         long result;
         try{
             operation = Enum.valueOf(CottonPartEqualityOperations.class, socksSearchDto.getOperation());
@@ -127,6 +127,9 @@ public class SocksServiceImpl implements SocksService {
                     + "Correct operations are: " + Arrays.toString(CottonPartEqualityOperations.values()));
         }catch (NullPointerException e) {
             result = 0;
+            if(operation != null) {
+                operation.after(0L);
+            }
         }
         return result;
     }
