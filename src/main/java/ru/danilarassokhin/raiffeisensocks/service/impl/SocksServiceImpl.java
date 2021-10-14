@@ -3,7 +3,7 @@ package ru.danilarassokhin.raiffeisensocks.service.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
-import ru.danilarassokhin.raiffeisensocks.dto.CottonPartEqualityOperations;
+import ru.danilarassokhin.raiffeisensocks.repository.CottonPartEqualityOperations;
 import ru.danilarassokhin.raiffeisensocks.dto.SocksIncomeDto;
 import ru.danilarassokhin.raiffeisensocks.dto.SocksOutcomeDto;
 import ru.danilarassokhin.raiffeisensocks.dto.SocksSearchDto;
@@ -112,14 +112,16 @@ public class SocksServiceImpl implements SocksService {
         if(!validationResult.isValid()) {
             throw new DataValidityException(validationResult.getFirstErrorMessage());
         }
-        CottonPartEqualityOperations operations;
+        CottonPartEqualityOperations operation;
         long result;
         try{
-            operations = Enum.valueOf(CottonPartEqualityOperations.class, socksSearchDto.getOperation());
-            Query query = entityManager.createNamedQuery(operations.getQueryName());
+            operation = Enum.valueOf(CottonPartEqualityOperations.class, socksSearchDto.getOperation());
+            operation.before();
+            Query query = entityManager.createNamedQuery(operation.getQueryName());
             query.setParameter("cottonPart", socksSearchDto.getCottonPart());
             query.setParameter("color", socksSearchDto.getColor());
             result = ((Number)query.getSingleResult()).longValue();
+            operation.after(result);
         }catch (IllegalArgumentException e) {
             throw new DataValidityException("Operation " + socksSearchDto.getOperation() + " doesn't exists! "
                     + "Correct operations are: " + Arrays.toString(CottonPartEqualityOperations.values()));
