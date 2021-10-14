@@ -1,0 +1,20 @@
+version: '3'
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    privileged: true
+    ports:
+      - "8080:8080"
+    depends_on:
+      - my_postgres_db
+
+  my_postgres_db:
+    image: "postgres"
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_USER=bestuser
+      - POSTGRES_PASSWORD=bestuser
+      - POSTGRES_DB=postgres
