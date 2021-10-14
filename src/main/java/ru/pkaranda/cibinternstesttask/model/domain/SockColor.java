@@ -14,7 +14,7 @@ public class SockColor {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sock_color_id_gen")
     private Long id;
 
-    @Column(name = "color")
+    @Column(name = "color", unique = true)
     private String color;
 
 }
