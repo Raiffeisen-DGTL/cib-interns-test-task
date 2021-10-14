@@ -15,7 +15,7 @@
 Сервис доступен по адресу https://sillyseal.systems/raiffeisen-task/  
 Ниже описаны варианты установки локальной версии.
 
-Вы можете скачать исполняемый jar-файл [тут](https://github.com/mickeytheseal/raiffeisentask/releases/download/v1.0.0/raiffeisentask-1.0.0-RELEASE.jar "raiffeisentask-1.0.0-RELEASE.jar") и запустить через:
+Вы можете скачать исполняемый jar-файл [тут](https://github.com/mickeytheseal/cib-interns-test-task/releases/download/v1.0.0/raiffeisentask-1.0.0-RELEASE.jar "raiffeisentask-1.0.0-RELEASE.jar") и запустить через:
 ```sh
 java -jar <pathToFile>
 ```
@@ -70,8 +70,8 @@ POST http://localhost:8080/api/socks/income?color=red&cottonPart=75&quantity=15
 POST http://localhost:8080/api/socks/outcome?color=red&cottonPart=75&quantity=6
 ```
 ## Коллекции Postman
-Скачать коллекцию для тестирования https://sillyseal.systems/raiffeisen-task/ можно [тут](https://github.com/mickeytheseal/raiffeisentask/releases/download/v1.0.0/RaiffeisenTaskDeployed.postman_collection "RaiffeisenTaskDeployed.postman_collection").  
-Скачать коллекцию для тестирования локальной версии можно [тут](https://github.com/mickeytheseal/raiffeisentask/releases/download/v1.0.0/RaiffeisenTaskLocal.postman_collection "RaiffeisenTaskLocal.postman_collection").
+Скачать коллекцию для тестирования https://sillyseal.systems/raiffeisen-task/ можно [тут](https://github.com/mickeytheseal/cib-interns-test-task/releases/download/v1.0.0/RaiffeisenTaskDeployed.postman_collection "RaiffeisenTaskDeployed.postman_collection").  
+Скачать коллекцию для тестирования локальной версии можно [тут](https://github.com/mickeytheseal/cib-interns-test-task/releases/download/v1.0.0/RaiffeisenTaskLocal.postman_collection "RaiffeisenTaskLocal.postman_collection").
 
 ## Обратная связь
 e-mail: mickeytheseal@gmail.com  
