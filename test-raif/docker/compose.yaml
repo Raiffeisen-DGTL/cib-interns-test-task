@@ -1,0 +1,28 @@
+version: '3.7'
+
+services:
+  test_raif_storage:
+    image: 'test_raif_storage:latest'
+    depends_on:
+      - test_raif_db
+    ports:
+      - "8080:8080"
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://test_raif_db:5432/test_raif_db
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=password
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+
+  test_raif_db:
+    image: 'postgres:alpine'
+    environment:
+      - POSTGRES_DB=test_raif_db
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=password
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U postgres" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
