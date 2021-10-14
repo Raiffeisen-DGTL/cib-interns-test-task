@@ -1,0 +1,1 @@
+create table sockslist(id int, primary key (id), color varchar, cottonPart int, quantity int)
