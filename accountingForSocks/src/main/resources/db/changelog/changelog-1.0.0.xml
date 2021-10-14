@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+
+    <changeSet id="init" author="Aleksandr Shakhoff">
+        <createTable tableName="colors">
+            <column name="id" type="uuid">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="name" type="varchar(32)">
+                <constraints nullable="false" unique="true"/>
+            </column>
+        </createTable>
+
+        <createTable tableName="socks">
+            <column name="id" type="uuid">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="color_id" type="uuid">
+                <constraints nullable="false" foreignKeyName="fk_product_id" references="colors(id)"/>
+            </column>
+            <column name="cotton_part" type="int">
+                <constraints nullable="false"/>
+            </column>
+            <column name="quantity" type="int" defaultValue="0"/>
+        </createTable>
+
+    </changeSet>
+
+
+</databaseChangeLog>
