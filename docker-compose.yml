@@ -1,0 +1,35 @@
+version: '3.8'
+
+services:
+  spring:
+    build:
+      context: .
+    container_name: spring-boot-app
+    depends_on:
+      - db
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:mysql://db:3306/${DB_NAME}
+      - SPRING_DATASOURCE_USERNAME=${DB_USERNAME}
+      - SPRING_DATASOURCE_PASSWORD=${DB_PASSWORD}
+    ports:
+      - "8080:8080"
+    expose:
+      - '8080'
+    stdin_open: true
+  db:
+    image: 'mysql:5.7'
+    container_name: db
+    restart: unless-stopped
+    environment:
+      - MYSQL_USER=${DB_USERNAME}
+      - MYSQL_PASSWORD=${DB_PASSWORD}
+      - MYSQL_DATABASE=${DB_NAME}
+      - MYSQL_ROOT_PASSWORD=root
+    ports:
+      - "3306:3306"
+    expose:
+      - '3306'
+    volumes:
+      - db:/var/lib/mysql
+volumes:
+  db:
