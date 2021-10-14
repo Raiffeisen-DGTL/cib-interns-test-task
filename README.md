@@ -1,82 +1,79 @@
-# Тестовое задание для Java стажеров
+# RaiffeisenTask
+## Тестовое задание на стажировку Java Bootcamp 2021.
 
-Привет!
+Текст задания можно найти [тут](https://github.com/Raiffeisen-DGTL/cib-interns-test-task "Тестовое задание для Java стажеров").
 
-Мы ищем стажера, который в перспективе станет Junior Java-разработчиком в нашей команде.
-Чтобы понять, что мы подходим друг другу, предлагаем вам написать простое web-приложение. Такое задание поможет нам понять, что вы:
+## Стек технологий
+- Java
+- Maven
+- Spring Boot
+- Spring Data JPA
+- Liquibase 
+- Apache Derby
 
-* можете понимать поставленную задачу;
-* умеете находить необходимую техническую информацию для реализации решения;
-* просто умеете кодить.
+## Установка
+Сервис доступен по адресу https://sillyseal.systems/raiffeisen-task/  
+Ниже описаны варианты установки локальной версии.
 
-На задание у вас уйдет ориентировочно один-два вечера. Главное условие — решение должно быть написано с использованием платформы JVM. Библиотеки и фреймворки можно выбирать на свой вкус.
+Вы можете скачать исполняемый jar-файл [тут](https://github.com/mickeytheseal/raiffeisentask/releases/download/v1.0.0/raiffeisentask-1.0.0-RELEASE.jar "raiffeisentask-1.0.0-RELEASE.jar") и запустить через:
+```sh
+java -jar <pathToFile>
+```
 
-## Что нужно сделать
+Используя Docker:
+```sh
+docker pull sillyseal/raiffeisen-task
+docker run -d -p 8080:8080 sillyseal/raiffeisen-task
+```
 
-Реализовать приложение для автоматизации учёта носков на складе магазина. Кладовщик должен иметь возможность:
+Используя Maven:
+```sh
+git clone https://github.com/mickeytheseal/raiffeisentask.git
+cd <yourGitClonePath>
+mvnw spring-boot:run
+```
 
-* учесть приход и отпуск носков;
-* узнать общее количество носков определенного цвета и состава в данный момент времени.
+## Использование
+##### При обращении к https://sillyseal.systems/raiffeisen-task/ 
+Получить все содержимое склада:
+```sh
+GET https://sillyseal.systems/raiffeisen-task/api/socks/all
+```
+Получить общее количество носков на складе, соответствующих переданным в параметрах критериям запроса:
+```sh
+GET https://sillyseal.systems/raiffeisen-task/api/socks?color=black&operation=moreThan&cottonPart=30
+```
+Зарегестрировать поступление носков:
+```sh
+POST https://sillyseal.systems/raiffeisen-task/api/socks/income?color=red&cottonPart=75&quantity=15
+```
+Зарегестрировать отпуск носков:
+```sh
+POST https://sillyseal.systems/raiffeisen-task/api/socks/outcome?color=red&cottonPart=75&quantity=6
+```
 
-Внешний интерфейс приложения представлен в виде HTTP API (REST, если хочется).
+##### При локальной устновке
+Получить все содержимое склада:
+```sh
+GET http://localhost:8080/api/socks/all
+```
+Получить общее количество носков на складе, соответствующих переданным в параметрах критериям запроса:
+```sh
+GET http://localhost:8080/api/socks?color=black&operation=moreThan&cottonPart=30
+```
+Зарегестрировать поступление носков:
+```sh
+POST http://localhost:8080/api/socks/income?color=red&cottonPart=75&quantity=15
+```
+Зарегестрировать отпуск носков:
+```sh
+POST http://localhost:8080/api/socks/outcome?color=red&cottonPart=75&quantity=6
+```
+## Коллекции Postman
+Скачать коллекцию для тестирования https://sillyseal.systems/raiffeisen-task/ можно [тут](https://github.com/mickeytheseal/raiffeisentask/releases/download/v1.0.0/RaiffeisenTaskDeployed.postman_collection "RaiffeisenTaskDeployed.postman_collection").  
+Скачать коллекцию для тестирования локальной версии можно [тут](https://github.com/mickeytheseal/raiffeisentask/releases/download/v1.0.0/RaiffeisenTaskLocal.postman_collection "RaiffeisenTaskLocal.postman_collection").
 
-## Список URL HTTP-методов
+## Обратная связь
+e-mail: mickeytheseal@gmail.com  
+telegram: t.me/sillyseal
 
-### POST /api/socks/income
-
-Регистрирует приход носков на склад.
-
-Параметры запроса передаются в теле запроса в виде JSON-объекта со следующими атрибутами:
-
-* color — цвет носков, строка (например, black, red, yellow);
-* cottonPart — процентное содержание хлопка в составе носков, целое число от 0 до 100 (например, 30, 18, 42);
-* quantity — количество пар носков, целое число больше 0.
-
-Результаты:
-
-* HTTP 200 — удалось добавить приход;
-* HTTP 400 — параметры запроса отсутствуют или имеют некорректный формат;
-* HTTP 500 — произошла ошибка, не зависящая от вызывающей стороны (например, база данных недоступна).
-
-### POST /api/socks/outcome
-
-Регистрирует отпуск носков со склада. Здесь параметры и результаты аналогичные, но общее количество носков указанного цвета и состава не увеличивается, а уменьшается.
-
-### GET /api/socks
-
-Возвращает общее количество носков на складе, соответствующих переданным в параметрах критериям запроса.
-
-Параметры запроса передаются в URL:
-
-* color — цвет носков, строка;
-* operation — оператор сравнения значения количества хлопка в составе носков, одно значение из: moreThan, lessThan, equal;
-* cottonPart — значение процента хлопка в составе носков из сравнения.
-
-Результаты:
-
-* HTTP 200 — запрос выполнен, результат в теле ответа в виде строкового представления целого числа;
-* HTTP 400 — параметры запроса отсутствуют или имеют некорректный формат;
-* HTTP 500 — произошла ошибка, не зависящая от вызывающей стороны (например, база данных недоступна).
-
-Примеры запросов:
-
-* /api/socks?color=red&operation=moreThan&cottonPart=90 — должен вернуть общее количество красных носков с долей хлопка более 90%;
-* /api/socks?color=black&operation=lessThan?cottonPart=10 — должен вернуть общее количество черных носков с долей хлопка менее 10%.
-
-Для хранения данных системы можно использовать любую реляционную базу данных. Схему БД желательно хранить в репозитории в любом удобном виде.
-
-## Как это сделать
-
-Мы ждем, что решение будет:
-
-* написано на языке Java;
-* standalone - состоять из одного выполняемого компонента верхнего уровня;
-* headless - без UI;
-* оформлено как форк к репозитарию и создан пул реквест.
-
-Будет плюсом, если:
-
-* приложение будет основано на Spring(Boot) Framework;
-* для версионирования схемы базы данных будет использоваться Liquibase или Flyway;
-* база данных будет подниматься рядом с приложением в докер-контейнере;
-* приложение будет развернуто на любом облачном сервисе, например Heroku, и его API будет доступно для вызова.
