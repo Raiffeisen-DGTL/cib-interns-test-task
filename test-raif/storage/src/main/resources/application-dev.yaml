@@ -1,0 +1,14 @@
+logging:
+  level:
+    root: info
+
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/test_raif_db
+    username: postgres
+    password: password
+  jpa:
+    show-sql: true
+    generate-ddl: true
+    hibernate:
+      ddl-auto: update

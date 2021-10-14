@@ -1,0 +1,17 @@
+logging:
+  level:
+    root: info
+
+server:
+  port: 5000
+
+spring:
+  datasource:
+    url: jdbc:postgresql://testraifdb.cak94jlorwdn.eu-central-1.rds.amazonaws.com:5432/test_raif_db
+    username: postgres
+    password: password
+  jpa:
+    show-sql: true
+    generate-ddl: true
+    hibernate:
+      ddl-auto: update

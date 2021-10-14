@@ -1,0 +1,61 @@
+
+###
+
+POST http://testraif-env.eba-mtapm35t.eu-central-1.elasticbeanstalk.com/api/socks/income
+Content-Type: application/json
+
+{
+  "color" : "red",
+  "cottonPart" : "70",
+  "quantity" : 10
+}
+
+###
+
+POST http://localhost:8080/api/socks/income
+Content-Type: application/json
+
+{
+  "color" : "red",
+  "cottonPart" : "40",
+  "quantity" : 110
+}
+
+###
+
+POST http://localhost:8080/api/socks/income
+Content-Type: application/json
+
+{
+  "color" : "blue",
+  "cottonPart" : "90",
+  "quantity" : 3
+}
+
+###
+
+POST http://localhost:8080/api/socks/outcome
+Content-Type: application/json
+
+{
+  "color" : "red",
+  "cottonPart" : "40",
+  "quantity" : 11
+}
+
+###
+
+GET http://localhost:8080/api/socks?color=red&operation=equal&cottonPart=40
+
+###
+
+GET http://testraif-env.eba-mtapm35t.eu-central-1.elasticbeanstalk.com/api/socks?color=red&operation=moreThan&cottonPart=20
+
+###
+
+GET http://localhost:8080/api/socks?color=blue&operation=moreThan&cottonPart=50
+
+###
+
+
+
