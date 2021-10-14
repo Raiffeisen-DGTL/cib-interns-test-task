@@ -1,0 +1,54 @@
+plugins {
+    id 'org.springframework.boot' version '2.5.5'
+    id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+    id 'java'
+    id "org.flywaydb.flyway" version "8.0.0"
+}
+
+group = 'com.example'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '11'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-websocket:2.5.5'
+
+    // db & schema
+    runtimeOnly 'org.postgresql:postgresql:42.2.24.jre7'
+    implementation 'org.springframework.boot:spring-boot-starter-data-jdbc:2.5.5'
+    implementation 'org.springframework.boot:spring-boot-starter-jdbc:2.5.5'
+    implementation 'org.springframework:spring-jdbc:5.3.10'
+    implementation 'org.postgresql:postgresql:42.2.24'
+//    implementation 'org.flywaydb:flyway-core'
+    implementation 'org.springframework.boot:spring-boot-gradle-plugin:2.5.5'
+
+    // logging
+    implementation 'org.slf4j:slf4j-api:1.7.32'
+    implementation 'org.springdoc:springdoc-openapi-data-rest:1.5.11'
+
+    // testing
+    testImplementation 'org.springframework.boot:spring-boot-starter-test:2.5.5'
+    testImplementation 'org.junit.vintage:junit-vintage-engine:5.8.1'
+    implementation 'junit:junit:4.13.2'
+}
+
+flyway {
+    url = 'jdbc:postgresql://localhost:5432/socks-db'
+    user = 'socks-user'
+    password = 'socks-password'
+    createSchemas = false
+    locations = ['classpath:db/migration']
+    driver = 'org.postgresql.Driver'
+
+}
+
+test {
+    useJUnitPlatform()
+}
+
+task stage {
+    stage.dependsOn(bootRun)
+}

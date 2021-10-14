@@ -1,0 +1,17 @@
+
+spring:
+  output.ansi.enabled: detect
+  cache.type: none
+
+  datasource:
+    url: jdbc:postgresql://localhost:5432/socks-db
+    username: socks-user
+    password: socks-password
+    driver-class-name: org.postgresql.Driver
+    hikari:
+      jdbc-url: ${spring.datasource.url}
+      driver-class-name: ${spring.datasource.driver-class-name}
+
+  flyway:
+    locations: classpath:/db/migration,classpath:/db/testdata
+

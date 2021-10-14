@@ -1,0 +1,7 @@
+"scripts": {
+"heroku-prebuild": "./docker.sh",
+"build": "echo This won't run when there's a heroku-postbuild script. Otherwise it runs instead.",
+"heroku-postbuild": "echo This runs after Heroku installs dependencies, but before Heroku prunes and caches dependencies.",
+"heroku-cleanup": "echo This runs after Heroku prunes and caches dependencies.",
+"start": "echo You can specify you start script here."
+}
