@@ -9,9 +9,6 @@
 * Облачный сервис Heroku с доступом к API
 
 ## Реализованы
-=======
-
->>>>>>> 0125332c9e9707cfff429fb307226bafdda069f5
 ### POST /api/socks/income
 
 Регистрирует приход носков на склад.
@@ -52,4 +49,3 @@
 
 * /api/socks?color=red&operation=moreThan&cottonPart=90 — должен вернуть общее количество красных носков с долей хлопка более 90%;
 * /api/socks?color=black&operation=lessThan?cottonPart=10 — должен вернуть общее количество черных носков с долей хлопка менее 10%.
-=======
