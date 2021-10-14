@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.3.xsd">
+    <changeSet id="202010211812" author="Romanov Alex">
+        <createTable tableName="socksrecords">
+            <column name="id" type="java.lang.Long">
+                <constraints primaryKey="true" primaryKeyName="socks_id_pk" />
+            </column>
+            <column name="color" type="java.lang.String"></column>
+            <column name="quantity" type="int" defaultValue="0"></column>
+            <column name="cottonpart" type="int" defaultValue="0"></column>
+        </createTable>
+        <insert tableName="socksrecords">
+            <column name="id" value="1"/>
+            <column name="color" value="Black"/>
+            <column name="cottonpart" value="50"/>
+            <column name="quantity" value="100"/>
+        </insert>
+        <insert tableName="socksrecords">
+            <column name="id" value="2"/>
+            <column name="color" value="Green"/>
+            <column name="cottonpart" value="70"/>
+            <column name="quantity" value="200"/>
+        </insert>
+        <insert tableName="socksrecords">
+            <column name="id" value="3"/>
+            <column name="color" value="White"/>
+            <column name="cottonpart" value="30"/>
+            <column name="quantity" value="1000"/>
+        </insert>
+        <addAutoIncrement tableName="socksrecords" columnName="id" columnDataType="java.lang.Long" startWith="4" incrementBy="1" />
+        <createSequence sequenceName="hibernate_sequence" incrementBy="1" startValue="4" />
+    </changeSet>
+</databaseChangeLog>
