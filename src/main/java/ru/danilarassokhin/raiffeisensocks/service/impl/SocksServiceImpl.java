@@ -17,6 +17,8 @@ import ru.danilarassokhin.raiffeisensocks.repository.SocksRepository;
 import ru.danilarassokhin.raiffeisensocks.service.SocksService;
 import ru.danilarassokhin.raiffeisensocks.util.ValidationUtils;
 
+import javax.persistence.EntityManager;
+import javax.persistence.Query;
 import java.util.Arrays;
 
 /**
@@ -27,9 +29,12 @@ public class SocksServiceImpl implements SocksService {
 
     private SocksRepository socksRepository;
 
+    private EntityManager entityManager;
+
     @Autowired
-    public SocksServiceImpl(SocksRepository socksRepository) {
+    public SocksServiceImpl(SocksRepository socksRepository, EntityManager entityManager) {
         this.socksRepository = socksRepository;
+        this.entityManager = entityManager;
     }
 
     @Override
@@ -108,33 +113,21 @@ public class SocksServiceImpl implements SocksService {
             throw new DataValidityException(validationResult.getFirstErrorMessage());
         }
         CottonPartEqualityOperations operations;
+        long result;
         try{
             operations = Enum.valueOf(CottonPartEqualityOperations.class, socksSearchDto.getOperation());
         }catch (IllegalArgumentException e) {
             throw new DataValidityException("Operation " + socksSearchDto.getOperation() + " doesn't exists! "
-            + "Correct operations are: " + Arrays.toString(CottonPartEqualityOperations.values()));
+                    + "Correct operations are: " + Arrays.toString(CottonPartEqualityOperations.values()));
         }
-        switch (operations) {
-            case moreThan:
-                return socksRepository.countByColorAndCottonPartGreaterThan(
-                        socksSearchDto.getColor(),
-                        socksSearchDto.getCottonPart()
-                ).orElse(0L);
-            case equal:
-                Socks result = findByColorAndCottonPartIs(
-                        socksSearchDto.getColor(),
-                        socksSearchDto.getCottonPart()
-                );
-                if(result == null) {
-                    return 0L;
-                }
-                return result.getQuantity();
-            case lessThan:
-                return socksRepository.countByColorAndCottonPartLessThan(
-                        socksSearchDto.getColor(),
-                        socksSearchDto.getCottonPart()
-                ).orElse(0L);
+        try{
+            Query query = entityManager.createNamedQuery(operations.getQueryName());
+            query.setParameter("cottonPart", socksSearchDto.getCottonPart());
+            query.setParameter("color", socksSearchDto.getColor());
+            result = ((Number)query.getSingleResult()).longValue();
+        }catch (NullPointerException e) {
+            result = 0;
         }
-        return 0L;
+        return result;
     }
 }

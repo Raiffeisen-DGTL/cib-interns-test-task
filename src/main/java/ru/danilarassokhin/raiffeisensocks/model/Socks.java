@@ -10,6 +10,19 @@ import javax.validation.constraints.NotBlank;
  */
 @Entity(name = "socks")
 @IdClass(SocksId.class)
+@NamedQueries({
+        @NamedQuery(name = "countWhereCottonPartMoreThan",
+                query = "SELECT SUM(quantity) FROM socks WHERE color = :color AND cotton_part >= :cottonPart"
+        ),
+        @NamedQuery(
+                name = "countWhereCottonPartLessThan",
+                query = "SELECT SUM(quantity) FROM socks WHERE color = :color AND cotton_part <= :cottonPart"
+        ),
+        @NamedQuery(
+                name = "countWhereCottonPartIs",
+                query = "SELECT SUM(quantity) FROM socks WHERE color = :color AND cotton_part = :cottonPart"
+        )
+})
 public class Socks {
 
     @Id
