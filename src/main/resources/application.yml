@@ -1,0 +1,9 @@
+server:
+  port: 8080
+
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/socks
+    driver-class-name: org.postgresql.Driver
+    username: admin
+    password: admin

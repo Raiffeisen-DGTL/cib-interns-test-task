@@ -1,0 +1,11 @@
+version: '3'
+
+services:
+  socks-db:
+    image: postgres:11.0
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_DB: socks
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: admin
