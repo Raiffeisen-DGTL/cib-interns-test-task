@@ -1,0 +1,29 @@
+### 200
+POST http://localhost:8080/api/socks/income
+Content-Type: application/json
+
+{
+  "color": "black",
+  "cottonPart": "60.0",
+  "quantity": "30"
+}
+
+### 400
+POST http://localhost:8080/api/socks/income
+Content-Type: application/json
+
+{
+  "name": "black",
+  "cottonPart": "60.0",
+  "quantity": "30"
+}
+
+### 500
+POST http://localhost:8080/api/socks/income
+Content-Type: application/json
+
+{
+  "color": "error",
+  "cottonPart": "60.0",
+  "quantity": "30"
+}
