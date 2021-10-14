@@ -1,0 +1,34 @@
+version: '3.8'
+services:
+  postgres:
+    build:
+      context: services/postgres
+      dockerfile: Dockerfile
+    ports:
+      - "5433"
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=RaiffeisenTest
+    volumes:
+      - "db-data:/var/lib/postgresql/data"
+  
+  
+  app:
+    build:
+      context: services/app
+      dockerfile: Dockerfile
+    environment:
+      - PORT=8080
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres/RaiffeisenTest
+      - JS_URL=http://localhost
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=postgres
+    image: 'raiffeisen_app'
+    ports:
+      - "8080:8080"
+    depends_on:
+      - postgres
+        
+volumes:
+   db-data:
