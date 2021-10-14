@@ -116,15 +116,13 @@ public class SocksServiceImpl implements SocksService {
         long result;
         try{
             operations = Enum.valueOf(CottonPartEqualityOperations.class, socksSearchDto.getOperation());
-        }catch (IllegalArgumentException e) {
-            throw new DataValidityException("Operation " + socksSearchDto.getOperation() + " doesn't exists! "
-                    + "Correct operations are: " + Arrays.toString(CottonPartEqualityOperations.values()));
-        }
-        try{
             Query query = entityManager.createNamedQuery(operations.getQueryName());
             query.setParameter("cottonPart", socksSearchDto.getCottonPart());
             query.setParameter("color", socksSearchDto.getColor());
             result = ((Number)query.getSingleResult()).longValue();
+        }catch (IllegalArgumentException e) {
+            throw new DataValidityException("Operation " + socksSearchDto.getOperation() + " doesn't exists! "
+                    + "Correct operations are: " + Arrays.toString(CottonPartEqualityOperations.values()));
         }catch (NullPointerException e) {
             result = 0;
         }
