@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+
+    <changeSet id="init" author="Aleksandr Shakhoff">
+        <insert tableName="colors">
+            <column name="id" valueComputed="uuid_generate_v4()"/>
+            <column name="name" value="green"/>
+        </insert>
+        <insert tableName="colors">
+            <column name="id" valueComputed="uuid_generate_v4()"/>
+            <column name="name" value="black"/>
+        </insert>
+        <insert tableName="colors">
+            <column name="id" valueComputed="uuid_generate_v4()"/>
+            <column name="name" value="red"/>
+        </insert>
+        <insert tableName="colors">
+            <column name="id" valueComputed="uuid_generate_v4()"/>
+            <column name="name" value="yellow"/>
+        </insert>
+        <insert tableName="colors">
+            <column name="id" valueComputed="uuid_generate_v4()"/>
+            <column name="name" value="white"/>
+        </insert>
+
+    </changeSet>
+
+
+</databaseChangeLog>
