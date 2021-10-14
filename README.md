@@ -1,5 +1,5 @@
-![TravisCI](https://app.travis-ci.com/CrissNamon/raiffeisen-socks-test.svg?branch=main)
-[![codecov](https://codecov.io/gh/CrissNamon/raiffeisen-socks-test/branch/main/graph/badge.svg?token=s6b4EsXqhR)](https://codecov.io/gh/CrissNamon/raiffeisen-socks-test)
+![TravisCI](https://app.travis-ci.com/CrissNamon/cib-interns-test-task.svg?branch=main)
+[![codecov](https://codecov.io/gh/CrissNamon/cib-interns-test-task/branch/main/graph/badge.svg?token=s6b4EsXqhR)](https://codecov.io/gh/CrissNamon/cib-interns-test-task)
 ## Использовано
 - Spring Boot (Data JPA, Web)
 - PostgreSQL + Flyway для хранения данных и миграций

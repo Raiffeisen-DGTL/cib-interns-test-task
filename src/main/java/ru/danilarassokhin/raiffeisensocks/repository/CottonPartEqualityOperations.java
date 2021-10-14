@@ -10,13 +10,24 @@ import ru.danilarassokhin.raiffeisensocks.service.impl.LoggerService;
  */
 public enum CottonPartEqualityOperations {
 
+    /**
+     * Count socks with cotton part is more than given
+     */
     moreThan(() -> LoggerFactory.getLogger(CottonPartEqualityOperations.class)
                     .info("Counting socks with countWhereCottonPartMoreThan named query..."),
                             "countWhereCottonPartMoreThan",
             (count) -> LoggerFactory.getLogger(CottonPartEqualityOperations.class)
                     .info("Found " + count + " socks by countWhereCottonPartMoreThan named query")
     ),
+
+    /**
+     * Count socks with cotton part is less than given
+     */
     lessThan("countWhereCottonPartLessThan", LoggerService::warn),
+
+    /**
+     * Count socks with cotton part is given
+     */
     equal("countWhereCottonPartIs", LoggerService::info)
     ;
 
@@ -31,7 +42,7 @@ public enum CottonPartEqualityOperations {
     private final NoParamFunctional before;
 
     /**
-     * Called after socks counting with socks count param if
+     * Called after socks counting with socks count param
      */
     private final OneParamFunctional<Long> after;
 

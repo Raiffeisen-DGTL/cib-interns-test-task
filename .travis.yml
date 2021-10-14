@@ -20,12 +20,12 @@ after_success: |-
     cd apidocs
     git init
     git checkout -b apidocs
-    git pull https://github.com/CrissNamon/raiffeisen-socks-test.git apidocs
+    git pull https://github.com/CrissNamon/cib-interns-test-task.git apidocs
     cp -r ../target/site/apidocs/. ./docs/
     git add .
     git -c user.name='travis' -c user.email='travis' commit -m 'Update docs'
-    git remote add origin https://github.com/CrissNamon/raiffeisen-socks-test.git
+    git remote add origin https://github.com/CrissNamon/cib-interns-test-task.git
     git remote -v
-    git push -q https://CrissNamon:$GITHUB_API_KEY@github.com/CrissNamon/raiffeisen-socks-test.git apidocs &>/dev/null
+    git push -q https://CrissNamon:$GITHUB_API_KEY@github.com/CrissNamon/cib-interns-test-task.git apidocs &>/dev/null
     cd "$TRAVIS_BUILD_DIR"
   fi
