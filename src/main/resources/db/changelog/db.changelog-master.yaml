@@ -1,0 +1,2 @@
+databaseChangeLog:
+  - logicalFilePath: db/chanhelog/db.changelog-master.yaml
