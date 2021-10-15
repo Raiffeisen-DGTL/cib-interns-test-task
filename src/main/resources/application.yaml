@@ -1,0 +1,11 @@
+server:
+  servlet:
+    context-path: /api
+  port: 8099
+
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5433/raiff?currentSchema=public
+    username: postgres
+    password: postgres
+    driver-class-name: org.postgresql.Driver
