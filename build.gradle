@@ -8,6 +8,8 @@ group = 'com.test'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '17'
 
+bootJar{}
+
 repositories {
     mavenCentral()
 }
