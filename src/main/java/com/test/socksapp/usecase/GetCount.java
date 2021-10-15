@@ -1,5 +1,6 @@
 package com.test.socksapp.usecase;
 
+import com.test.socksapp.exception.ValueConstraintValidator;
 import com.test.socksapp.repository.SockRepository;
 import com.test.socksapp.requestmodel.ComparisonOperation;
 
@@ -13,6 +14,9 @@ public class GetCount {
     public int execute(String color,
                        ComparisonOperation operation,
                        int cottonPart) {
+        ValueConstraintValidator.notNullValidate(color);
+        ValueConstraintValidator.percentValidate(cottonPart);
+
         return switch (operation) {
             case equal -> sockRepo.countWhereEqual(color, cottonPart);
             case lessThan -> sockRepo.countWhereLess(color, cottonPart);
