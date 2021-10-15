@@ -1,13 +1,12 @@
 version: '2'
 
 services:
-  app:
+  db:
     build:
       context: .
       dockerfile: Dockerfile
-    container_name: raifaisentask
+    container_name: raifaisentaskdb
     ports:
-      - "80:80"
       - "5432:5432"
     environment:
       - POSTGRES_USER=postgres
