@@ -1,0 +1,4 @@
+joha\ch\raif\domain\Sock.class
+joha\ch\raif\controller\SocksController.class
+joha\ch\raif\RaifApplication.class
+joha\ch\raif\repo\SockRepository.class
