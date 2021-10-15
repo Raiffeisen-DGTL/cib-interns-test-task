@@ -1,0 +1,10 @@
+version: '2'
+services:
+  postgres:
+    image: postgres:10.1
+    volumes:
+      - ./initial_sql_script.sql:/docker-entrypoint-initdb.d/initial_sql_script.sql
+    environment:
+      - POSTGRES_HOST_AUTH_METHOD=trust
+    ports:
+      - 5432:5432
