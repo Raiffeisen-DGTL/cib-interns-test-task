@@ -1,5 +1,6 @@
 package com.test.socksapp.usecase;
 
+import com.test.socksapp.entity.Sock;
 import com.test.socksapp.exception.SockInvalidArgumentException;
 import com.test.socksapp.exception.ValueConstraintValidator;
 import com.test.socksapp.repository.SockRepository;
@@ -20,11 +21,11 @@ public class GetCount {
 
         switch (operation) {
             case equal:
-                return sockRepo.findWhereEqual(color, cottonPart);
+                return sockRepo.findWhereEqual(color, cottonPart).stream().mapToInt(Sock::getQuantity).sum();
             case lessThan:
-                return sockRepo.findWhereLess(color, cottonPart);
+                return sockRepo.findWhereLess(color, cottonPart).stream().mapToInt(Sock::getQuantity).sum();
             case moreThan:
-                return sockRepo.findWhereMore(color, cottonPart);
+                return sockRepo.findWhereMore(color, cottonPart).stream().mapToInt(Sock::getQuantity).sum();
         }
 
         throw new SockInvalidArgumentException();
