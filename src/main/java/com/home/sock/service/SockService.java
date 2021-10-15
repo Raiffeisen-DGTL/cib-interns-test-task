@@ -3,10 +3,10 @@ package com.home.sock.service;
 import com.home.sock.dto.SocksIncomeOutcomeDto;
 import com.home.sock.repository.SockRepository;
 import com.home.sock.models.Color;
-import com.home.sock.models.CottonPart;
+import com.home.sock.models.Composite;
 import com.home.sock.models.Sock;
 import com.home.sock.repository.ColorRepository;
-import com.home.sock.repository.CottonPartRepository;
+import com.home.sock.repository.CompositeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,7 +17,7 @@ public class SockService {
     @Autowired
     SockRepository sockRepository;
     @Autowired
-    CottonPartRepository cottonPartRepository;
+    CompositeRepository compositeRepository;
     @Autowired
     ColorRepository colorRepository;
 
@@ -29,19 +29,19 @@ public class SockService {
         else return colorToDb.get();
     }
 
-    public CottonPart findCottonPartOrSave(int cottonPart) {
-        Optional<CottonPart> cpToDb = this.cottonPartRepository.findOneByCottonPart(cottonPart);
+    public Composite findCottonPartOrSave(int cottonPart) {
+        Optional<Composite> cpToDb = this.compositeRepository.findOneByCottonPart(cottonPart);
         if (cpToDb.isEmpty())
-            return this.cottonPartRepository.save(new CottonPart(cottonPart));
+            return this.compositeRepository.save(new Composite(cottonPart));
         else return cpToDb.get();
     }
 
     public boolean income(SocksIncomeOutcomeDto dto) {
         Optional<Sock> Sock;
         Optional<Color> color = this.colorRepository.findOneByColor(dto.getColor());
-        Optional<CottonPart> cottonPart = this.cottonPartRepository.findOneByCottonPart(dto.getCottonPart());
-        if (color.isPresent() && cottonPart.isPresent()) {
-            Sock = this.sockRepository.findOneByColorAndCottonPart(color.get(), cottonPart.get());
+        Optional<Composite> composite = this.compositeRepository.findOneByCottonPart(dto.getCottonPart());
+        if (color.isPresent() && composite.isPresent()) {
+            Sock = this.sockRepository.findOneByColorAndComposite(color.get(), composite.get());
         } else {
             saveNewPosition(dto);
             return true;
@@ -50,24 +50,24 @@ public class SockService {
             Sock.get().incomeSocks(dto.getQuantity());
             this.sockRepository.save(Sock.get());
         } else {
-            this.sockRepository.save(new Sock(color.get(), dto.getQuantity(), cottonPart.get()));
+            this.sockRepository.save(new Sock(color.get(), dto.getQuantity(), composite.get()));
         }
         return true;
     }
 
     public void saveNewPosition(SocksIncomeOutcomeDto dto) {
         Color color = findColorOrSave(dto.getColor());
-        CottonPart cottonPart = findCottonPartOrSave(dto.getCottonPart());
-        Sock Sock = new Sock(color, dto.getQuantity(), cottonPart);
+        Composite composite = findCottonPartOrSave(dto.getCottonPart());
+        Sock Sock = new Sock(color, dto.getQuantity(), composite);
         this.sockRepository.save(Sock);
     }
 
     public boolean outcome(SocksIncomeOutcomeDto dto) {
         Optional<Sock> Sock;
         Optional<Color> color = this.colorRepository.findOneByColor(dto.getColor());
-        Optional<CottonPart> cottonPart = this.cottonPartRepository.findOneByCottonPart(dto.getCottonPart());
-        if (color.isPresent() && cottonPart.isPresent()) {
-            Sock = this.sockRepository.findOneByColorAndCottonPart(color.get(), cottonPart.get());
+        Optional<Composite> composite = this.compositeRepository.findOneByCottonPart(dto.getCottonPart());
+        if (color.isPresent() && composite.isPresent()) {
+            Sock = this.sockRepository.findOneByColorAndComposite(color.get(), composite.get());
         } else {
             return false;
         }

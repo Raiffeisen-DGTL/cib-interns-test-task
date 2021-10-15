@@ -4,8 +4,8 @@ import javax.persistence.*;
 import java.util.Set;
 
 @Entity
-@Table(name = "cotton_parts")
-public class CottonPart {
+@Table(name = "composites")
+public class Composite {
     @Column(nullable = false)
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "composite_generator")
@@ -15,19 +15,19 @@ public class CottonPart {
     @Column(name = "cotton_part")
     private int cottonPart;
 
-    @OneToMany(mappedBy = "cottonPart", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "composite", cascade = CascadeType.ALL)
     private Set<Sock> socks;
     public long getId() {
         return id;
     }
 
-    public CottonPart() {
+    public Composite() {
     }
-    public CottonPart(int cottonPart) {
+    public Composite(int cottonPart) {
         this.cottonPart = cottonPart;
     }
 
-    public CottonPart(int cottonPart, Set<Sock> socks) {
+    public Composite(int cottonPart, Set<Sock> socks) {
         this.cottonPart = cottonPart;
         this.socks = socks;
     }

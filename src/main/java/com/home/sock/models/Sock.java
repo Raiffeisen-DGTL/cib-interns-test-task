@@ -23,18 +23,18 @@ public class Sock implements Serializable {
   private int quantity;
 
   @ManyToOne(cascade = CascadeType.ALL, optional = false)
-  @JoinColumn(name = "cotton_parts_id")
-  private CottonPart cottonPart;
+  @JoinColumn(name = "composites_id")
+  private Composite composite;
 
 
   public Sock() {
   }
 
 
-  public Sock(Color color, int quantity, CottonPart cottonPart) {
+  public Sock(Color color, int quantity, Composite composite) {
     this.color = color;
     this.quantity = quantity;
-    this.cottonPart = cottonPart;
+    this.composite = composite;
   }
 
   public long getId() {
@@ -61,12 +61,12 @@ public class Sock implements Serializable {
     this.quantity = quantity;
   }
 
-  public CottonPart getCottonPart() {
-    return cottonPart;
+  public Composite getComposite() {
+    return composite;
   }
 
-  public void setCottonPart(CottonPart cottonPart) {
-    this.cottonPart = cottonPart;
+  public void setComposite(Composite composite) {
+    this.composite = composite;
   }
 
 
