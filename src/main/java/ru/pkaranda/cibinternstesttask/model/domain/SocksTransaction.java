@@ -1,5 +1,6 @@
 package ru.pkaranda.cibinternstesttask.model.domain;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -14,6 +15,7 @@ import javax.validation.constraints.Min;
 @Entity
 @Table(name = "socks_transactions")
 @NoArgsConstructor
+@AllArgsConstructor
 public class SocksTransaction {
 
     @Id
@@ -21,14 +23,14 @@ public class SocksTransaction {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "socks_transaction_id_gen")
     private Long id;
 
-    @Column(name = "color_id")
+    @Column(name = "color_id", insertable = false, updatable = false)
     private Long colorId;
 
     @ManyToOne
     @JoinColumn(name = "color_id")
     private SockColor color;
 
-    @Column(name = "transaction_type_id")
+    @Column(name = "transaction_type_id", insertable = false, updatable = false)
     private Long transactionTypeId;
 
     @ManyToOne

@@ -77,3 +77,20 @@ databaseChangeLog:
             constraintName: fk_transaction_type_id
             referencedTableName: transaction_types
             referencedColumnNames: id
+
+  - changeSet:
+      id: fill_transaction_types
+      author: p.karanda
+      changes:
+        - sqlFile:
+            path: dbinit.sql
+  - changeSet:
+      id: add_cotton_part_column
+      author: p.karanda
+      changes:
+        - addColumn:
+            tableName: socks_transactions
+            columns:
+              - column:
+                  name: cotton_part
+                  type: INT

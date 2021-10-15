@@ -7,9 +7,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 import ru.pkaranda.cibinternstesttask.component.MessageComponent;
-import ru.pkaranda.cibinternstesttask.exception.BaseException;
-import ru.pkaranda.cibinternstesttask.exception.ColorNotFoundException;
-import ru.pkaranda.cibinternstesttask.exception.NotEnoughSocksException;
+import ru.pkaranda.cibinternstesttask.exception.*;
 import ru.pkaranda.cibinternstesttask.model.Error;
 import ru.pkaranda.cibinternstesttask.model.Message;
 
@@ -21,13 +19,22 @@ public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionH
 
     @ExceptionHandler(value = {
             ColorNotFoundException.class,
-            NotEnoughSocksException.class
+            NotEnoughSocksException.class,
+            OperationException.class,
+            NotValidCottonPartValueException.class,
+            NotValidQuantityValueException.class
     })
     protected ResponseEntity<Object> handleBaseException(BaseException exception) {
         HttpStatus status = HttpStatus.INTERNAL_SERVER_ERROR;
         if (exception instanceof ColorNotFoundException) {
             status = HttpStatus.NOT_FOUND;
         } else if (exception instanceof NotEnoughSocksException) {
+            status = HttpStatus.BAD_REQUEST;
+        } else if (exception instanceof OperationException) {
+            status = HttpStatus.BAD_REQUEST;
+        } else if (exception instanceof NotValidCottonPartValueException) {
+            status = HttpStatus.BAD_REQUEST;
+        } else if (exception instanceof NotValidQuantityValueException) {
             status = HttpStatus.BAD_REQUEST;
         }
         return buildErrorResult(status, exception.getMsg(), exception.getParams());

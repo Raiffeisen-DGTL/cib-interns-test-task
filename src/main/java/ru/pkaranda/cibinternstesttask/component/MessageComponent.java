@@ -2,7 +2,9 @@ package ru.pkaranda.cibinternstesttask.component;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.MessageSource;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.i18n.LocaleContextHolder;
+import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 import org.springframework.stereotype.Component;
 
 import java.util.Locale;
@@ -10,6 +12,7 @@ import java.util.Locale;
 @Component
 @RequiredArgsConstructor
 public class MessageComponent {
+
 
     private final MessageSource messageSource;
 

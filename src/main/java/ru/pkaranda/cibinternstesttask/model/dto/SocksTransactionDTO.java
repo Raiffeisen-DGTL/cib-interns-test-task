@@ -2,17 +2,18 @@ package ru.pkaranda.cibinternstesttask.model.dto;
 
 import lombok.Builder;
 import lombok.Data;
-import ru.pkaranda.cibinternstesttask.model.domain.OperationType;
+import lombok.NoArgsConstructor;
 import ru.pkaranda.cibinternstesttask.model.domain.SockColor;
+import ru.pkaranda.cibinternstesttask.model.domain.Transaction;
 
 
 @Data
-@Builder
+@NoArgsConstructor
 public class SocksTransactionDTO {
 
     private Long id;
     private SockColor color;
-    private OperationType operation;
+    private Transaction transactionType;
     private int cottonPart;
     private int quantity;
 }

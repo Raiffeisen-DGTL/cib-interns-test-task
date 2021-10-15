@@ -1,5 +1,6 @@
 package ru.pkaranda.cibinternstesttask.model.domain;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -10,6 +11,7 @@ import javax.persistence.*;
 @Entity
 @Table(name = "sock_colors")
 @Builder
+@AllArgsConstructor
 @NoArgsConstructor
 public class SockColor {
 

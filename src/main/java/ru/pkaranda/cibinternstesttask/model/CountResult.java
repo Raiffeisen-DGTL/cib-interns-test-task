@@ -11,6 +11,7 @@ import lombok.Data;
 public class CountResult {
 
     private String color;
+    private String operation;
     private int cottonPart;
     private int quantity;
 }
