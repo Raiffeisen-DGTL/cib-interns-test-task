@@ -1,3 +1,17 @@
+# Задача выполнена
+
+Документация - https://rftask.theenjoy.repl.co/swagger-ui/#/
+
+Пример запроса POST curl windows: 
+
+* curl -X POST -H "Content-Type: application/json" -d "{ \"color\": \"blue\",\"cottonPart\": 17,\"quantity\": 1}" https://rftask.theenjoy.repl.co/api/socks/income
+
+Пример запроса GET:
+* https://rftask.theenjoy.repl.co/api/socks?color=blue&operation=lessTHAN&cottonPart=60
+
+Стек:
+* Java 8, Swagger, Maven, Spring, Lombok, Postgres
+
 # Тестовое задание для Java стажеров
 
 Привет!
