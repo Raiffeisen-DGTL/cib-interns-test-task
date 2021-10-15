@@ -1,0 +1,7 @@
+databaseChangeLog:
+  - include:
+      file: db/changelog/sockscategory/0001-add-socks_category.sql
+  - include:
+      file: db/changelog/sockscounter/0001-add-socks_counter.sql
+  - include:
+      file: db/changelog/filltables/0001-fill-tables.sql
