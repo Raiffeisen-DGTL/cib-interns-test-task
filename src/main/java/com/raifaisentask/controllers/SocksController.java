@@ -23,14 +23,14 @@ public class SocksController {
             throws NoSuchFieldException, BadRequestException {
         String operationSign;
         if (color == null) {
-            if (operationStr == null && cottonPart == null) {
-                throw new BadRequestException();
+            if (operationStr == null || cottonPart == null) {
+                throw new BadRequestException("Отсутствуют параметры отбора!");
             } else {
                 operationSign = SocksCompareOperation.signFromString(operationStr);
                 return socksDao.getSocksQuantityByCottonPart(operationSign, cottonPart);
             }
         } else {
-            if (operationStr == null && cottonPart == null) {
+            if (operationStr == null || cottonPart == null) {
                 return socksDao.getSocksQuantityByColor(color);
             } else {
                 operationSign = SocksCompareOperation.signFromString(operationStr);
