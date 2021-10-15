@@ -29,8 +29,7 @@ public class ApplicationConfig {
     public DataSource dataSource() throws IOException {
         DriverManagerDataSource source = new DriverManagerDataSource();
         source.setDriverClassName(org.postgresql.Driver.class.getName());
-        source.setUrl("jdbc:postgresql://\n" +
-                "ec2-54-216-48-43.eu-west-1.compute.amazonaws.com:5432/dfsht4lreg16br");
+        source.setUrl("jdbc:postgresql://ec2-54-216-48-43.eu-west-1.compute.amazonaws.com:5432/dfsht4lreg16br");
         source.setUsername("cgjbktugedldbr");
         source.setPassword("c3e6e6e9172a5aff074353c1ec31b5fef6259289b0d4a76687348669230a852e");
         Properties properties = new Properties();
