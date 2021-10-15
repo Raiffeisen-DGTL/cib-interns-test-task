@@ -1,0 +1,8 @@
+server:
+  port: 9055
+
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/api_socks_db
+    username: RB
+    password: RB
