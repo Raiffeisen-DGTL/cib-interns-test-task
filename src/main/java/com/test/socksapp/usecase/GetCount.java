@@ -1,5 +1,6 @@
 package com.test.socksapp.usecase;
 
+import com.test.socksapp.exception.SockInvalidArgumentException;
 import com.test.socksapp.exception.ValueConstraintValidator;
 import com.test.socksapp.repository.SockRepository;
 import com.test.socksapp.requestmodel.ComparisonOperation;
@@ -17,10 +18,15 @@ public class GetCount {
         ValueConstraintValidator.notNullValidate(color);
         ValueConstraintValidator.percentValidate(cottonPart);
 
-        return switch (operation) {
-            case equal -> sockRepo.countWhereEqual(color, cottonPart);
-            case lessThan -> sockRepo.countWhereLess(color, cottonPart);
-            case moreThan -> sockRepo.countWhereMore(color, cottonPart);
-        };
+        switch (operation) {
+            case equal:
+                return sockRepo.findWhereEqual(color, cottonPart);
+            case lessThan:
+                return sockRepo.findWhereLess(color, cottonPart);
+            case moreThan:
+                return sockRepo.findWhereMore(color, cottonPart);
+        }
+
+        throw new SockInvalidArgumentException();
     }
 }
