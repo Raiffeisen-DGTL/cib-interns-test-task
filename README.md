@@ -3,9 +3,9 @@
 Я создал простое web приложение с REST api внешним интерфейсом. Для решения задачи был использован фреймворк Spring Boot, система контроля базы данных PostgreSQL и Docker для удобного развертывания приложения. Приложение и база данных завернуты в Docker контейнеры и развернуты на облачном сервере. Написаны JUnit тесты для слоя контроллера и бизнес логики приложения.
 
 ## Как развернуть
-  git clone https://github.com/RussianRightWing/RaiffeisenTask.git
+  git clone -b master https://github.com/cib-interns-test-task.git
   
-  cd RaiffeisenTask/
+  cd cib-interns-test-task/
   
   docker-compose up -d
   
