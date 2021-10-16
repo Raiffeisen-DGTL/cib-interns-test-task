@@ -1,3 +1,12 @@
+## Размещение приложения
+
+Доступные для запроса цвета:
+* "black","blue","green","grey","pink","red","white","yellow"
+
+Примеры запросов:
+* https://belonet.ru/api/socks?color=black&operation=lessThan&cottonPart=10
+* https://belonet.ru/api/socks?color=red&operation=moreThan&cottonPart=90
+
 # Тестовое задание для Java стажеров
 
 Привет!
