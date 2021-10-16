@@ -51,6 +51,10 @@
 			<artifactId>lombok</artifactId>
 			<type>jar</type>
 		</dependency>
+		<dependency>
+			<groupId>org.liquibase</groupId>
+			<artifactId>liquibase-core</artifactId>
+		</dependency>
 	</dependencies>
 
 	<build>

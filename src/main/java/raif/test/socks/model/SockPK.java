@@ -1,4 +1,5 @@
 package raif.test.socks.model;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -11,9 +12,10 @@ import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
 
 
+@EqualsAndHashCode
 public class SockPK implements Serializable {
 
-    @Column(name = "sock_color", length = 64)
+    @Column(name = "sock_color")
     @NotBlank
     private String color;
 
@@ -41,4 +43,5 @@ public class SockPK implements Serializable {
     public void setCottonPart(Byte cottonPart) {
         this.cottonPart = cottonPart;
     }
+
 }

@@ -25,8 +25,6 @@ public class Sock implements Serializable {
     @Column(name = "sock_quantity")
     @NotNull
     @Min(1)
-    @Getter
-    @Setter
     private Integer quantity;
 
     public Sock() { }
