@@ -1,0 +1,40 @@
+version: '3'
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    privileged: true
+    ports:
+      - "8080:8080"
+    depends_on:
+      - my_postgres_db
+
+  my_postgres_db:
+    image: "postgres"
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_USER=root
+      - POSTGRES_PASSWORD=root
+      - POSTGRES_DB=accounting_for_socks
+
+#Для сервера
+#version: '3'
+#services:
+#  app:
+#    image: rus5i/accounting_of_socks
+#    ports:
+#      - "8080:8080"
+#    depends_on:
+#      - my_postgres_db
+#
+#  my_postgres_db:
+#    image: "postgres"
+#    ports:
+#      - "5432:5432"
+#    environment:
+#      - POSTGRES_USER=root
+#      - POSTGRES_PASSWORD=root
+#      - POSTGRES_DB=accounting_for_socks
+#Примечание: очень часто нужно сохранить результат и сразу же выйти из vi, для этого можно просто набрать «:wq».
