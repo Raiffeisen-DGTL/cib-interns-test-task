@@ -1,0 +1,1 @@
+drop constraint if exists socks_color_id_cotton_part_uk;
