@@ -16,6 +16,11 @@
 
 Документация: https://documenter.getpostman.com/view/15653942/UV5WDJK9
 
+Запуск с помощью команды ```./mvnw spring-boot:run```
+
+Приложение развернуто на heroku: https://raiffeisen-socks-storage.herokuapp.com/
+
+В качестве базы данных используется H2.
 
 ## Что нужно сделать
 
