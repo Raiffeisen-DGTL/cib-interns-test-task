@@ -9,9 +9,6 @@ import org.springframework.jdbc.core.JdbcTemplate;
 public class JdbsSocksDao implements SocksDao {
     @Autowired
     private JdbcTemplate jdbcTemplate;
-    private String SQL_CREATE_SOCKS;
-    private String SQL_ADD_SOCKS;
-    private String SQL_REMOVE_SOCKS;
 
     public void setJdbcTemplate(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
@@ -30,8 +27,8 @@ public class JdbsSocksDao implements SocksDao {
 
     @Override
     public Long getSocksQuantityByCottonPart(String operation, int cottonPart) throws BadRequestException {
-        if (cottonPart < 0 || cottonPart > 100) throw
-                new BadRequestException("параметр cottonPart должен быть в пределах [0,100]");
+        if (cottonPart < 0 || cottonPart > 100)
+            throw new BadRequestException("параметр cottonPart должен быть в пределах [0,100]");
 
         String SQL_SELECT_SOCKS_QUANTITY_BY_COTTON_PART = "SELECT sum(quantity) FROM Socks where cotton_Part" + operation + " ? ";
 
@@ -45,7 +42,7 @@ public class JdbsSocksDao implements SocksDao {
     @Override
     public Long getSocksQuantityByColorAndCottonPart(String color, String operation, int cottonPart) throws BadRequestException {
         if (cottonPart < 0 || cottonPart > 100)
-            new BadRequestException("параметр cottonPart должен быть в пределах [0,100]");
+            throw new BadRequestException("параметр cottonPart должен быть в пределах [0,100]");
 
         String SQL_SELECT_SOCKS_QUANTITY_BY_COLOR_AND_COTTON_PART =
                 "SELECT sum(quantity) FROM Socks where color=? and cotton_Part " + operation + " ? ";
