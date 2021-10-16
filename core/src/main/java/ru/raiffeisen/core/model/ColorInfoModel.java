@@ -12,10 +12,16 @@ import javax.persistence.Table;
 @Table(name="colors")
 public class ColorInfoModel {
 
+    /**
+     * Идентификатор цвета.
+     */
     @Id
     @Column(name="id")
     private Long id;
 
+    /**
+     * Название цвета.
+     */
     @Column(name="color")
     private String color;
 }
