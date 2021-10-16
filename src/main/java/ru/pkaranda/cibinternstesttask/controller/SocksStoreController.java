@@ -2,12 +2,10 @@ package ru.pkaranda.cibinternstesttask.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.ComponentScan;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import ru.pkaranda.cibinternstesttask.mapper.common.SocksTransactionMapper;
 import ru.pkaranda.cibinternstesttask.model.CountResult;
+import ru.pkaranda.cibinternstesttask.model.Request;
 import ru.pkaranda.cibinternstesttask.model.dto.SocksTransactionDTO;
 import ru.pkaranda.cibinternstesttask.service.SocksTransactionService;
 
@@ -35,21 +33,23 @@ public class SocksStoreController {
     }
 
     @PostMapping(path = "/api/socks/income")
-    public SocksTransactionDTO registerSocksIncome(@RequestParam String color,
-                                                   @RequestParam @Min(0) @Max(100) int cottonPart,
-                                                   @RequestParam @Min(0) int quantity) {
+    public SocksTransactionDTO registerSocksIncome(@RequestBody Request request) {
 
-        return socksTransactionMapper.domainToDto(socksTransactionService.registerIncome(color, cottonPart, quantity));
+        return socksTransactionMapper.domainToDto(socksTransactionService.registerIncome(
+                request.getColor(),
+                request.getCottonPart(),
+                request.getQuantity()));
 
     }
 
 
     @PostMapping(path = "/api/socks/outcome")
-    public SocksTransactionDTO registerSocksOutcome(@RequestParam String color,
-                                                    @RequestParam @Min(0) @Max(100) int cottonPart,
-                                                    @RequestParam @Min(0) int quantity) {
+    public SocksTransactionDTO registerSocksOutcome(@RequestBody Request request) {
 
-        return socksTransactionMapper.domainToDto(socksTransactionService.registerOutcome(color, cottonPart, quantity));
+        return socksTransactionMapper.domainToDto(socksTransactionService.registerOutcome(
+                request.getColor(),
+                request.getCottonPart(),
+                request.getQuantity()));
     }
 
 }
