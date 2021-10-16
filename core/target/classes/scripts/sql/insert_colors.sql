@@ -1,0 +1,11 @@
+insert into "public".colors (color) values ('Red');
+insert into "public".colors (color) values ('Green');
+insert into "public".colors (color) values ('Orange');
+insert into "public".colors (color) values ('Blue');
+insert into "public".colors (color) values ('Khaki');
+insert into "public".colors (color) values ('Pink');
+insert into "public".colors (color) values ('Fuscia');
+insert into "public".colors (color) values ('Indigo');
+insert into "public".colors (color) values ('Purple');
+insert into "public".colors (color) values ('Teal');
+insert into "public".colors (color) values ('Violet');

@@ -1,0 +1,8 @@
+ru\raiffeisen\core\config\ApplicationConfiguration.class
+ru\raiffeisen\core\controller\StorageController.class
+ru\raiffeisen\core\model\SocksInfoModel.class
+ru\raiffeisen\core\service\StorageServiceImpl.class
+ru\raiffeisen\core\api\StorageService.class
+ru\raiffeisen\core\CoreApplication.class
+ru\raiffeisen\core\model\StorageInfoModel.class
+ru\raiffeisen\core\repository\StorageRepository.class
