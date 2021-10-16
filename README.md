@@ -1,8 +1,8 @@
-#cib-interns-test-task
-##Описание
+# cib-interns-test-task
+## Описание
 Решенное тестовое задание https://github.com/Raiffeisen-DGTL/cib-interns-test-task
 
-##Инструкция по установке
+## Инструкция по установке
 
 - Выкачать исходный код из данного репозитория
 - Установить docker (https://docs.docker.com/engine/install/)
@@ -10,7 +10,7 @@
   docker run --rm --name pgdocker -e POSTGRES_PASSWORD=postgres -e POSTGRES_USER=postgres -e POSTGRES_DB=postgres -d -p 5432:5432 -v $HOME/docker/volumes/postgres:/var/lib/postgresql/data postgres
 - Запустить Spring Boot приложение (CibInternsTestTaskApplication.java)
 
-##Endpoints
+## Endpoints
 
 - POST /socks-store/api/socks/income RequestParams:
 ```
