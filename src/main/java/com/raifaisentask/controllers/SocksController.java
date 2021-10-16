@@ -1,6 +1,6 @@
 package com.raifaisentask.controllers;
 
-import com.raifaisentask.SocksDao;
+import com.raifaisentask.dao.SocksDao;
 import com.raifaisentask.data.BadRequestException;
 import com.raifaisentask.data.Socks;
 import com.raifaisentask.data.SocksCompareOperation;

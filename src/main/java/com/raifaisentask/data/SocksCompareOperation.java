@@ -16,6 +16,6 @@ public enum SocksCompareOperation {
         for (SocksCompareOperation operationEnum : SocksCompareOperation.values()) {
             if (operationEnum.value.equals(op)) return operationEnum.opSign;
         }
-        throw new BadRequestException();
+        throw new BadRequestException("Данная операция сравнения не поддерживается: "+op);
     }
 }

@@ -1,5 +1,7 @@
 package com.raifaisentask;
 
+import com.raifaisentask.dao.JdbsSocksDao;
+import com.raifaisentask.dao.SocksDao;
 import com.raifaisentask.data.Socks;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -12,21 +14,11 @@ import springfox.documentation.spring.web.plugins.Docket;
 
 import javax.sql.DataSource;
 import java.io.IOException;
-import java.util.Properties;
 
 @Configuration
 public class ApplicationConfig {
-
-
-/*
     @Bean
-    public SpitterService spitterService(){
-        return new SpitterServiceImpl();
-    }
-*/
-
-    @Bean
-    public DataSource dataSource() throws IOException {
+    public DataSource dataSource() {
         DriverManagerDataSource source = new DriverManagerDataSource();
         source.setDriverClassName(org.postgresql.Driver.class.getName());
         String dbUrl = System.getenv("JDBC_DATABASE_URL");
@@ -35,28 +27,16 @@ public class ApplicationConfig {
         source.setUrl(dbUrl);
         source.setUsername(username);
         source.setPassword(password);
-        //source.setUrl("jdbc:postgresql://ec2-54-216-48-43.eu-west-1.compute.amazonaws.com:5432/dfsht4lreg16br");
-        //source.setUsername("cgjbktugedldbr");
-        //source.setPassword("c3e6e6e9172a5aff074353c1ec31b5fef6259289b0d4a76687348669230a852e");
-        Properties properties = new Properties();
-
-        ClassLoader classloader = Thread.currentThread().getContextClassLoader();
-        properties.load(classloader.getResourceAsStream("application.properties"));
-        source.setConnectionProperties(properties);
         return source;
     }
 
     @Bean
-    public Socks socks(){
-        return new Socks();
-    }
-    @Bean
-    public JdbcTemplate jdbcTemplate() throws IOException {
+    public JdbcTemplate jdbcTemplate() {
         return new JdbcTemplate(dataSource());
     }
 
     @Bean
-    public SocksDao socksDao() throws IOException {
+    public SocksDao socksDao() {
         JdbsSocksDao socksDao = new JdbsSocksDao();
         socksDao.setJdbcTemplate(jdbcTemplate());
         return socksDao;
@@ -70,10 +50,4 @@ public class ApplicationConfig {
                 .paths(PathSelectors.any())
                 .build();
     }
-/*    @Bean
-    public DataSourceTransactionManager transactionManager(){
-        DataSourceTransactionManager dataSourceTransactionManager = new DataSourceTransactionManager();
-        dataSourceTransactionManager.setDataSource(dataSource());
-        return dataSourceTransactionManager;
-    }*/
 }

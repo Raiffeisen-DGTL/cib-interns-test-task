@@ -1,7 +1,6 @@
 package com.raifaisentask.controllers;
 
 import com.raifaisentask.data.BadRequestException;
-import com.raifaisentask.data.ThereAreNoSuchSocksException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;

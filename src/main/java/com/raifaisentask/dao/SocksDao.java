@@ -1,4 +1,4 @@
-package com.raifaisentask;
+package com.raifaisentask.dao;
 
 import com.raifaisentask.data.BadRequestException;
 
