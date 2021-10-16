@@ -12,17 +12,21 @@
 
 ## Endpoints
 
-- POST /socks-store/api/socks/income RequestParams:
+- POST /socks-store/api/socks/income request body:
 ```
-  1. color (String)
-  2. cottonPart (int в диапазоне от 0 до 100)
-  3. quantity (int больше 0)
+{
+  "color": (String)
+  "cottonPart": (int в диапазоне от 0 до 100)
+  "quantity": (int больше 0)
+}
 ```
 - POST /socks-store/api/socks/outcome
 ```
-  1. color (String)
-  2. cottonPart (int в диапазоне от 0 до 100)
-  3. quantity (int больше 0)
+{
+  "color": (String)
+  "cottonPart": (int в диапазоне от 0 до 100)
+  "quantity": (int больше 0)
+}
 ```
 - GET /socks-store/api/socks
 ```
