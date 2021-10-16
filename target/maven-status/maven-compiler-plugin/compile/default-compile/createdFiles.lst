@@ -1,0 +1,6 @@
+ru\testcase\accountingSocks\model\Socks.class
+ru\testcase\accountingSocks\rest\SocksRestContoller.class
+ru\testcase\accountingSocks\service\SocksServiceImpl.class
+ru\testcase\accountingSocks\service\SocksService.class
+ru\testcase\accountingSocks\SocksApp.class
+ru\testcase\accountingSocks\repository\SocksRepository.class

@@ -1,0 +1,1 @@
+web: java $JAVA_OPTS -jar out/artifacts/socks_jar/socks.jar --port $PORT target/*.war
