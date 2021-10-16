@@ -22,6 +22,7 @@ public class IncomeServiceImpl implements IncomeService {
     @Override
     public void income(List<SocksDto> socksDtos) {
         for (SocksDto req : socksDtos) {
+
             String color = req.getColor();
             short cottonPart = req.getCottonPart();
             int quantity = req.getQuantity();
