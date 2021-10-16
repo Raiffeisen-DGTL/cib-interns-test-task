@@ -15,3 +15,18 @@
 ## Работа с сервисом:
 
 Проект запускается по адресу 127.0.0.1 и порту 8090 либо по адресу ```https://devkabezrooki-raiffeisen-api.herokuapp.com/```, после чего можно обращаться к описанным ниже методам.
+
+### POST /api/socks/income
+Регистрирует приход носков на склад.
+
+Параметры запроса передаются в теле запроса в виде JSON-объекта со следующими атрибутами:
+
+* color — цвет носков, строка из перечня: "black", "white", "red", "orange", "yellow", "green", "blue", "purple", "pink", "brown", "grey", "multi";
+* cottonPart — процентное содержание хлопка в составе носков, целое число от 0 до 100;
+* quantity — количество пар носков, целое число больше 0.
+
+При вводе некорректного значения возвращает сообщение об ошибке и код HTTP 400, при ошибке, не зависящей от вызывающей стороны возвращает код HTTP 500. Если метод сработал корректно, возвращает сообщение "Ok" и код HTTP 200.
+
+Примеры запроса:
+*https://devkabezrooki-raiffeisen-api.herokuapp.com/api/socks/income?color=fghfh&cottonPart=20&quantity=15
+Вернул сообщение: "Uncorrect color, you must choose from:[black, white, red, orange, yellow, green, blue, purple, pink, brown, grey, multi]" и статус 400Bad Request.
