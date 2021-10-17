@@ -63,7 +63,7 @@ public class SocksController {
     @RequestMapping(value = "", method = RequestMethod.GET)
     public ResponseEntity<?> get(@RequestParam("color") String color,
                                  @RequestParam("operation") String operation,
-                                 @RequestParam("cottonPack") Byte cottonPack) {
+                                 @RequestParam("cottonPart") Byte cottonPack) {
         switch (operation) {
             case "moreThan": {
                 Iterable<Sock> socks = socksRepository.findAllByColorAndCottonPartGreaterThan(color, cottonPack);
