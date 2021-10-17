@@ -1,10 +1,9 @@
-package com.github.furetur.raiffeisentask;
+package com.github.furetur.raiffeisentask.db;
 
+import com.github.furetur.raiffeisentask.exceptions.NotEnoughSocksException;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.client.HttpClientErrorException;
 
 
 public interface SocksRepository extends JpaRepository<Socks, Long> {
@@ -24,12 +23,10 @@ public interface SocksRepository extends JpaRepository<Socks, Long> {
     int countByColorAndCottonPart(String color, Integer cottonPart);
 
     @Modifying
-    @Transactional
     @Query(value = "insert into socks (color, cotton_part, quantity) values (?1, ?2, ?3) on conflict (color, cotton_part) do update set quantity = socks.quantity + ?3", nativeQuery = true)
     void addSocks(String color, int cottonPart, int quantity);
 
     @Modifying
-    @Transactional
     default void removeSocks(String color, int cottonPart, int quantity) {
         var socks = findByColorAndCottonPart(color, cottonPart);
         if (socks == null || socks.getQuantity() < quantity) throw new NotEnoughSocksException();

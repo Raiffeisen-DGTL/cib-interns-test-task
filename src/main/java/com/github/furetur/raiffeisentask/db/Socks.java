@@ -1,4 +1,4 @@
-package com.github.furetur.raiffeisentask;
+package com.github.furetur.raiffeisentask.db;
 
 import javax.persistence.*;
 
@@ -33,5 +33,9 @@ public class Socks {
 
     public Integer getQuantity() {
         return quantity;
+    }
+
+    public void setQuantity(int newQuantity) {
+        quantity = newQuantity;
     }
 }

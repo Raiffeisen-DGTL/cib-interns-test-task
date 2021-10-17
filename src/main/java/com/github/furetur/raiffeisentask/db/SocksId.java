@@ -1,4 +1,4 @@
-package com.github.furetur.raiffeisentask;
+package com.github.furetur.raiffeisentask.db;
 
 import javax.persistence.Column;
 import java.io.Serializable;
