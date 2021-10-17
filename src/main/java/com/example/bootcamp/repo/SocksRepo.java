@@ -18,15 +18,15 @@ public interface SocksRepo extends CrudRepository<SocksEntity, Long> {
             " where s.colorEntity = :color")
     List<SocksEntity> findByColor(@Param("color") String color);
 
-    @Query("select sum(s.quantityEntity) from SocksEntity s" +
+    @Query("select coalesce(sum(s.quantityEntity),0) from SocksEntity s" +
             " where s.colorEntity = :color and s.cottonPartEntity > :cotton")
     int findSocksMoreThan(@Param("color") String color, @Param("cotton") int cotton);
 
-    @Query("select sum(s.quantityEntity) from SocksEntity s" +
+    @Query("select coalesce(sum(s.quantityEntity),0) from SocksEntity s" +
             " where s.colorEntity = :color and s.cottonPartEntity = :cotton")
     int findSocksEqual(@Param("color") String color, @Param("cotton") int cotton);
 
-    @Query("select sum(s.quantityEntity) from SocksEntity s" +
+    @Query("select coalesce(sum(s.quantityEntity),0) from SocksEntity s" +
             " where s.colorEntity = :color and s.cottonPartEntity < :cotton")
     int findSocksLessThan(@Param("color") String color, @Param("cotton") int cotton);
 }
