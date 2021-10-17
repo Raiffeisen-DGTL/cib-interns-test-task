@@ -1,6 +1,5 @@
 package com.example.bootcamp.controller;
 
-import com.example.bootcamp.dto.Operation;
 import com.example.bootcamp.dto.SocksDto;
 import com.example.bootcamp.service.GetSocksService;
 import com.example.bootcamp.service.IncomeService;
@@ -35,7 +34,7 @@ public class SocksController {
     }
 
     @GetMapping("/socks")
-    public int getSocks(@RequestParam("color") String color, @RequestParam("operation") Operation operation,
+    public int getSocks(@RequestParam("color") java.lang.String color, @RequestParam("operation") String operation,
                         @RequestParam("cottonPart") short cottonPart) {
         return getSocksService.getSocks(color, operation, cottonPart);
     }

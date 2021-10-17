@@ -1,6 +1,5 @@
 package com.example.bootcamp.service;
 
-import com.example.bootcamp.dto.Operation;
 import com.example.bootcamp.repo.SocksRepo;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -16,13 +15,13 @@ public class GetSocksServiceImpl implements GetSocksService {
 
     @Transactional
     @Override
-    public int getSocks(String color, Operation operation, short cotton) {
+    public int getSocks(String color, String operation, short cotton) {
 
 
         int result = switch (operation) {
-            case moreThan -> socksRepo.findSocksMoreThan(color, cotton);
-            case equal -> socksRepo.findSocksEqual(color, cotton);
-            case lessThan -> socksRepo.findSocksLessThan(color, cotton);
+            case "moreThan" -> socksRepo.findSocksMoreThan(color, cotton);
+            case "equal" -> socksRepo.findSocksEqual(color, cotton);
+            case "lessThan" -> socksRepo.findSocksLessThan(color, cotton);
             default -> throw new RuntimeException("Не верно задан operation " + operation);
         };
 
