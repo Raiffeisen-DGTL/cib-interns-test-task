@@ -1,0 +1,23 @@
+version: '2'
+services:
+  app:
+    image: 'socks-api:latest'
+    ports:
+      - "8080:8080"
+    build:
+      context: .
+    container_name: app
+    depends_on:
+      - db
+    environment:
+      - DB_URL=jdbc:postgresql://db:5432/compose-postgres
+      - DB_USERNAME=compose-postgres
+      - DB_PASSWORD=compose-postgres
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=validate
+
+  db:
+    image: 'postgres:13.1-alpine'
+    container_name: db
+    environment:
+      - POSTGRES_USER=compose-postgres
+      - POSTGRES_PASSWORD=compose-postgres

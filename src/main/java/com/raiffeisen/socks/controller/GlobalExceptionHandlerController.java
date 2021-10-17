@@ -13,17 +13,18 @@ public class GlobalExceptionHandlerController {
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler
     public ErrorMessage notFoundSockExceptionHandler(NotFoundSockException ex) {
-        return new ErrorMessage(HttpStatus.BAD_REQUEST.value(),ex.getMessage());
+        return new ErrorMessage(HttpStatus.BAD_REQUEST.value(), ex.getMessage());
     }
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler
     public ErrorMessage IncorrectFormatExceptionHandler(IncorrectSockFormatException ex) {
-        return new ErrorMessage(HttpStatus.BAD_REQUEST.value(),ex.getMessage());
+        return new ErrorMessage(HttpStatus.BAD_REQUEST.value(), ex.getMessage());
     }
+
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     @ExceptionHandler()
-    public ErrorMessage onNullResult(RuntimeException exception){
+    public ErrorMessage onNullResult(Exception exception) {
         return new ErrorMessage(HttpStatus.INTERNAL_SERVER_ERROR.value(), exception.getMessage());
     }
 }
