@@ -50,6 +50,7 @@ public class SocksServiceImpl implements SocksService {
         final SockDto sockDto = new SockDto();
         sockDto.setColor(color);
         sockDto.setCottonPart(cottonPart);
+        sockDto.setQuantity(0);
         List<Sock> sockList = getSocksListsByOperation(color, operation, cottonPart);
         if (sockList.isEmpty()) {
             throw new NotFoundSockException("Носки с данными параметрами не найдены");
