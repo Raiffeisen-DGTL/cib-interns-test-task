@@ -8,11 +8,11 @@ import java.beans.ConstructorProperties;
 public class SocksDto {
 
     private String color;
-    private short cottonPart;
+    private int cottonPart;
     private int quantity;
 
     @ConstructorProperties({"color", "cottonPart", "quantity"})
-    public SocksDto(String color, short cottonPart, int quantity) {
+    public SocksDto(String color, int cottonPart, int quantity) {
         this.color = color;
         this.cottonPart = cottonPart;
         this.quantity = quantity;

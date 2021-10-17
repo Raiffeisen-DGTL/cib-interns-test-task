@@ -23,11 +23,11 @@ public class SocksEntity implements Serializable {
     @NotEmpty
     private String colorEntity;
 
-    private short cottonPartEntity;
+    private int cottonPartEntity;
 
     private int quantityEntity;
 
-    public SocksEntity(String colorEntity, short cottonPartEntity, int quantityEntity) {
+    public SocksEntity(String colorEntity, int cottonPartEntity, int quantityEntity) {
         this.colorEntity = colorEntity;
         this.cottonPartEntity = cottonPartEntity;
         this.quantityEntity = quantityEntity;

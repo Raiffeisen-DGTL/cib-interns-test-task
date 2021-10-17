@@ -37,9 +37,9 @@ public class BootcampApplicationTest {
     @Transactional
     void setup() {
 
-        socksRepo.save(new SocksEntity("red", (short) 60, 8));
+        socksRepo.save(new SocksEntity("red", 60, 8));
 
-        socksRepo.save(new SocksEntity("black", (short) 90, 15));
+        socksRepo.save(new SocksEntity("black", 90, 15));
 
     }
 

@@ -24,7 +24,7 @@ public class OutcomeServiceImpl implements OutcomeService {
         for (SocksDto req : socksDtos) {
 
             String color = req.getColor();
-            short cottonPart = req.getCottonPart();
+            int cottonPart = req.getCottonPart();
             int quantity = req.getQuantity();
 
             if (quantity < 0) {

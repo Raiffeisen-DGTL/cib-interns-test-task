@@ -12,7 +12,7 @@ public interface SocksRepo extends CrudRepository<SocksEntity, Long> {
 
     @Query("select s from SocksEntity s" +
             " where s.colorEntity = :color and s.cottonPartEntity = :cotton")
-    Optional<SocksEntity> fingByColorAndCotton(@Param("color") String color, @Param("cotton") short cotton);
+    Optional<SocksEntity> fingByColorAndCotton(@Param("color") String color, @Param("cotton") int cotton);
 
     @Query("select s from SocksEntity s" +
             " where s.colorEntity = :color")
@@ -20,13 +20,13 @@ public interface SocksRepo extends CrudRepository<SocksEntity, Long> {
 
     @Query("select sum(s.quantityEntity) from SocksEntity s" +
             " where s.colorEntity = :color and s.cottonPartEntity > :cotton")
-    int findSocksMoreThan(@Param("color") String color, @Param("cotton") short cotton);
+    int findSocksMoreThan(@Param("color") String color, @Param("cotton") int cotton);
 
     @Query("select sum(s.quantityEntity) from SocksEntity s" +
             " where s.colorEntity = :color and s.cottonPartEntity = :cotton")
-    int findSocksEqual(@Param("color") String color, @Param("cotton") short cotton);
+    int findSocksEqual(@Param("color") String color, @Param("cotton") int cotton);
 
     @Query("select sum(s.quantityEntity) from SocksEntity s" +
             " where s.colorEntity = :color and s.cottonPartEntity < :cotton")
-    int findSocksLessThan(@Param("color") String color, @Param("cotton") short cotton);
+    int findSocksLessThan(@Param("color") String color, @Param("cotton") int cotton);
 }

@@ -24,7 +24,7 @@ public class IncomeServiceImpl implements IncomeService {
         for (SocksDto req : socksDtos) {
 
             String color = req.getColor();
-            short cottonPart = req.getCottonPart();
+            int cottonPart = req.getCottonPart();
             int quantity = req.getQuantity();
 
             if (cottonPart < 0 || cottonPart > 100) {

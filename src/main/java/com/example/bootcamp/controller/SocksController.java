@@ -35,7 +35,7 @@ public class SocksController {
 
     @GetMapping("/socks")
     public int getSocks(@RequestParam("color") java.lang.String color, @RequestParam("operation") String operation,
-                        @RequestParam("cottonPart") short cottonPart) {
+                        @RequestParam("cottonPart") int cottonPart) {
         return getSocksService.getSocks(color, operation, cottonPart);
     }
 }

@@ -10,5 +10,5 @@ public interface GetSocksService {
      * @param cotton значение процента хлопка в составе носков из сравнения
      * @return общее количество носков на складе, соответствующих переданным в параметрах критериям запроса
      */
-    int getSocks(String color, java.lang.String operation, short cotton);
+    int getSocks(String color, java.lang.String operation, int cotton);
 }

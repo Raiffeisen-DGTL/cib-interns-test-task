@@ -15,7 +15,7 @@ public class GetSocksServiceImpl implements GetSocksService {
 
     @Transactional
     @Override
-    public int getSocks(String color, String operation, short cotton) {
+    public int getSocks(String color, String operation, int cotton) {
 
 
         int result = switch (operation) {
