@@ -28,8 +28,7 @@ public class SocksServiceImpl implements SocksService {
                 .ifPresentOrElse(sock -> {
                             sock.setQuantity(sock.getQuantity() + sockDto.getQuantity());
                             repository.save(sock);
-                        },
-                        () -> repository.save(createNewSockFromDto(sockDto))
+                        }, () -> repository.save(createNewSockFromDto(sockDto))
                 );
     }
 
