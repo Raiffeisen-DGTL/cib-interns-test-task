@@ -8,10 +8,9 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 @RestControllerAdvice
 public class ExceptionController {
-    @ExceptionHandler(NotEnoughSocksException.class)
-    @ResponseStatus(value = HttpStatus.BAD_REQUEST)
-    public @ResponseBody
-    String handleException(NotEnoughSocksException e) {
-        return e.getMessage();
-    }
+  @ExceptionHandler(NotEnoughSocksException.class)
+  @ResponseStatus(value = HttpStatus.BAD_REQUEST)
+  public @ResponseBody String handleException(NotEnoughSocksException e) {
+    return e.getMessage();
+  }
 }

@@ -6,8 +6,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class RaiffeisenTaskApplication {
 
-    public static void main(String[] args) {
-        SpringApplication.run(RaiffeisenTaskApplication.class, args);
-    }
-
+  public static void main(String[] args) {
+    SpringApplication.run(RaiffeisenTaskApplication.class, args);
+  }
 }

@@ -7,35 +7,33 @@ import javax.persistence.*;
 @IdClass(SocksId.class)
 public class Socks {
 
-    @Id
-    private String color;
+  @Id private String color;
 
-    @Id
-    private Integer cottonPart;
+  @Id private Integer cottonPart;
 
-    private Integer quantity;
+  private Integer quantity;
 
-    protected Socks() {}
+  protected Socks() {}
 
-    public Socks(String color, int cottonPart, int quantity) {
-        this.color = color;
-        this.cottonPart = cottonPart;
-        this.quantity = quantity;
-    }
+  public Socks(String color, int cottonPart, int quantity) {
+    this.color = color;
+    this.cottonPart = cottonPart;
+    this.quantity = quantity;
+  }
 
-    public String getColor() {
-        return color;
-    }
+  public String getColor() {
+    return color;
+  }
 
-    public Integer getCottonPart() {
-        return cottonPart;
-    }
+  public Integer getCottonPart() {
+    return cottonPart;
+  }
 
-    public Integer getQuantity() {
-        return quantity;
-    }
+  public Integer getQuantity() {
+    return quantity;
+  }
 
-    public void setQuantity(int newQuantity) {
-        quantity = newQuantity;
-    }
+  public void setQuantity(int newQuantity) {
+    quantity = newQuantity;
+  }
 }
