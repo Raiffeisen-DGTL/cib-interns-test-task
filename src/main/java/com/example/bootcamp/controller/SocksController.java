@@ -2,6 +2,7 @@ package com.example.bootcamp.controller;
 
 import com.example.bootcamp.dto.Operation;
 import com.example.bootcamp.dto.SocksDto;
+import com.example.bootcamp.service.GetSocksService;
 import com.example.bootcamp.service.IncomeService;
 import com.example.bootcamp.service.OutcomeService;
 import org.springframework.web.bind.annotation.*;
@@ -14,10 +15,13 @@ public class SocksController {
 
     private final IncomeService incomeService;
     private final OutcomeService outcomeService;
+    private final GetSocksService getSocksService;
 
-    public SocksController(IncomeService incomeService, OutcomeService outcomeService) {
+    public SocksController(IncomeService incomeService, OutcomeService outcomeService,
+                           GetSocksService getSocksService) {
         this.incomeService = incomeService;
         this.outcomeService = outcomeService;
+        this.getSocksService = getSocksService;
     }
 
     @PostMapping("/socks/income")
@@ -33,6 +37,6 @@ public class SocksController {
     @GetMapping("/socks")
     public int getSocks(@RequestParam("color") String color, @RequestParam("operation") Operation operation,
                         @RequestParam("cottonPart") short cottonPart) {
-        return 0;
+        return getSocksService.getSocks(color, operation, cottonPart);
     }
 }

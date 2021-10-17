@@ -8,14 +8,25 @@ import org.springframework.data.repository.query.Param;
 import java.util.List;
 import java.util.Optional;
 
-public interface SocksRepo extends CrudRepository<SocksEntity,Long> {
+public interface SocksRepo extends CrudRepository<SocksEntity, Long> {
 
     @Query("select s from SocksEntity s" +
             "where s.colorEntity = :color and s.cottonPartEntity = :cotton")
-    Optional<SocksEntity> fingByColorAndCotton(@Param("color") String color,@Param("cotton") short cotton);
+    Optional<SocksEntity> fingByColorAndCotton(@Param("color") String color, @Param("cotton") short cotton);
 
     @Query("select s from SocksEntity s" +
             "where s.colorEntity = :color")
     List<SocksEntity> findByColor(@Param("color") String color);
 
+    @Query("select sum(s.quantityEntity) from SocksEntity s" +
+            "where s.colorEntity = :color and s.cottonPartEntity > :cotton")
+    int findSocksMoreThan(@Param("color") String color, @Param("cotton") short cotton);
+
+    @Query("select sum(s.quantityEntity) from SocksEntity s" +
+            "where s.colorEntity = :color and s.cottonPartEntity = :cotton")
+    int findSocksEqual(@Param("color") String color, @Param("cotton") short cotton);
+
+    @Query("select sum(s.quantityEntity) from SocksEntity s" +
+            "where s.colorEntity = :color and s.cottonPartEntity < :cotton")
+    int findSocksLessThan(@Param("color") String color, @Param("cotton") short cotton);
 }
