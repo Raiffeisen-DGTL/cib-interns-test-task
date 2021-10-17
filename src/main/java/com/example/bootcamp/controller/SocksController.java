@@ -1,24 +1,38 @@
 package com.example.bootcamp.controller;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RestController;
+import com.example.bootcamp.dto.Operation;
+import com.example.bootcamp.dto.SocksDto;
+import com.example.bootcamp.service.IncomeService;
+import com.example.bootcamp.service.OutcomeService;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
+@RequestMapping("/api")
 public class SocksController {
 
-    @PostMapping("/api/socks/income")
-    public void income() {
+    private final IncomeService incomeService;
+    private final OutcomeService outcomeService;
 
+    public SocksController(IncomeService incomeService, OutcomeService outcomeService) {
+        this.incomeService = incomeService;
+        this.outcomeService = outcomeService;
     }
 
-    @PostMapping("/api/socks/outcome")
-    public void outcome() {
-
+    @PostMapping("/socks/income")
+    public void income(@RequestBody List<SocksDto> socksDtoList) {
+        incomeService.income(socksDtoList);
     }
 
-    @GetMapping("/api/socks")
-    public void getSocks() {
+    @PostMapping("/socks/outcome")
+    public void outcome(@RequestBody List<SocksDto> socksDtoList) {
+        outcomeService.outcome(socksDtoList);
+    }
 
+    @GetMapping("/socks")
+    public int getSocks(@RequestParam("color") String color, @RequestParam("operation") Operation operation,
+                        @RequestParam("cottonPart") short cottonPart) {
+        return 0;
     }
 }
