@@ -10,11 +10,6 @@ public class StringToOperationTypeConverter implements Converter<String, Operati
     @Override
     @Nullable
     public OperationType convert(String source) {
-        return switch (source) {
-            case "moreThan" -> OperationType.MORE_THAN;
-            case "lessThan" -> OperationType.LESS_THAN;
-            case "equal" -> OperationType.EQUAL;
-            default -> null;
-        };
+        return OperationType.getByRestValue(source);
     }
 }
