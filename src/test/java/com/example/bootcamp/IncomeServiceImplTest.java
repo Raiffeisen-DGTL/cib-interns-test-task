@@ -35,11 +35,6 @@ public class IncomeServiceImplTest {
      */
     static final int COTTON_EXISTENT = 40;
 
-    /**
-     * Содержание хлопка в носках,еще не занесенное в базу данных
-     */
-    static final int COTTON_NON_EXISTENT = 70;
-
     IncomeServiceImpl incomeService;
 
     SocksRepo socksRepo;
@@ -54,16 +49,6 @@ public class IncomeServiceImplTest {
                         Optional.of(
                                 new SocksEntity(EXISTENT, COTTON_EXISTENT, QUANTITY)
                         )
-                );
-
-        when(socksRepo.fingByColorAndCotton(EXISTENT, COTTON_NON_EXISTENT))
-                .thenReturn(
-                        Optional.empty()
-                );
-
-        when(socksRepo.fingByColorAndCotton(NON_EXISTENT, COTTON_NON_EXISTENT))
-                .thenReturn(
-                        Optional.empty()
                 );
 
         when(socksRepo.fingByColorAndCotton(NON_EXISTENT, COTTON_EXISTENT))
@@ -92,26 +77,6 @@ public class IncomeServiceImplTest {
     void shouldInsertNewRecordWhenColorNonExistentAndCottonExistent() {
 
         incomeService.income(List.of(new SocksDto(NON_EXISTENT, COTTON_EXISTENT, CNT)));
-        ArgumentCaptor<SocksEntity> argCaptor = ArgumentCaptor.forClass(SocksEntity.class);
-        verify(socksRepo).save(argCaptor.capture());
-
-        assertEquals(CNT, argCaptor.getValue().getQuantityEntity());
-    }
-
-    @Test
-    void shouldInsertNewRecordWhenColorNonExistentAndCottonNonExistent() {
-
-        incomeService.income(List.of(new SocksDto(NON_EXISTENT, COTTON_NON_EXISTENT, CNT)));
-        ArgumentCaptor<SocksEntity> argCaptor = ArgumentCaptor.forClass(SocksEntity.class);
-        verify(socksRepo).save(argCaptor.capture());
-
-        assertEquals(CNT, argCaptor.getValue().getQuantityEntity());
-    }
-
-    @Test
-    void shouldInsertNewRecordWhenColorExistentAndCottonNonExistent() {
-
-        incomeService.income(List.of(new SocksDto(EXISTENT, COTTON_NON_EXISTENT, CNT)));
         ArgumentCaptor<SocksEntity> argCaptor = ArgumentCaptor.forClass(SocksEntity.class);
         verify(socksRepo).save(argCaptor.capture());
 
