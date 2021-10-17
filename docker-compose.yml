@@ -1,0 +1,21 @@
+version: "3.3"
+services:
+  web:
+    build: .
+    container_name: app
+    ports:
+      - "8080:8080"
+    volumes:
+      - .:/repo
+    links:
+      - postgres
+    environment:
+      - JDBC_DATABASE_URL=jdbc:postgresql://postgres:5432/compose
+      - JDBC_DATABASE_USERNAME=compose
+      - JDBC_DATABASE_PASSWORD=compose
+  postgres:
+    image: 'postgres:13.1-alpine'
+    container_name: postgres
+    environment:
+      - POSTGRES_USER=compose
+      - POSTGRES_PASSWORD=compose
