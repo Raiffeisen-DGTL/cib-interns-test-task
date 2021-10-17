@@ -6,6 +6,7 @@ import com.raiffeisen.socks.exceptions.IncorrectSockFormatException;
 import com.raiffeisen.socks.exceptions.NotFoundSockException;
 import com.raiffeisen.socks.model.Sock;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -22,7 +23,7 @@ public class SocksServiceImpl implements SocksService {
 
     @Transactional
     @Override
-    public void registerSocks(SockDto sockDto) {
+    public void registerSocks(@NonNull SockDto sockDto) {
         sockDtoValidation(sockDto);
         repository.getSockByColorAndCottonPart(sockDto.getColor(), sockDto.getCottonPart())
                 .ifPresentOrElse(sock -> {
@@ -34,7 +35,7 @@ public class SocksServiceImpl implements SocksService {
 
     @Transactional
     @Override
-    public void outcomeSocks(SockDto sockDto) {
+    public void outcomeSocks(@NonNull SockDto sockDto) {
         sockDtoValidation(sockDto);
         repository.getSockByColorAndCottonPart(sockDto.getColor(), sockDto.getCottonPart())
                 .ifPresentOrElse(sock -> deleteCertainQuantityOfSocks(sock, sockDto.getQuantity()),
@@ -75,7 +76,7 @@ public class SocksServiceImpl implements SocksService {
     private void sockDtoValidation(SockDto sockDto) {
         if (sockDto == null || sockDto.getColor() == null
                 || sockDto.getCottonPart() == null
-                || sockDto.getQuantity() == null
+                || sockDto.getQuantity() == null || sockDto.getQuantity() <= 0
                 || sockDto.getCottonPart() < 0 || sockDto.getCottonPart() > 100) {
             throw new IncorrectSockFormatException("Некорректный формат объекта");
         }
