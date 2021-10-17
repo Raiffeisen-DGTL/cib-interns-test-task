@@ -2,6 +2,7 @@ package com.raiffeisen.socks.controller;
 
 import com.raiffeisen.socks.dto.SockDto;
 import com.raiffeisen.socks.service.SocksService;
+import com.raiffeisen.socks.service.SocksServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
@@ -10,29 +11,30 @@ import org.springframework.web.bind.annotation.*;
 @Controller
 @RequestMapping("/api/socks")
 public class SocksController {
-    private final SocksService socksService;
+    private final SocksService socksServiceImpl;
 
     @Autowired
-    public SocksController(SocksService socksService) {
-        this.socksService = socksService;
+    public SocksController(SocksService socksServiceImpl) {
+        this.socksServiceImpl = socksServiceImpl;
     }
 
     @ResponseStatus(HttpStatus.OK)
     @PostMapping("/income")
     public void incomeSock(@RequestBody SockDto newSocks) {
-        socksService.registerSocks(newSocks);
+        socksServiceImpl.registerSocks(newSocks);
     }
 
     @ResponseStatus(HttpStatus.OK)
     @PostMapping("/outcome")
     public void outcomeSock(@RequestBody SockDto socksDto) {
-        socksService.outcomeSocks(socksDto);
+        socksServiceImpl.outcomeSocks(socksDto);
     }
 
+    @ResponseStatus(HttpStatus.OK)
     @GetMapping()
     public SockDto getSocks(@RequestParam("color") String color,
                             @RequestParam("operation") String operation,
                             @RequestParam("cottonPart") Integer cottonPart) {
-        return socksService.getSocksByParams(color, operation, cottonPart);
+        return socksServiceImpl.getSocksByParams(color, operation, cottonPart);
     }
 }
