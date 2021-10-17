@@ -1,0 +1,28 @@
+version: "3.8"
+services:
+
+  app-db:
+    image: postgres:13-alpine
+    volumes:
+      - ./app_data:/var/lib/postgresql/data
+    networks:
+      - backend
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_DB: "test"
+      POSTGRES_USER: "test"
+      POSTGRES_PASSWORD: "test"
+      PGDATA : /var/lib/postgresql/data/pgdata
+
+  app:
+    build: .
+    networks:
+      - backend
+    ports:
+      - "8080:8080"
+    depends_on:
+      - app-db
+
+networks:
+  backend:
