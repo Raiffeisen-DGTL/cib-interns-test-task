@@ -15,7 +15,7 @@ public class SocksController {
     this.socksService = socksService;
   }
 
-  @GetMapping("/api/socks")
+  @GetMapping("/socks")
   public int countSocks(
       @RequestParam(name = "color") String color,
       @RequestParam(name = "operation") OperationType operation,
@@ -23,12 +23,12 @@ public class SocksController {
     return socksService.countSocks(color, operation, cottonPart);
   }
 
-  @PostMapping(value = "api/socks/income", consumes = "application/json")
+  @PostMapping(value = "/socks/income", consumes = "application/json")
   public void incomeSocks(@RequestBody SocksJson socks) {
     socksService.addSocks(socks.color(), socks.cottonPart(), socks.quantity());
   }
 
-  @PostMapping(value = "api/socks/outcome", consumes = "application/json")
+  @PostMapping(value = "/socks/outcome", consumes = "application/json")
   public void outcomeSocks(@RequestBody SocksJson socks) {
     socksService.removeSocks(socks.color(), socks.cottonPart(), socks.quantity());
   }
