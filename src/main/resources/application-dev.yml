@@ -1,0 +1,27 @@
+logging:
+  level:
+    root: info
+    web: debug
+    org:
+      hibernate:
+        SQL: debug
+
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/test
+    username: test
+    password: test
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQL10Dialect
+        jdbc:
+          batch_size: 10
+          order_inserts: true
+        generate_statistics: false
+    hibernate:
+      ddl-auto: none
+  liquibase:
+    enabled: true
+
