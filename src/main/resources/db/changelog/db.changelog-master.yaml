@@ -1,0 +1,26 @@
+databaseChangeLog:
+  - logicalFilePath: db/changelog/db.changelog-lesson1.yaml
+  - changeSet:
+      id: 1
+      author: andrew_pavlov
+      changes:
+        - createTable:
+            tableName: "socks"
+            columns:
+              - column:
+                  name: "sock_color"
+                  type: varchar(64)
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: "sock_cotton_part"
+                  type: tinyint
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: "sock_quantity"
+                  type: integer
+                  constraints:
+                    nullable: false
