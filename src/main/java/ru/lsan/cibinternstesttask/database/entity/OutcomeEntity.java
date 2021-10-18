@@ -10,8 +10,8 @@ import java.util.Set;
 
 @Entity
 @Data
-@Table(name = "delivery")
-public class DeliveryEntity {
+@Table(name = "outcome")
+public class OutcomeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -21,8 +21,8 @@ public class DeliveryEntity {
     @Column(name = "date_time", nullable = false)
     private LocalDateTime date_time;
 
-    @OneToMany(mappedBy = "delivery", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "outcome", fetch = FetchType.EAGER)
     @Fetch(FetchMode.SUBSELECT)
-    private Set<DeliveryCompositionEntity> deliveryCompositions;
+    private Set<OutcomeCompositionEntity> outcomeCompositions;
 
 }

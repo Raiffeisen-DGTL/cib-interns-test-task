@@ -20,11 +20,10 @@ public class GoodEntity {
     @Column(name = "color", nullable = false)
     private String color;
 
-    @OneToMany(mappedBy = "good", fetch = FetchType.EAGER)
-    @Fetch(FetchMode.SUBSELECT)
-    private Set<CompositionEntity> compositions;
+    @Column(name = "cottonPart", nullable = false)
+    private Integer cottonPart;
 
     @OneToMany(mappedBy = "good",fetch = FetchType.EAGER)
     @Fetch(FetchMode.SUBSELECT)
-    private Set<DeliveryCompositionEntity> deliveryCompositions;
+    private Set<IncomeCompositionEntity> incomeCompositions;
 }

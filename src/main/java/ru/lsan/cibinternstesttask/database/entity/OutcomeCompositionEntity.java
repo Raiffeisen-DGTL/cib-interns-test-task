@@ -6,8 +6,8 @@ import javax.persistence.*;
 
 @Entity
 @Data
-@Table(name = "sold_composition")
-public class SoldCompositionEntity {
+@Table(name = "outcome_composition")
+public class OutcomeCompositionEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -22,7 +22,7 @@ public class SoldCompositionEntity {
     private Integer count;
 
     @ManyToOne
-    @JoinColumn(name = "sold_id", nullable = false)
-    private SoldEntity sold;
+    @JoinColumn(name = "outcome_id", nullable = false)
+    private OutcomeEntity outcome;
 
 }

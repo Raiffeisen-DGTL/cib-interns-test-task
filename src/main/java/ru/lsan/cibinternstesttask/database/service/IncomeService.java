@@ -1,4 +1,4 @@
 package ru.lsan.cibinternstesttask.database.service;
 
-public interface DeliveryService {
+public interface IncomeService {
 }

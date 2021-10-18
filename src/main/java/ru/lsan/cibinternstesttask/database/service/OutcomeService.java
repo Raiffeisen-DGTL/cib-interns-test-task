@@ -1,4 +1,4 @@
 package ru.lsan.cibinternstesttask.database.service;
 
-public interface CompositionService {
+public interface OutcomeService {
 }
