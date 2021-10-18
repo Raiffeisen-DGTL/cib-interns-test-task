@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>DATABASE</ID>
+  <OriginalElement>cb1d6b01-ddc2-4264-abe7-100e2a554492.TABLE:test.public.socks</OriginalElement>
+  <nodes>
+    <node x="0.0" y="0.0">cb1d6b01-ddc2-4264-abe7-100e2a554492.TABLE:test.public.socks</node>
+  </nodes>
+  <notes />
+  <edges />
+  <settings layout="Hierarchic" zoom="1.0" showDependencies="false" x="82.0" y="61.0" />
+  <SelectedNodes>
+    <node>cb1d6b01-ddc2-4264-abe7-100e2a554492.TABLE:test.public.socks</node>
+  </SelectedNodes>
+  <Categories>
+    <Category>Columns</Category>
+    <Category>Comments</Category>
+    <Category>Key columns</Category>
+    <Category>Virtual foreign keys</Category>
+  </Categories>
+</Diagram>
+
