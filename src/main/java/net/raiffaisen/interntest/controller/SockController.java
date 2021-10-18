@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 //@CrossOrigin(origins = "http://localhost:8081")
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/socks")
 public class SockController {
 
     @Autowired
@@ -21,17 +21,11 @@ public class SockController {
 
     @GetMapping("/index")
     public List<Sock> getAllSocks(){
-        try {
-            List<Sock> socks = new ArrayList<Sock>();
+        return sockRepository.findAll();
+    }
 
-               return sockRepository.findAll();
-
-            if (socks.isEmpty()) {
-                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-            }
-            return new ResponseEntity<>(socks, HttpStatus.OK);
-        } catch (Exception e) {
-            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
-        }
+    @PostMapping("/income")
+    public Sock incomeSocks(@RequestBody Sock sock){
+        return sockRepository.save(sock);
     }
 }
