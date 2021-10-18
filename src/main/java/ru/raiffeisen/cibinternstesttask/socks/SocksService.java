@@ -72,17 +72,9 @@ public class SocksService {
         socks.setQuantity(quantity);
     }
 
-    private Operation findOperationOrThrow(List<Operation> opList, String opName) {
-        return opList.stream()
-                .filter(o -> opName.equals(o.getOperationName()))
-                .findAny()
-                .orElseThrow(() -> new ResponseStatusException(
-                        HttpStatus.BAD_REQUEST,
-                        "Unsupported operation"));
-    }
-
     private Operation getOperation(String opName) {
-        return findOperationOrThrow(Operation.getOperationList(socksRepository), opName);
+        return Operation.findOperationOrThrow(
+                Operation.getOperationList(socksRepository), opName);
     }
 
     private void checkCottonPart(Short cottonPart) {
