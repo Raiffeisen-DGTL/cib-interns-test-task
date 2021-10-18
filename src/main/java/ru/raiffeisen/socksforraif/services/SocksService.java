@@ -52,6 +52,14 @@ public class SocksService {
         jsonIsValid(socksJson).orElseThrow(() -> new BadRequestException("json file error, absence of property(ies)"));
         Optional<Socks> socks = socksRepo.findByColorAndCottonPart(socksJson.getColor(), socksJson.getCottonPart());
         socks.ifPresent(raifSocks -> socksRepo.save(raifSocks.setQuantity(raifSocks.getQuantity() + socksJson.getQuantity())));
+        if (!socks.isPresent()){
+            socksRepo.save(
+                    new Socks()
+                            .setColor(socksJson.getColor())
+                            .setCottonPart(socksJson.getCottonPart())
+                            .setQuantity(socksJson.getQuantity())
+            );
+        }
     }
 
     public void socksOutcome(SocksJson socksJson) {
