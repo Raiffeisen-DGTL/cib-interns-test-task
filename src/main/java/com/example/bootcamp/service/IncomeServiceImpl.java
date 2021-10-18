@@ -39,7 +39,7 @@ public class IncomeServiceImpl implements IncomeService {
 
             if (socksEntity.isPresent()) {
                 SocksEntity socksPresent = socksEntity.get();
-                socksPresent.setQuantityEntity(quantity);
+                socksPresent.setQuantityEntity(socksPresent.getQuantityEntity() + quantity);
                 socksRepo.save(socksPresent);
             } else {
                 socksRepo.save(new

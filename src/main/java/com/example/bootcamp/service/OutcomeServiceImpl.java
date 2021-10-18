@@ -46,7 +46,7 @@ public class OutcomeServiceImpl implements OutcomeService {
                     int quantityEntity = socks.getQuantityEntity();
 
                     if (quantityEntity > quantity) {
-                        socks.setQuantityEntity(-quantity);
+                        socks.setQuantityEntity(socks.getQuantityEntity() - quantity);
                         socksRepo.save(socks);
                     } else if (quantityEntity == quantity) {
                         socksRepo.delete(socks);

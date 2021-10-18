@@ -21,10 +21,11 @@ public class OutcomeServiceImplTest {
     static final int QUANTITY = 50;
     static final int CNT_LESS_THAN_EXISTENT = 6;
     static final int CNT_BIGGER_THAN_EXISTENT = 88;
+
     /**
      * Цвет имеющихся в базе пар носков.
      */
-    static final String EXISTENT = "Existent";
+    static final String EXISTENT = "red";
 
     /**
      * Цвет отсутствующих в базе пар носков.
@@ -52,6 +53,13 @@ public class OutcomeServiceImplTest {
                         )
                 );
 
+        when(socksRepo.findByColor(EXISTENT))
+                .thenReturn(
+                        List.of(
+                                new SocksEntity(EXISTENT, COTTON_EXISTENT, QUANTITY)
+                        )
+                );
+
         when(socksRepo.fingByColorAndCotton(NON_EXISTENT, COTTON_EXISTENT))
                 .thenReturn(
                         Optional.empty()
@@ -61,7 +69,7 @@ public class OutcomeServiceImplTest {
     }
 
     @Test
-    void проверитьСлучайКогдаБеретсяКоличествоТовараМеньшеОстатка() {
+    void checkTheCaseWhenTheNumberOfSocksIsTakenLessThanTheRemainder() {
 
         outcomeService.outcome(List.of(new SocksDto(EXISTENT, COTTON_EXISTENT, CNT_LESS_THAN_EXISTENT)));
 
@@ -72,7 +80,7 @@ public class OutcomeServiceImplTest {
     }
 
     @Test
-    void проверитьСлучайКогдаТоБеретсяКоличествоТовараБольшеОстатка() {
+    void checkTheCaseWhenTheNumberOfSocksIsTakenMoreThanTheRemainder() {
 
         Assertions.assertThrows(
                 RuntimeException.class,
@@ -82,7 +90,7 @@ public class OutcomeServiceImplTest {
     }
 
     @Test
-    void проверитьСлучайКогдаБеретсяКоличествоТовараРавноеОстатку() {
+    void checkTheCaseWhenTheNumberOfSocksIsTakenEqualToTheRemainder() {
 
         outcomeService.outcome(List.of(new SocksDto(EXISTENT, COTTON_EXISTENT, QUANTITY)));
         verify(socksRepo).delete(any());
@@ -91,7 +99,7 @@ public class OutcomeServiceImplTest {
     }
 
     @Test
-    void проверитьСлучайКогдаЗадаетсяНесуществующееПоле() {
+    void checkTheCaseWhenNonExistentColorIsSet() {
         Assertions.assertThrows(
                 RuntimeException.class,
                 () -> outcomeService.outcome(List.of(new SocksDto(NON_EXISTENT, COTTON_EXISTENT, CNT_LESS_THAN_EXISTENT)))
@@ -99,7 +107,7 @@ public class OutcomeServiceImplTest {
     }
 
     @Test
-    void проверитьСлучайКогдаПоступаетПустойЗапрос() {
+    void checkEmptyRequest() {
         outcomeService.outcome(List.of());
 
         verifyNoInteractions(outcomeService);

@@ -59,10 +59,6 @@ public class IncomeServiceImplTest {
         incomeService = new IncomeServiceImpl(socksRepo);
     }
 
-    /**
-     * quantityEntity у записи увеличивается на величину переданное в параметре, если запись существует.
-     */
-
     @Test
     void shouldIncreaseSocksQuantityWhenEntityExistent() {
 

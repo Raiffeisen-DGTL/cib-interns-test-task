@@ -94,7 +94,7 @@ public class BootcampApplicationTest {
 
 
         String resultBlack = mockMvc.perform(get
-                        ("/api/socks?color=red&operation=equal&cottonPart=90"))
+                        ("/api/socks?color=black&operation=equal&cottonPart=90"))
                 .andReturn().getResponse().getContentAsString();
 
         Integer countBlack = mapper.readValue(resultBlack, new TypeReference<>() {

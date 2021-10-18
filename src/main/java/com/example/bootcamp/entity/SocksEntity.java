@@ -3,6 +3,7 @@ package com.example.bootcamp.entity;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.lang.Nullable;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
@@ -23,8 +24,10 @@ public class SocksEntity implements Serializable {
     @NotEmpty
     private String colorEntity;
 
+    @Column(nullable = false)
     private int cottonPartEntity;
 
+    @Column(nullable = false)
     private int quantityEntity;
 
     public SocksEntity(String colorEntity, int cottonPartEntity, int quantityEntity) {
