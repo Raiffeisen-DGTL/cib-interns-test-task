@@ -1,0 +1,39 @@
+### income example
+POST http://localhost:8080/api/socks/income
+Content-Type: application/json
+
+{
+  "color": "0",
+  "cottonPart": "60",
+  "quantity": "10"
+}
+
+### income example BAD REQUEST
+POST http://localhost:8080/api/socks/income
+Content-Type: application/json
+
+{
+  "color": "black",
+  "cottonPart": "120",
+  "quantity": "10"
+}
+
+### outcome example
+POST http://localhost:8080/api/socks/outcome
+Content-Type: application/json
+
+{
+  "color": "black",
+  "cottonPart": "60",
+  "quantity": "5"
+}
+
+### outcome example BAD REQUEST
+POST http://localhost:8080/api/socks/outcome
+Content-Type: application/json
+
+{
+  "color": "black",
+  "cottonPart": "50",
+  "quantity": "100000"
+}
