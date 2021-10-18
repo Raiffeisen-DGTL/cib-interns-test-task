@@ -5,6 +5,9 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
+/**
+ * Используется для получения данных в SocksController о количестве и типе носков.
+ */
 public record SocksDto(
         @NotBlank(message = "Color must not be blank")
         String color,

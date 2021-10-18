@@ -2,7 +2,6 @@ package ru.raiffeisen.cibinternstesttask.socks;
 
 import java.util.List;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -11,14 +10,24 @@ import ru.raiffeisen.cibinternstesttask.operations.Operation;
 import ru.raiffeisen.cibinternstesttask.socks.dto.QuantityDto;
 import ru.raiffeisen.cibinternstesttask.socks.dto.SocksDto;
 
+/**
+ * Предоставляет методы для обработки запросов к Socks.
+ */
 @Service
-@Slf4j
 @RequiredArgsConstructor
 public class SocksService {
 
     private final SocksRepository socksRepository;
     private final ColorRepository colorRepository;
 
+    /**
+     * Обрабатывает приход носков. Получает DTO и проверяет, есть ли носки с таким
+     * сочетанием параметров в базе данных.
+     * Если есть - увеличивает количество носков указанного типа.
+     * Если подходящая запись не найдена - создает сущность с указанными параметрами.
+     *
+     * @param dto SocksDto
+     */
     @Transactional
     public void income(SocksDto dto) {
         var color = colorRepository.save(Color.of(dto.color()));
@@ -29,6 +38,15 @@ public class SocksService {
         increaseQty(dto, socks);
     }
 
+    /**
+     * Обрабатывает расход носков. Получает DTO и проверяет, есть ли носки с таким
+     * сочетанием параметров в базе данных.
+     * Если есть - уменьшает количество носков на указанное в запросе число.
+     * Если нет - выбрасывает ResponseStatusException с HTTP 400.
+     * Если количество в запросе больше чем есть базе, также выбрасывает исключение с HTTP 400.
+     *
+     * @param dto SocksDto
+     */
     @Transactional
     public void outcome(SocksDto dto) {
         var color = getColorOrThrow(dto.color());
@@ -42,6 +60,21 @@ public class SocksService {
         decreaseQty(dto, socks);
     }
 
+    /**
+     * Возвращает количество носков, подходящих под указанные параметры.
+     * Если подходящих записей в базе данных нет, возвращает ноль.
+     * Параметры:
+     * - color — цвет носков, строка;
+     * - operation — оператор сравнения значения количества хлопка в составе носков,
+     * одно значение из: moreThan, lessThan, equal;
+     * - cottonPart — значение процента хлопка в составе носков из сравнения,
+     * целое число от 0 до 100.
+     *
+     * @param colorName название цвета
+     * @param opName название операции
+     * @param cottonPart содержание хлопка
+     * @return QuantityDto
+     */
     public QuantityDto getSocksQuantity(String colorName, String opName, Short cottonPart) {
         checkCottonPart(cottonPart);
         var socksList = getOperation(opName)
@@ -50,6 +83,12 @@ public class SocksService {
         return new QuantityDto(quantity);
     }
 
+    /**
+     * Возвращает сущность Color из базы данных или выбрасывает исключение.
+     *
+     * @param colorName название цвета
+     * @return Color
+     */
     private Color getColorOrThrow(String colorName) {
         return colorRepository
                 .findByName(colorName)
@@ -58,10 +97,24 @@ public class SocksService {
                         "No color found with name " + colorName));
     }
 
+    /**
+     * Увеличивает количество полученных носков на значение, указанное в DTO.
+     *
+     * @param dto dto
+     * @param socks socks
+     */
     private void increaseQty(SocksDto dto, Socks socks) {
         socks.setQuantity(socks.getQuantity() + dto.quantity());
     }
 
+    /**
+     * Уменьшает количество полученных носков на значение, указанное в DTO.
+     * Выбрасывает исключение ResponseStatusException с кодом HTTP 400,
+     * если носков в базе меньше, чем значение в DTO.
+     *
+     * @param dto dto
+     * @param socks socks
+     */
     private void decreaseQty(SocksDto dto, Socks socks) {
         var quantity = socks.getQuantity() - dto.quantity();
         if (quantity < 0) {
@@ -72,11 +125,24 @@ public class SocksService {
         socks.setQuantity(quantity);
     }
 
+    /**
+     * Возвращает экземпляр класса, соответствующий названию операции или
+     * выбрасывает ResponseStatusException с кодом HTTP 400.
+     *
+     * @param opName название операции
+     * @return Operation
+     */
     private Operation getOperation(String opName) {
         return Operation.findOperationOrThrow(
                 Operation.getOperationList(socksRepository), opName);
     }
 
+    /**
+     * Проверяет количество хлопка соответствие диапазону значений 0 <= cottonPart <= 100.
+     * Если не соответствует, выбрасывает исключение ResponseStatusException с HTTP 400.
+     *
+     * @param cottonPart количество хлопка
+     */
     private void checkCottonPart(Short cottonPart) {
         if (cottonPart < 0 || cottonPart > 100) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
@@ -84,6 +150,12 @@ public class SocksService {
         }
     }
 
+    /**
+     * Суммирует количество всех носков в переданном списке.
+     *
+     * @param socksList список с Socks
+     * @return количество носков
+     */
     private int countSocks(List<Socks> socksList) {
         var result = 0;
         for (var item : socksList) {

@@ -19,6 +19,9 @@ import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
+/**
+ * Пара носков.
+ */
 @Getter
 @Setter
 @ToString
@@ -48,6 +51,14 @@ public class Socks {
     @JoinColumn(name = "color_name")
     private Color color;
 
+    /**
+     * Возвращает носки.
+     *
+     * @param color цвет
+     * @param cottonPart содержание хлопка
+     * @param quantity количество на складе
+     * @return Socks
+     */
     public static Socks of(Color color, Short cottonPart, Integer quantity) {
         var socks = new Socks();
         socks.setColor(color);

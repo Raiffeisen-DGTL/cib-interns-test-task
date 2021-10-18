@@ -13,6 +13,9 @@ import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
+/**
+ * Цвет носков.
+ */
 @Getter
 @Setter
 @ToString
@@ -29,6 +32,12 @@ public class Color {
     @ToString.Exclude
     private List<Socks> socks = new ArrayList<>();
 
+    /**
+     * Возвращает объект с цветом носков.
+     *
+     * @param name название цвета
+     * @return Color
+     */
     public static Color of(String name) {
         var color = new Color();
         color.setName(name);
