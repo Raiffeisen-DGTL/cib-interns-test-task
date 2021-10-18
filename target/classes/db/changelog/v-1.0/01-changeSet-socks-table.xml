@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+
+    <changeSet id="10" author="o.akkulov">
+        <sqlFile dbms="postgresql"
+                 encoding="utf8"
+                 endDelimiter="\nGO"
+                 relativeToChangelogFile="true"
+                 splitStatements="true"
+                 stripComments="true"
+                 path="V202110082002_create_table_socks.sql"/>
+        <rollback>
+            <sqlFile dbms="postgresql"
+                     encoding="utf8"
+                     endDelimiter="\nGO"
+                     relativeToChangelogFile="true"
+                     splitStatements="true"
+                     stripComments="true"
+                     path="V202110082025_drop_table_socks.sql"/>
+        </rollback>
+    </changeSet>
+
+</databaseChangeLog>
