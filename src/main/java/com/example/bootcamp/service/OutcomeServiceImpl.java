@@ -23,7 +23,7 @@ public class OutcomeServiceImpl implements OutcomeService {
     public void outcome(List<SocksDto> socksDtos) {
         for (SocksDto req : socksDtos) {
 
-            String color = req.getColor();
+            String color = req.getColor().toUpperCase();
             int cottonPart = req.getCottonPart();
             int quantity = req.getQuantity();
 

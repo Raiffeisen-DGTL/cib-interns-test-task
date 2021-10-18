@@ -23,7 +23,7 @@ public class IncomeServiceImpl implements IncomeService {
     public void income(List<SocksDto> socksDtos) {
         for (SocksDto req : socksDtos) {
 
-            String color = req.getColor();
+            String color = req.getColor().toUpperCase();
             int cottonPart = req.getCottonPart();
             int quantity = req.getQuantity();
 

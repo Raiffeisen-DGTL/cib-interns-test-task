@@ -25,7 +25,7 @@ public class OutcomeServiceImplTest {
     /**
      * Цвет имеющихся в базе пар носков.
      */
-    static final String EXISTENT = "red";
+    static final String EXISTENT = "red".toUpperCase();
 
     /**
      * Цвет отсутствующих в базе пар носков.
@@ -104,13 +104,6 @@ public class OutcomeServiceImplTest {
                 RuntimeException.class,
                 () -> outcomeService.outcome(List.of(new SocksDto(NON_EXISTENT, COTTON_EXISTENT, CNT_LESS_THAN_EXISTENT)))
         );
-    }
-
-    @Test
-    void checkEmptyRequest() {
-        outcomeService.outcome(List.of());
-
-        verifyNoInteractions(outcomeService);
     }
 
     @Test

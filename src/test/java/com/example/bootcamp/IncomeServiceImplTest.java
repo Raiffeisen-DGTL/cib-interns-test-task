@@ -22,7 +22,7 @@ public class IncomeServiceImplTest {
     /**
      * Цвет имеющихся в базе пар носков.
      */
-    static final String EXISTENT = "Existent";
+    static final String EXISTENT = "Existent".toUpperCase();
 
     /**
      * Цвет отсутствующих в базе пар носков.
