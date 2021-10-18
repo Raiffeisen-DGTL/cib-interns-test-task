@@ -3,6 +3,7 @@ package com.example.bootcamp;
 import com.example.bootcamp.dto.SocksDto;
 import com.example.bootcamp.entity.SocksEntity;
 import com.example.bootcamp.repo.SocksRepo;
+import com.example.bootcamp.service.OutcomeService;
 import com.example.bootcamp.service.OutcomeServiceImpl;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -38,7 +39,7 @@ public class OutcomeServiceImplTest {
      */
     static final int COTTON_EXISTENT = 40;
 
-    OutcomeServiceImpl outcomeService;
+    OutcomeService outcomeService;
 
     SocksRepo socksRepo;
 

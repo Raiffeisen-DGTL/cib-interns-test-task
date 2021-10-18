@@ -16,12 +16,17 @@ public class GetSocksServiceImpl implements GetSocksService {
     @Transactional
     @Override
     public int getSocks(String color, String operation, int cotton) {
+        if (cotton < 0 || cotton > 100) {
+            throw new RuntimeException("Неверно задано значение cotton.Значение должно быть " +
+                    "целым числом в диапазоне от 0 до 100");
+        }
 
-
-        int result = switch (operation) {
-            case "moreThan" -> socksRepo.findSocksMoreThan(color, cotton);
-            case "equal" -> socksRepo.findSocksEqual(color, cotton);
-            case "lessThan" -> socksRepo.findSocksLessThan(color, cotton);
+        String colorToUpperCase = color.toUpperCase();
+        String operationToUpperCase = operation.toUpperCase();
+        int result = switch (operationToUpperCase) {
+            case "MORETHAN" -> socksRepo.findSocksMoreThan(colorToUpperCase, cotton);
+            case "EQUAL" -> socksRepo.findSocksEqual(colorToUpperCase, cotton);
+            case "LESSTHAN" -> socksRepo.findSocksLessThan(colorToUpperCase, cotton);
             default -> throw new RuntimeException("Не верно задан operation " + operation);
         };
 
