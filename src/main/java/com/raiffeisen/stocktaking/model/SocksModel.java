@@ -28,7 +28,7 @@ public class SocksModel {
     )
     private Long id;
 
-    @NonNull
+    @NotNull
     @NotBlank(message = "color is mandatory")
     private String color;
 
