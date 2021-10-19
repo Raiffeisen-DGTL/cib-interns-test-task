@@ -1,0 +1,29 @@
+version: '3.3'
+
+services:
+  j-app:
+    image: lugalkiennn/j-app:0.0.3
+#    image: j-app
+    container_name: j-app-docker
+    depends_on:
+      j-db:
+        condition: service_healthy
+    restart: always
+    ports:
+      - '8080:8080'
+  j-db:
+    container_name: j-db-docker
+    image: mysql:8.0.26
+    restart: always
+    environment:
+      MYSQL_USER: 'bestuser'
+      MYSQL_PASSWORD: 'bestuser'
+      MYSQL_DATABASE: 'j_db_socks'
+      MYSQL_ROOT_PASSWORD: 'springcourse'
+    ports:
+      - '4306:3306'
+    healthcheck:
+      test: ["CMD", 'mysqladmin', 'ping', '-h', 'localhost', '-u', 'root', '-p$$MYSQL_ROOT_PASSWORD' ]
+      interval: 30s
+      timeout: 10s
+      retries: 5
