@@ -32,11 +32,16 @@ public class SocksTransactionService {
             throw new NotValidCottonPartValueException(Message.WRONG_COTTON_PART_VALUE, cottonPart);
         }
 
+
         int number = 0;
-        OperationType operation = OperationType.valueOfLabel(operationType);
-        if (operation == null) {
-            throw new OperationException(Message.WRONG_OPERATION, operationType);
+        OperationType operation = OperationType.EMPTY;
+        if (operationType != null) {
+            operation = OperationType.valueOfLabel(operationType);
+            if (operation == null) {
+                throw new OperationException(Message.WRONG_OPERATION, operationType);
+            }
         }
+
         Long colorId = sockColorRepository.getSockColorByColor(color).orElseThrow(
                 () -> new ColorNotFoundException(Message.COLOR_NOT_FOUND, color)).getId();
 
@@ -56,6 +61,10 @@ public class SocksTransactionService {
             case EQUAL:
                 number = countNumberOfSocks(socksTransactionRepository
                         .getSocksTransactionsByColorIdAndCottonPartEquals(colorId, cottonPart));
+                break;
+
+            case EMPTY:
+                number = countNumberOfSocks(socksTransactionRepository.getSocksTransactionsByColorId(colorId));
                 break;
 
         }

@@ -3,7 +3,9 @@ package ru.pkaranda.cibinternstesttask.model.domain;
 public enum OperationType {
     MORE_THAN("moreThan"),
     LESS_THAN("lessThan"),
-    EQUAL("equal");
+    EQUAL("equal"),
+    EMPTY("");
+
 
     private final String value;
 
