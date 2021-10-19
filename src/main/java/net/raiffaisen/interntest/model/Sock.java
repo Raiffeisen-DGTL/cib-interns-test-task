@@ -3,6 +3,7 @@ package net.raiffaisen.interntest.model;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.data.annotation.CreatedDate;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -15,13 +16,13 @@ import java.util.Date;
         allowGetters = true)
 public class Sock {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    //@GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
-
+    
     @Column(name = "color")
     private String color;
 
-    @Column(name = "cottonPart")
+    @Column(name = "cotton_part")
     private int cottonPart;
 
     @Column(name = "quantity")
@@ -29,6 +30,7 @@ public class Sock {
 
     @Column(name = "created_at",nullable = true)
     @Temporal(TemporalType.TIMESTAMP)
+    @CreatedDate
     private Date created_at;
 
     @Override

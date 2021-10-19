@@ -25,7 +25,13 @@ public class SockController {
     }
 
     @PostMapping("/income")
-    public Sock incomeSocks(@RequestBody Sock sock){
+    public Sock incomeSocks(
+            @RequestParam String color,
+            @RequestParam Integer cottonPart,
+            @RequestParam Integer quantity,
+            @RequestBody Sock sock){
         return sockRepository.save(sock);
     }
+
+
 }
