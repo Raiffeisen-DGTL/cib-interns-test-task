@@ -1,0 +1,44 @@
+plugins {
+    id 'org.springframework.boot' version '2.5.5'
+    id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+    id "org.flywaydb.flyway" version "8.0.1"
+    id 'java'
+}
+
+group = 'ru.ikuzin.DGTLTask'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = "14"
+
+configurations {
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-web:2.5.5'
+    implementation 'org.flywaydb:flyway-core:8.0.0'
+    implementation 'org.springframework.boot:spring-boot-starter-validation:2.5.5'
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa:2.5.5'
+    compileOnly 'org.projectlombok:lombok:1.18.22'
+    developmentOnly 'org.springframework.boot:spring-boot-devtools:2.5.5'
+    implementation 'org.postgresql:postgresql:42.2.24.jre7'
+    annotationProcessor 'org.projectlombok:lombok:1.18.22'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test:2.5.5'
+}
+
+test {
+    useJUnitPlatform()
+}
+
+flyway {
+    url =
+    user =
+    password =
+    schemas =
+}
+targetCompatibility = JavaVersion.VERSION_14
