@@ -1,0 +1,21 @@
+POST {{host}}/api/socks/income
+Content-Type: application/json
+
+{
+  "color": "red",
+  "cottonPart" : 27,
+  "quantity": 10
+}
+
+###
+POST {{host}}/api/socks/outcome
+Content-Type: application/json
+
+{
+  "color": "red",
+  "cottonPart" : 27,
+  "quantity": 3
+}
+
+###
+GET {{host}}/api/socks?color=red&operation=moreThan&cottonPart=9
