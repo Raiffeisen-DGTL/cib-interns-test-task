@@ -52,7 +52,7 @@ public class SocksService {
         else
             throw new EntityNotFoundException(String.format(
                     "There is no '%s' socks with '%d' cottonPart in stock.",
-                    socks.getColor(), socks.getQuantity()));
+                    socks.getColor(), socks.getCottonPart()));
     }
 
     public long getSocksQuantity(String color, String operation, int cottonPart) {
