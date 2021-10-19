@@ -3,7 +3,7 @@
 1. Тестовое задание выполнено на Spring. Приложение реализовано в модуле service.
 2. Контроль версий базы данных выполнен на liquibase. Реализовано в модуле migrations.
    ChangeLog файл расположен \migrations\src\main\resources\liquibase-outputChangeLog.xml
-3. Реализован Docker-compose. MySQL и service поднимаются в контейнере. При сборке контейнера запускается, но не выполняет свою задачу liquibase. Судя по логам, причина в не-Pro версии liqiubase, из-за этого liquibase не доступны переменные environments. Поэтому полностью работоспособную версию контейнера проверить не могу и уже не успеваю.
+3. Реализован Docker-compose. MySQL, migrations и service поднимаются в контейнере.
    
 
 # Тестовое задание для Java стажеров
