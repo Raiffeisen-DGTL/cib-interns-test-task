@@ -13,16 +13,19 @@ public class GoodController {
     @Autowired
     private GoodService goodService;
 
-    @PostMapping("/create")
-    public ResponseEntity createItem(@RequestBody GoodDto goodDto) {
-        goodService.createGood(goodDto);
-        return ResponseEntity.ok().build();
-    }
-
-    @GetMapping("/")
-    public long getSocks(@RequestBody GoodDto goodDto){
-        return goodService.getGoodsCountBy(goodDto);
+    @GetMapping
+    public ResponseEntity getSocks(@RequestParam(name = "color") String color, @RequestParam(name = "operation") String operation, @RequestParam(name = "cottonPart") int cottonPart) {
+        GoodDto goodDto = new GoodDto(color, operation, cottonPart);
+        Long goodsCounts = 0L;
+        try {
+            goodsCounts = goodService.getGoodsCountBy(goodDto);
+            return ResponseEntity.status(200).body(goodsCounts);
+        } catch (NullPointerException exception) {
+            return ResponseEntity.status(400).build();
+        }
     }
 
 
 }
+
+

@@ -1,6 +1,6 @@
 package ru.lsan.cibinternstesttask.database.entity;
 
-import lombok.Data;
+import lombok.*;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 
@@ -8,7 +8,10 @@ import javax.persistence.*;
 import java.util.Set;
 
 @Entity
-@Data
+@Setter
+@Getter
+@AllArgsConstructor
+@NoArgsConstructor
 @Table(name = "good")
 public class GoodEntity {
 
@@ -20,10 +23,18 @@ public class GoodEntity {
     @Column(name = "color", nullable = false)
     private String color;
 
-    @Column(name = "cottonPart", nullable = false)
-    private Integer cottonPart;
+    @Column(name = "cotton_part", nullable = false)
+    private Integer cotton_part;
 
-    @OneToMany(mappedBy = "good",fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "goodIncome",fetch = FetchType.EAGER)
     @Fetch(FetchMode.SUBSELECT)
-    private Set<IncomeCompositionEntity> incomeCompositions;
+    private Set<IncomeEntity> income;
+
+    @OneToMany(mappedBy = "goodOutcome",fetch = FetchType.EAGER)
+    @Fetch(FetchMode.SUBSELECT)
+    private Set<OutcomeEntity> outcome;
+
+    @Column(name = "stored")
+    private Integer stored;
+
 }

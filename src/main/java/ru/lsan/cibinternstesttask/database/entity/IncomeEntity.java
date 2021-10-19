@@ -1,6 +1,6 @@
 package ru.lsan.cibinternstesttask.database.entity;
 
-import lombok.Data;
+import lombok.*;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 
@@ -9,7 +9,10 @@ import java.time.LocalDateTime;
 import java.util.Set;
 
 @Entity
-@Data
+@Setter
+@Getter
+@AllArgsConstructor
+@NoArgsConstructor
 @Table(name = "income")
 public class IncomeEntity {
 
@@ -21,8 +24,12 @@ public class IncomeEntity {
     @Column(name = "date_time", nullable = false)
     private LocalDateTime date_time;
 
-    @OneToMany(mappedBy = "income", fetch = FetchType.EAGER)
-    @Fetch(FetchMode.SUBSELECT)
-    private Set<IncomeCompositionEntity> incomeCompositions;
+    @ManyToOne
+    @JoinColumn(name = "good_id", nullable = false)
+    private GoodEntity goodIncome;
+
+    @Column(name ="quantity", nullable = false)
+    private int quantity;
+
 
 }

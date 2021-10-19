@@ -5,12 +5,12 @@ import lombok.Data;
 
 @Data
 @AllArgsConstructor
-public class GoodDto {
+public class OutcomeDto {
 
     private String color;
 
-    private String operation;
-
     private int cottonPart;
+
+    private int quantity;
 
 }

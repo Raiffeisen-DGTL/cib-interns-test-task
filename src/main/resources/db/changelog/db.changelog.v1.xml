@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+
+    <changeSet id="2" author="L-san">
+        <createTable tableName="good">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="color" type="varchar"/>
+            <column name="cotton_part" type="bigint"/>
+        </createTable>
+
+        <createTable tableName="income">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="date_time" type="datetime"/>
+            <column name="good_id" type="bigint"/>
+        </createTable>
+
+        <addForeignKeyConstraint baseTableName="income" baseColumnNames="good_id" constraintName="fk_good_income"
+                                 referencedTableName="good"
+                                 referencedColumnNames="id"/>
+
+        <createTable tableName="outcome">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="date_time" type="datetime"/>
+            <column name="good_id" type="bigint"/>
+        </createTable>
+
+        <addForeignKeyConstraint baseTableName="outcome" baseColumnNames="good_id" constraintName="fk_good_outcome"
+                                 referencedTableName="good"
+                                 referencedColumnNames="id"/>
+    </changeSet>
+
+    <changeSet id="3" author="L-san">
+        <addColumn tableName="income">
+            <column name="quantity" type="bigint"/>
+        </addColumn>
+        <addColumn tableName="outcome">
+            <column name="quantity" type="bigint"/>
+        </addColumn>
+    </changeSet>
+
+    <changeSet id="4" author="L-san">
+        <addColumn tableName="good">
+            <column name="stored" type="bigint"/>
+        </addColumn>
+        <sql>ALTER TABLE good ADD CONSTRAINT checkSgn CHECK(good.stored>=0)</sql>
+    </changeSet>
+
+    <changeSet id="5" author="L-san">
+        <sql>ALTER TABLE good ALTER COLUMN stored SET DEFAULT 0</sql>
+    </changeSet>
+</databaseChangeLog>

@@ -1,15 +1,15 @@
 package ru.lsan.cibinternstesttask.database.entity;
 
-import lombok.Data;
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
+import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.Set;
 
 @Entity
-@Data
+@Setter
+@Getter
+@AllArgsConstructor
+@NoArgsConstructor
 @Table(name = "outcome")
 public class OutcomeEntity {
 
@@ -21,8 +21,11 @@ public class OutcomeEntity {
     @Column(name = "date_time", nullable = false)
     private LocalDateTime date_time;
 
-    @OneToMany(mappedBy = "outcome", fetch = FetchType.EAGER)
-    @Fetch(FetchMode.SUBSELECT)
-    private Set<OutcomeCompositionEntity> outcomeCompositions;
+    @ManyToOne
+    @JoinColumn(name = "good_id", nullable = false)
+    private GoodEntity goodOutcome;
+
+    @Column(name ="quantity", nullable = false)
+    private int quantity;
 
 }

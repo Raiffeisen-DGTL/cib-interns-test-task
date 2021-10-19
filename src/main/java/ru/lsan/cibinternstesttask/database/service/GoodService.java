@@ -2,14 +2,19 @@ package ru.lsan.cibinternstesttask.database.service;
 
 import ru.lsan.cibinternstesttask.database.entity.GoodEntity;
 import ru.lsan.cibinternstesttask.dto.GoodDto;
-
-import java.util.List;
+import ru.lsan.cibinternstesttask.dto.IncomeDto;
+import ru.lsan.cibinternstesttask.dto.OutcomeDto;
 
 public interface GoodService {
 
     GoodEntity createGood(GoodDto dto);
 
-    void delete(GoodEntity good);
+    GoodEntity findByDto(GoodDto dto);
+
+    void incomeGoodCount(IncomeDto incomeDto);
+
+    void outcomeGoodCount(OutcomeDto outcomeDto);
 
     long getGoodsCountBy(GoodDto dto);
+
 }
