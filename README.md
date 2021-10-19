@@ -15,8 +15,11 @@ git clone https://github.com/workivan/DGTL.git
 ```
 ./gradlew build
 ```
-
-Сейчас вы можете пройти внутрь папки build/libs и запустить с помощью команды 
+4. Вы можете запустить sql скрипт из файла **schema**, либо запустить для миграций
+```
+gradle flywayMigrate -iс
+```
+5. Сейчас вы можете пройти внутрь папки build/libs и запустить с помощью команды 
 ```
 java -jar Socks-0.0.1-SNAPSHOT.jar
 ```
