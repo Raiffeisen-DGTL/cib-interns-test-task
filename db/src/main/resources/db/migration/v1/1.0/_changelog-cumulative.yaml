@@ -1,0 +1,18 @@
+databaseChangeLog:
+  - changeSet:
+      id: BOK-001-202110082312
+      author: amyasoedov
+      comment: Init DB struct
+      changes:
+        - sqlFile:
+            path: BOK-001-202110082312.sql
+            relativeToChangelogFile: true
+
+  - changeSet:
+      id: BOK-001-202110082331
+      author: amyasoedov
+      comment: Init data set
+      changes:
+        - sqlFile:
+            path: BOK-001-202110082331.sql
+            relativeToChangelogFile: true

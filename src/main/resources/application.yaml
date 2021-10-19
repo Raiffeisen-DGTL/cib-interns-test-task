@@ -1,0 +1,15 @@
+server:
+  port: ${PORT:8080}
+spring:
+  datasource:
+    url: ${SPRING_DATASOURSE_URL:jdbc:postgresql://localhost:5432/postgres}
+    username: ${SPRING_DATASOURCE_USERNAME:postgres}
+    password: ${SPRING_DATASOURCE_PASSWORD:123321}
+  jpa:
+    open-in-view: on
+    hibernate:
+      ddl-auto: validate
+    show-sql: true
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+  liquibase:
+    change-log: classpath:db/migration/v1/changelog.yaml

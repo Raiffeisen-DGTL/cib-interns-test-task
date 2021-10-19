@@ -1,0 +1,21 @@
+plugins {
+    id 'org.springframework.boot' version '2.5.2'
+    id 'java'
+}
+
+allprojects {
+
+    apply plugin: 'java'
+
+    group 'ru.vsu'
+    version '1.0-SNAPSHOT'
+
+    repositories {
+        mavenCentral()
+    }
+}
+
+dependencies {
+    implementation(project(':rest'))
+    implementation 'org.springframework.boot:spring-boot-starter-web:2.5.2'
+}

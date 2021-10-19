@@ -1,0 +1,5 @@
+rootProject.name = 'socks-storage-raiffeisenbank'
+include 'db'
+include 'service'
+include 'rest'
+
