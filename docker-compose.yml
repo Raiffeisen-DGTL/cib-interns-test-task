@@ -1,0 +1,50 @@
+version: '3.8'
+
+services:
+  postgres_db:
+    container_name: postgres_db
+    image: postgres
+    restart: always
+    network_mode: bridge
+    ports:
+      - "5432:5432"
+    expose:
+      - 5432
+    environment:
+      POSTGRES_DB: raiffeisen
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: $db_password
+      PGDATA: /var/lib/postgresql/data/pgdata
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: pg_isready -U postgres
+      interval: 1m
+      timeout: 10s
+      retries: 2
+
+  raiffeisen_test_task:
+    container_name: raiffeisen_test_task
+    image: "docker.pkg.github.com/sloning/cib-interns-test-task/cib-interns-test-task:latest"
+    restart: always
+    network_mode: bridge
+    ports:
+      - "80:8080"
+    depends_on:
+      - postgres_db
+    links:
+      - postgres_db
+    environment:
+      db_host: $db_host
+      db_username: postgres
+      db_password: $db_password
+      SECURITY_SECRET: $SECURITY_SECRET
+    healthcheck:
+      test: curl -f http://localhost:80/actuator/health || exit 1
+      interval: 1m
+      timeout: 10s
+      retries: 2
+
+volumes:
+  postgres_data:
+    driver: local

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.4.xsd">
+
+    <changeSet id="1634566650295-1" author="Vladislav">
+        <createTable tableName="socks">
+            <column name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="pk_socks"/>
+            </column>
+            <column name="color" type="VARCHAR(255)"/>
+            <column name="cotton_part" type="SMALLINT"/>
+            <column name="quantity" type="BIGINT"/>
+        </createTable>
+    </changeSet>
+</databaseChangeLog>
