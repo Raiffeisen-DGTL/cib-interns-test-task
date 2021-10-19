@@ -3,57 +3,58 @@ package com.example.socksstr.REST;
 
 import com.example.socksstr.Model.Socks;
 import com.example.socksstr.Service.SocksService;
-import lombok.AllArgsConstructor;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
+import javax.validation.Valid;
+import javax.validation.constraints.Pattern;
 
 
+@Slf4j
 @RestController
 @RequestMapping("/api/socks/")
-@AllArgsConstructor
 public class SocksRestController {
 
-    private SocksService socksService;
+    private final SocksService socksService;
 
-    @RequestMapping(value = "add", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Socks> saveSocks(@RequestBody Socks socks) {
-        HttpHeaders headers = new HttpHeaders();
-
-        if (socks == null) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
-
-        this.socksService.save(socks);
-        return new ResponseEntity<>(socks, headers, HttpStatus.CREATED);
+    @Autowired
+    public SocksRestController(SocksService socksService) {
+        this.socksService = socksService;
     }
 
-    @RequestMapping(value = "delete/{id}", method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity deleteSocks(@PathVariable Long id) {
-        Socks socks = this.socksService.getById(id);
-
-        if (socks == null) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-
-        this.socksService.delete(id,socks);
-        return new ResponseEntity(HttpStatus.NO_CONTENT, HttpStatus.valueOf("Вещь удалена"));
+    @PostMapping("/income")
+    public ResponseEntity socksIncome(@Valid @RequestBody Socks socks) {
+        socksService.socksIncome(socks);
+        return ResponseEntity.ok().build();
     }
 
-    @RequestMapping(value = "getAll", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<List<Socks>> getAllSocks() {
-        List<Socks> socksList = this.socksService.getAll();
-
-        if (socksList.isEmpty()) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-
-        return new ResponseEntity<>(socksList, HttpStatus.OK);
+    @PostMapping("/outcome")
+    public ResponseEntity socksOutcome(@Valid @RequestBody Socks socks) {
+        socksService.socksOutcome(socks);
+        return ResponseEntity.ok().build();
     }
 
+    @GetMapping("")
+    public long getSocksQuantity(@RequestParam("color") String color,
+                                 @RequestParam("operation")
+                                 @Pattern(regexp = "lessthan|morethan|equal", flags = Pattern.Flag.CASE_INSENSITIVE)
+                                         String operation,
+                                 @RequestParam("cottonPart") long cottonPart) {
+        return socksService.getSocksQuantity(color, operation, cottonPart);
+    }
+
+    @ExceptionHandler(IllegalArgumentException.class)
+    public String handle(IllegalArgumentException e) {
+        log.error(e.getMessage());
+        return "IllegalArgument";
+    }
+    @ExceptionHandler(NullPointerException.class)
+    public String handle(NullPointerException e){
+        log.error(e.getMessage());
+        return "NullPoint";
+    }
 
 }
+

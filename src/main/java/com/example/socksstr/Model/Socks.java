@@ -4,11 +4,10 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
-import java.math.BigDecimal;
-import java.util.List;
+import javax.persistence.*;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.NotNull;
 
 
 @Entity
@@ -16,16 +15,32 @@ import java.util.List;
 @Getter
 @Setter
 @ToString
+@IdClass(BaseEntity.class)
 public class Socks extends BaseEntity {
 
-    @Column (name = "color")
+    @Id
+    @Column(name = "color")
+    @NotNull
     private String color;
 
-    @Column (name = "cottonPart")
-    private Long cottonPart;
+    @Id
+    @Column(name = "cottonPart")
+    @Min(0)
+    @Max(100)
+    private long cottonPart;
 
-    @Column (name = "quantity")
-    private BigDecimal quantity;
+    @Column(name = "quantity")
+    @Min(1)
+    private long quantity;
 
+
+    public Socks() {
+    }
+
+    public Socks(String color, long cottonPart, long quantity) {
+        this.color = color;
+        this.cottonPart = cottonPart;
+        this.quantity = quantity;
+    }
 
 }

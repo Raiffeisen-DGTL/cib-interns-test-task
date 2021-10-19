@@ -4,19 +4,35 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.MappedSuperclass;
 
-@MappedSuperclass
+import java.io.Serializable;
+import java.util.Objects;
+
 @Getter
 @Setter
 @ToString
-public class BaseEntity {
+public class BaseEntity implements Serializable {
+    private String color;
+    private long cottonPart;
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    public BaseEntity() {}
 
-    private Long id;
+    public BaseEntity (String color, long cottonPart) {
+        this.color = color;
+        this.cottonPart = cottonPart;
+    }
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        BaseEntity id = (BaseEntity) o;
+        return color.equals(id.color) &&
+                cottonPart == id.cottonPart;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(color, cottonPart);
+    }
+
 }

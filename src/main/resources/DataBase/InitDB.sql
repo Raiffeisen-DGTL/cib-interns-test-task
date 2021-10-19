@@ -1,8 +1,7 @@
-CREATE TABLE IF NOT EXISTS Socks
+CREATE TABLE "socks"
 (
-    id         BIGINT AUTO_INCREMENT PRIMARY KEY,
-    color      VARCHAR(50) NOT NULL,
-    cottonPart BIGINT(100) NOT NULL,
-    quantity   DECIMAL     NOT NULL
-
+    color      VARCHAR(64) NOT NULL,
+    cottonPart INTEGER     NOT NULL,
+    quantity   BIGINT      NOT NULL,
+    PRIMARY KEY (color, cottonPart)
 );
