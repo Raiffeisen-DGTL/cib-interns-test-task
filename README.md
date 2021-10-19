@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # Тестовое задание для Java стажеров
 
 Привет!
@@ -93,4 +92,3 @@ docker-compose up -d
 POST: http://83.161.76.203:9000api/socks/outcome
 
 GET: http://83.161.76.203:9000/api/socks?color=yellow&operation=lessThan&cottonPart=15
->>>>>>> Create README.md
