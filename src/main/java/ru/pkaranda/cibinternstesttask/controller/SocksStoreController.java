@@ -25,8 +25,8 @@ public class SocksStoreController {
     @Valid
     @GetMapping(path = "/api/socks")
     public CountResult countSocksByColorAndCottonPartAndOperation(@RequestParam String color,
-                                                                  @RequestParam String operation,
-                                                                  @RequestParam @Min(0) @Max(100) int cottonPart) {
+                                                                  @RequestParam(required = false) String operation,
+                                                                  @RequestParam(required = false) @Min(0) @Max(100) Integer cottonPart) {
 
         return socksTransactionService.getNumberOfSocksByColorIdAndCottonPart(color, operation, cottonPart);
 

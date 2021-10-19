@@ -26,15 +26,18 @@ public class SocksTransactionService {
     private final TransactionRepository transactionRepository;
 
 
-    public CountResult getNumberOfSocksByColorIdAndCottonPart(String color, String operationType, int cottonPart) {
+    public CountResult getNumberOfSocksByColorIdAndCottonPart(String color, String operationType, Integer cottonPart) {
+        OperationType operation = OperationType.EMPTY;
+
+        if (cottonPart == null) {
+            cottonPart = 0;
+        }
 
         if (cottonPart < 0 || cottonPart > 100) {
             throw new NotValidCottonPartValueException(Message.WRONG_COTTON_PART_VALUE, cottonPart);
         }
 
-
         int number = 0;
-        OperationType operation = OperationType.EMPTY;
         if (operationType != null) {
             operation = OperationType.valueOfLabel(operationType);
             if (operation == null) {
@@ -65,7 +68,12 @@ public class SocksTransactionService {
 
             case EMPTY:
                 number = countNumberOfSocks(socksTransactionRepository.getSocksTransactionsByColorId(colorId));
-                break;
+                return CountResult.builder()
+                        .color(color)
+                        .operation(operation.getValue())
+                        .quantity(number)
+                        .build();
+
 
         }
 

@@ -7,11 +7,11 @@ import lombok.Data;
 
 @Data
 @Builder
-@JsonInclude
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class CountResult {
 
     private String color;
     private String operation;
-    private int cottonPart;
-    private int quantity;
+    private Integer cottonPart;
+    private Integer quantity;
 }

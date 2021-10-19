@@ -39,9 +39,9 @@ public class SocksTransaction {
 
     @Min(0)
     @Max(100)
-    private int cottonPart;
+    private Integer cottonPart;
 
     @Min(0)
-    private int quantity;
+    private Integer quantity;
 
 }

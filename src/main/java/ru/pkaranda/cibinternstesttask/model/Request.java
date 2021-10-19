@@ -8,6 +8,6 @@ import lombok.Data;
 public class Request {
 
     private String color;
-    private int cottonPart;
-    private int quantity;
+    private Integer cottonPart;
+    private Integer quantity;
 }
