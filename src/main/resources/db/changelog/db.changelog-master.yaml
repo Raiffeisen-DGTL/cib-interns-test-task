@@ -1,0 +1,48 @@
+databaseChangeLog:
+  - logicalFilePath: db/changelog/db.changelog1.yaml
+  - changeSet:
+      id: 1
+      author: Alamart1683
+      changes:
+        - createTable:
+            - tableName: color
+              columns:
+                - column:
+                    name: color_id
+                    type: INT
+                    autoIncrement: true
+                    constraints:
+                      primaryKey: true
+                      nullable: false
+                - column:
+                    name: color
+                    type: varchar(128)
+                    constraints:
+                      nullable: false
+        - createTable:
+            tableName: socks
+            columns:
+              - column:
+                  name: socks_id
+                  type: INT
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: color
+                  type: INT
+                  constraints:
+                    nullable: false
+                    foreignKeyName: fk_color
+                    references: color(color_id)
+              - column:
+                  name: cotton_part
+                  type: INT
+                  constraints:
+                    nullable: false
+              - column:
+                  name: quantity
+                  type: INT
+                  constraints:
+                    nullable: false
