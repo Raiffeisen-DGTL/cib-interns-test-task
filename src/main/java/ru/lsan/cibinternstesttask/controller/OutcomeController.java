@@ -24,7 +24,7 @@ public class OutcomeController {
             try {
                 outcomeService.createOutcome(outcomeDto);
                 return ResponseEntity.status(200).build();
-            } catch (NullPointerException exception) {
+            } catch (NullPointerException|IllegalArgumentException exception) {
                 return ResponseEntity.status(400).build();
             } catch (Exception exception) {
                 return ResponseEntity.status(500).build();

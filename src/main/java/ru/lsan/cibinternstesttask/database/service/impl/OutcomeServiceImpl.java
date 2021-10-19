@@ -22,7 +22,7 @@ public class OutcomeServiceImpl implements OutcomeService {
     private GoodService goodService;
 
     @Override
-    public OutcomeEntity createOutcome(OutcomeDto outcomeDto) {
+    public OutcomeEntity createOutcome(OutcomeDto outcomeDto) throws IllegalArgumentException{
         OutcomeEntity outcomeEntity = new OutcomeEntity();
         GoodDto goodDtoFromOutcome = new GoodDto(outcomeDto.getColor(), null, outcomeDto.getCottonPart());
         GoodEntity goodEntity;
@@ -34,6 +34,9 @@ public class OutcomeServiceImpl implements OutcomeService {
         outcomeEntity.setDate_time(LocalDateTime.now());
         outcomeEntity.setGoodOutcome(goodEntity);
         outcomeEntity.setQuantity(outcomeDto.getQuantity());
+        if(outcomeDto.getQuantity()>goodEntity.getStored()){
+            throw new IllegalArgumentException();
+        }
         goodService.outcomeGoodCount(outcomeDto);
         return outcomeRepository.save(outcomeEntity);
     }
