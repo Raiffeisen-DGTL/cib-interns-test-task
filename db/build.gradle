@@ -1,0 +1,31 @@
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
+
+dependencies {
+    implementation 'org.springframework.data:spring-data-jpa:2.5.3'
+    annotationProcessor 'org.hibernate:hibernate-jpamodelgen:5.4.31.Final'
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa:2.5.2'
+    runtimeOnly 'org.postgresql:postgresql:42.2.23'
+    implementation 'org.liquibase:liquibase-core:3.10.3'
+}
+
+task newMigration {
+    doLast {
+
+        def path = java.nio.file.Path.of("${project.projectDir}/src/main/resources/db/migration/v1/1.0")
+
+        def id = "BOK-001-${DateTimeFormatter.ofPattern("YYYYMMddHHmm").format(LocalDateTime.now())}"
+
+        path.resolve("_changelog-cumulative.yaml").append("""
+  - changeSet:
+      id: ${id}
+      author: amyasoedov
+      comment: TODO
+      changes:
+        - sqlFile:
+            path: ${id}.sql
+            relativeToChangelogFile: true
+""")
+        path.resolve("${id}.sql").toFile().createNewFile();
+    }
+}

@@ -1,0 +1,28 @@
+version: '3'
+services:
+  postgres:
+    image: postgres:latest
+    environment:
+      POSTGRES_PASSWORD: 123321
+      POSTGRES_USER: postgres
+    ports:
+      - 5432:5432
+    volumes:
+      - type: volume
+        source: pgdata
+        target: /var/lib/postgresql/data
+  backend:
+    image: socks-storage-raiffeisenbank:latest
+    depends_on:
+      - postgres
+    environment:
+      spring.datasource.url: jdbc:postgresql://postgres:5432/postgres
+      spring.datasource.password: 123321
+      spring.datasource.username: postgres
+    links:
+      - postgres
+    ports:
+      - 8080:8080
+volumes:
+  pgdata:
+    name: pgdata

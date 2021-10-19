@@ -1,0 +1,5 @@
+dependencies {
+    implementation 'org.springframework:spring-webmvc:5.3.9'
+    implementation(project(":service"))
+    implementation 'jakarta.validation:jakarta.validation-api:2.0.2'
+}
