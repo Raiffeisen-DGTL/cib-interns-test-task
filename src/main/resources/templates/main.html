@@ -1,0 +1,27 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+
+    <div th:insert="blocks/dependencies :: dependencies"></div>
+
+</head>
+<body>
+
+<header th:insert="blocks/header :: header"></header>
+
+<div class="container mt-3">
+    <h2 th:text="'Found socks: ' + ${socks.size()}"/>
+</div>
+
+<div class="container mt-3">
+    <h2 th:text="${error}"/>
+</div>
+
+<div th:each="sock : ${socks}" class="container mt-3 alert alert-info mt-2">
+    <h3 th:text="${sock.toString()}"/>
+</div>
+
+<div th:insert="blocks/footer :: footer"></div>
+
+</body>
+</html>
