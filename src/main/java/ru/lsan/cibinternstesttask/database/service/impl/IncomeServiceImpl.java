@@ -2,12 +2,12 @@ package ru.lsan.cibinternstesttask.database.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import ru.lsan.cibinternstesttask.database.entity.GoodEntity;
+import ru.lsan.cibinternstesttask.database.entity.SockEntity;
 import ru.lsan.cibinternstesttask.database.entity.IncomeEntity;
 import ru.lsan.cibinternstesttask.database.repository.IncomeRepository;
-import ru.lsan.cibinternstesttask.database.service.GoodService;
+import ru.lsan.cibinternstesttask.database.service.SockService;
 import ru.lsan.cibinternstesttask.database.service.IncomeService;
-import ru.lsan.cibinternstesttask.dto.GoodDto;
+import ru.lsan.cibinternstesttask.dto.SockDto;
 import ru.lsan.cibinternstesttask.dto.IncomeDto;
 
 import java.time.LocalDateTime;
@@ -19,22 +19,22 @@ public class IncomeServiceImpl implements IncomeService {
     private IncomeRepository incomeRepository;
 
     @Autowired
-    private GoodService goodService;
+    private SockService sockService;
 
     @Override
     public IncomeEntity createIncome(IncomeDto incomeDto) {
         IncomeEntity incomeEntity = new IncomeEntity();
-        GoodDto goodDtoFromIncome = new GoodDto(incomeDto.getColor(), null, incomeDto.getCottonPart());
-        GoodEntity goodEntity;
+        SockDto sockDtoFromIncome = new SockDto(incomeDto.getColor(), null, incomeDto.getCottonPart());
+        SockEntity sockEntity;
 
-        goodEntity = goodService.findByDto(goodDtoFromIncome);
-        if (goodEntity == null) {
-            goodEntity = goodService.createGood(goodDtoFromIncome);
+        sockEntity = sockService.findByDto(sockDtoFromIncome);
+        if (sockEntity == null) {
+            sockEntity = sockService.createGood(sockDtoFromIncome);
         }
         incomeEntity.setDate_time(LocalDateTime.now());
-        incomeEntity.setGoodIncome(goodEntity);
+        incomeEntity.setSockIncome(sockEntity);
         incomeEntity.setQuantity(incomeDto.getQuantity());
-        goodService.incomeGoodCount(incomeDto);
+        sockService.incomeGoodCount(incomeDto);
         return incomeRepository.save(incomeEntity);
     }
 

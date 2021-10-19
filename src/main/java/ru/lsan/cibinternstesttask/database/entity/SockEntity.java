@@ -12,8 +12,8 @@ import java.util.Set;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "good")
-public class GoodEntity {
+@Table(name = "sock")
+public class SockEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -26,11 +26,11 @@ public class GoodEntity {
     @Column(name = "cotton_part", nullable = false)
     private Integer cotton_part;
 
-    @OneToMany(mappedBy = "goodIncome",fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "sockIncome",fetch = FetchType.EAGER)
     @Fetch(FetchMode.SUBSELECT)
     private Set<IncomeEntity> income;
 
-    @OneToMany(mappedBy = "goodOutcome",fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "sockOutcome",fetch = FetchType.EAGER)
     @Fetch(FetchMode.SUBSELECT)
     private Set<OutcomeEntity> outcome;
 

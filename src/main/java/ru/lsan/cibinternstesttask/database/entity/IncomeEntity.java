@@ -1,12 +1,9 @@
 package ru.lsan.cibinternstesttask.database.entity;
 
 import lombok.*;
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.Set;
 
 @Entity
 @Setter
@@ -25,8 +22,8 @@ public class IncomeEntity {
     private LocalDateTime date_time;
 
     @ManyToOne
-    @JoinColumn(name = "good_id", nullable = false)
-    private GoodEntity goodIncome;
+    @JoinColumn(name = "sock_id", nullable = false)
+    private SockEntity sockIncome;
 
     @Column(name ="quantity", nullable = false)
     private int quantity;

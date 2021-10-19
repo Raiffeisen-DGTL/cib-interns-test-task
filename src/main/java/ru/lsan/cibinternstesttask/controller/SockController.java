@@ -3,28 +3,27 @@ package ru.lsan.cibinternstesttask.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import ru.lsan.cibinternstesttask.database.service.GoodService;
-import ru.lsan.cibinternstesttask.dto.GoodDto;
+import ru.lsan.cibinternstesttask.database.service.SockService;
+import ru.lsan.cibinternstesttask.dto.SockDto;
 
 @RestController
 @RequestMapping("/api/socks")
-public class GoodController {
+public class SockController {
 
     @Autowired
-    private GoodService goodService;
+    private SockService sockService;
 
     @GetMapping
     public ResponseEntity getSocks(@RequestParam(name = "color") String color, @RequestParam(name = "operation") String operation, @RequestParam(name = "cottonPart") int cottonPart) {
-        GoodDto goodDto = new GoodDto(color, operation, cottonPart);
+        SockDto sockDto = new SockDto(color, operation, cottonPart);
         Long goodsCounts = 0L;
         try {
-            goodsCounts = goodService.getGoodsCountBy(goodDto);
+            goodsCounts = sockService.getGoodsCountBy(sockDto);
             return ResponseEntity.status(200).body(goodsCounts);
         } catch (NullPointerException exception) {
             return ResponseEntity.status(400).build();
         }
     }
-
 
 }
 

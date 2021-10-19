@@ -22,8 +22,8 @@ public class OutcomeEntity {
     private LocalDateTime date_time;
 
     @ManyToOne
-    @JoinColumn(name = "good_id", nullable = false)
-    private GoodEntity goodOutcome;
+    @JoinColumn(name = "sock_id", nullable = false)
+    private SockEntity sockOutcome;
 
     @Column(name ="quantity", nullable = false)
     private int quantity;

@@ -6,7 +6,7 @@
 http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
 
     <changeSet id="2" author="L-san">
-        <createTable tableName="good">
+        <createTable tableName="sock">
             <column name="id" type="bigint" autoIncrement="true">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
@@ -19,11 +19,11 @@ http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
             <column name="date_time" type="datetime"/>
-            <column name="good_id" type="bigint"/>
+            <column name="sock_id" type="bigint"/>
         </createTable>
 
-        <addForeignKeyConstraint baseTableName="income" baseColumnNames="good_id" constraintName="fk_good_income"
-                                 referencedTableName="good"
+        <addForeignKeyConstraint baseTableName="income" baseColumnNames="sock_id" constraintName="fk_sock_income"
+                                 referencedTableName="sock"
                                  referencedColumnNames="id"/>
 
         <createTable tableName="outcome">
@@ -31,11 +31,11 @@ http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
             <column name="date_time" type="datetime"/>
-            <column name="good_id" type="bigint"/>
+            <column name="sock_id" type="bigint"/>
         </createTable>
 
-        <addForeignKeyConstraint baseTableName="outcome" baseColumnNames="good_id" constraintName="fk_good_outcome"
-                                 referencedTableName="good"
+        <addForeignKeyConstraint baseTableName="outcome" baseColumnNames="sock_id" constraintName="fk_sock_outcome"
+                                 referencedTableName="sock"
                                  referencedColumnNames="id"/>
     </changeSet>
 
@@ -49,13 +49,13 @@ http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
     </changeSet>
 
     <changeSet id="4" author="L-san">
-        <addColumn tableName="good">
+        <addColumn tableName="sock">
             <column name="stored" type="bigint"/>
         </addColumn>
-        <sql>ALTER TABLE good ADD CONSTRAINT checkSgn CHECK(good.stored>=0)</sql>
+        <sql>ALTER TABLE sock ADD CONSTRAINT checkSgn CHECK(sock.stored>=0)</sql>
     </changeSet>
 
     <changeSet id="5" author="L-san">
-        <sql>ALTER TABLE good ALTER COLUMN stored SET DEFAULT 0</sql>
+        <sql>ALTER TABLE sock ALTER COLUMN stored SET DEFAULT 0</sql>
     </changeSet>
 </databaseChangeLog>

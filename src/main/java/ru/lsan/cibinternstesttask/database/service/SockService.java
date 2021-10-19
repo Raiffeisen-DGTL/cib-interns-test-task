@@ -1,20 +1,20 @@
 package ru.lsan.cibinternstesttask.database.service;
 
-import ru.lsan.cibinternstesttask.database.entity.GoodEntity;
-import ru.lsan.cibinternstesttask.dto.GoodDto;
+import ru.lsan.cibinternstesttask.database.entity.SockEntity;
+import ru.lsan.cibinternstesttask.dto.SockDto;
 import ru.lsan.cibinternstesttask.dto.IncomeDto;
 import ru.lsan.cibinternstesttask.dto.OutcomeDto;
 
-public interface GoodService {
+public interface SockService {
 
-    GoodEntity createGood(GoodDto dto);
+    SockEntity createGood(SockDto dto);
 
-    GoodEntity findByDto(GoodDto dto);
+    SockEntity findByDto(SockDto dto);
 
     void incomeGoodCount(IncomeDto incomeDto);
 
     void outcomeGoodCount(OutcomeDto outcomeDto);
 
-    long getGoodsCountBy(GoodDto dto);
+    long getGoodsCountBy(SockDto dto);
 
 }

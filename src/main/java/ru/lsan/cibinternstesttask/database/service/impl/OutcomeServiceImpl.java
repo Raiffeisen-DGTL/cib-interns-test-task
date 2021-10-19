@@ -2,12 +2,12 @@ package ru.lsan.cibinternstesttask.database.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import ru.lsan.cibinternstesttask.database.entity.GoodEntity;
+import ru.lsan.cibinternstesttask.database.entity.SockEntity;
 import ru.lsan.cibinternstesttask.database.entity.OutcomeEntity;
 import ru.lsan.cibinternstesttask.database.repository.OutcomeRepository;
-import ru.lsan.cibinternstesttask.database.service.GoodService;
+import ru.lsan.cibinternstesttask.database.service.SockService;
 import ru.lsan.cibinternstesttask.database.service.OutcomeService;
-import ru.lsan.cibinternstesttask.dto.GoodDto;
+import ru.lsan.cibinternstesttask.dto.SockDto;
 import ru.lsan.cibinternstesttask.dto.OutcomeDto;
 
 import java.time.LocalDateTime;
@@ -19,25 +19,25 @@ public class OutcomeServiceImpl implements OutcomeService {
     private OutcomeRepository outcomeRepository;
 
     @Autowired
-    private GoodService goodService;
+    private SockService sockService;
 
     @Override
     public OutcomeEntity createOutcome(OutcomeDto outcomeDto) throws IllegalArgumentException{
         OutcomeEntity outcomeEntity = new OutcomeEntity();
-        GoodDto goodDtoFromOutcome = new GoodDto(outcomeDto.getColor(), null, outcomeDto.getCottonPart());
-        GoodEntity goodEntity;
+        SockDto sockDtoFromOutcome = new SockDto(outcomeDto.getColor(), null, outcomeDto.getCottonPart());
+        SockEntity sockEntity;
 
-        goodEntity = goodService.findByDto(goodDtoFromOutcome);
-        if (goodEntity == null) {
-            goodEntity = goodService.createGood(goodDtoFromOutcome);
+        sockEntity = sockService.findByDto(sockDtoFromOutcome);
+        if (sockEntity == null) {
+            sockEntity = sockService.createGood(sockDtoFromOutcome);
         }
         outcomeEntity.setDate_time(LocalDateTime.now());
-        outcomeEntity.setGoodOutcome(goodEntity);
+        outcomeEntity.setSockOutcome(sockEntity);
         outcomeEntity.setQuantity(outcomeDto.getQuantity());
-        if(outcomeDto.getQuantity()>goodEntity.getStored()){
+        if(outcomeDto.getQuantity()> sockEntity.getStored()){
             throw new IllegalArgumentException();
         }
-        goodService.outcomeGoodCount(outcomeDto);
+        sockService.outcomeGoodCount(outcomeDto);
         return outcomeRepository.save(outcomeEntity);
     }
 

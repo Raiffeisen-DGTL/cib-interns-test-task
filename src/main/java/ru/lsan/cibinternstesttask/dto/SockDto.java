@@ -5,7 +5,7 @@ import lombok.Data;
 
 @Data
 @AllArgsConstructor
-public class GoodDto {
+public class SockDto {
 
     private String color;
 
