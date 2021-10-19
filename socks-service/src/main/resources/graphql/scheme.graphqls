@@ -1,0 +1,33 @@
+schema {
+    query: Query
+    mutation: Mutation
+}
+
+type Query {
+    count(color: String, operation: OperationType, cottonPart: Int): String
+}
+
+type Mutation {
+    increase(sock: SockInput): Sock
+    decrease(sock: SockInput): Sock
+}
+
+type Sock {
+    color: String!
+    cottonPart: Int!
+    quantity: Int!
+    createdAt: String
+    updatedAt: String
+}
+
+input SockInput {
+    color: String!
+    cottonPart: Int!
+    quantity: Int!
+}
+
+enum OperationType {
+    moreThan
+    lessThan
+    equal
+}
