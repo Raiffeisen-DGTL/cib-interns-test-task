@@ -29,13 +29,14 @@ public class SocksService {
      * @param dto SocksDto
      */
     @Transactional
-    public void income(SocksDto dto) {
+    public Socks income(SocksDto dto) {
         var color = colorRepository.save(Color.of(dto.color()));
         var socks = socksRepository
                 .findSocksByColorAndCottonPart(color, dto.cottonPart())
                 .orElseGet(() -> socksRepository.save(
                                 Socks.of(color, dto.cottonPart(), dto.quantity())));
         increaseQty(dto, socks);
+        return socks;
     }
 
     /**
@@ -48,7 +49,7 @@ public class SocksService {
      * @param dto SocksDto
      */
     @Transactional
-    public void outcome(SocksDto dto) {
+    public Socks outcome(SocksDto dto) {
         var color = getColorOrThrow(dto.color());
         var socks = socksRepository
                 .findSocksByColorAndCottonPart(color, dto.cottonPart())
@@ -58,6 +59,7 @@ public class SocksService {
                                 "Socks with color: %s, cottonPart: %d not found",
                                 color.getName(), dto.cottonPart())));
         decreaseQty(dto, socks);
+        return socks;
     }
 
     /**
