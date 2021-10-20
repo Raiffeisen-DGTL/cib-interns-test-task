@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.raiffeisen.repository.SockRepository">
+
+    <resultMap id="SockMap" type="com.raiffeisen.model.Sock">
+        <result property="color" column="color"/>
+        <result property="cottonPart" column="cottonPart"/>
+        <result property="quantity" column="quantity"/>
+    </resultMap>
+
+    <insert id="save" parameterType="com.raiffeisen.model.Sock">
+        INSERT INTO socks (color, cottonPart, quantity)
+        VALUES (#{color}, #{cottonPart}, #{quantity})
+        ON DUPLICATE KEY UPDATE quantity=#{quantity};
+    </insert>
+
+    <update id="update" parameterType="com.raiffeisen.model.Sock">
+        UPDATE socks
+        SET quantity=#{quantity}
+        WHERE color=#{color} AND cottonPart=#{cottonPart};
+    </update>
+
+    <select id="findWhereCottonPartBigger" resultType="int">
+        SELECT IFNULL(SUM(quantity),0) FROM socks WHERE color=#{color} AND cottonPart&gt;#{cottonPart};
+    </select>
+
+    <select id="findWhereCottonPartSmaller" resultType="int">
+        SELECT IFNULL(SUM(quantity),0) FROM socks WHERE color=#{color} AND cottonPart&lt;#{cottonPart};
+    </select>
+
+    <select id="findWhereCottonPartEqual" resultType="int">
+        SELECT IFNULL(SUM(quantity),0) FROM socks WHERE color=#{color} AND cottonPart=#{cottonPart};
+    </select>
+
+</mapper>
