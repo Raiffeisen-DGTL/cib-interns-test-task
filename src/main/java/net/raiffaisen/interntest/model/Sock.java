@@ -16,11 +16,10 @@ import java.util.Date;
 @Setter
 @Entity
 @Table(name = "socks")
-@JsonIgnoreProperties(value = {"created_at"},
-        allowGetters = true)
+@JsonIgnoreProperties(value = {"created_at"}, allowGetters = true)
 public class Sock {
     @Id
-//    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "id")
     private long id;
 
     @NotNull
@@ -28,7 +27,7 @@ public class Sock {
     private String color;
 
     @NotNull
-    @Range(min=0, max=100)
+    @Range(min = 0, max = 100)
     @Column(name = "cotton_part")
     private int cottonPart;
 
@@ -37,15 +36,9 @@ public class Sock {
     @Column(name = "quantity")
     private int quantity;
 
-    @Column(name = "created_at",nullable = true)
+    @Column(name = "created_at", nullable = true)
     @Temporal(TemporalType.TIMESTAMP)
     @CreatedDate
     private Date created_at;
-
-//    @Override
-//    public String toString() {
-//        return "Tutorial [id=" + id + ", color=" + color
-//                + ", cottonPart=" + cottonPart + ", quantity="
-//                + quantity + " created_at= " + created_at + "]";
-//    }
 }
+
