@@ -1,3 +1,29 @@
+# Выполнено
+
+* написано на языке Kotlin(!)
+* standalone - состоит из одного выполняемого компонента верхнего уровня
+* headless - без UI;
+* оформлено как форк к репозитарию и создан пул реквест.
+* приложение основано на Spring(Boot) Framework
+* для версионирования схемы базы данных будет использоваться Liquibase
+* база данных поднимается рядом с приложением в докер-контейнере
+
+Сборка и запуск проекта:
+
+`docker-compose build`
+
+`docker-compose up`
+
+* приложение развернуто на облачном сервисе Heroku, и его API будет доступно для вызова.
+
+POST https://raifservice.herokuapp.com/api/socks/income
+
+POST https://raifservice.herokuapp.com/api/socks/outcome
+
+GET https://raifservice.herokuapp.com/api/socks
+
+Пример: https://raifservice.herokuapp.com/api/socks?color=red&operation=lessThan&cottonPart=100
+
 # Тестовое задание для Java стажеров
 
 Привет!

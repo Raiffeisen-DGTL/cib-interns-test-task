@@ -1,0 +1,36 @@
+databaseChangeLog:
+
+  - changeSet:
+      id: 1
+      author: SashaPaladin
+      changes:
+        - createTable:
+            tableName: socks
+            remarks:
+            columns:
+              - column:
+                  name: color
+                  type: varchar(50)
+                  remarks:
+                  constraints:
+                    nullable: false
+              - column:
+                  name: cotton_part
+                  type: integer
+                  autoIncrement: true
+                  constraints:
+                    nullable: false
+              - column:
+                  name: quantity
+                  type: integer
+                  autoIncrement: true
+                  constraints:
+                    nullable: false
+              - column:
+                  name: id
+                  type: integer
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    primaryKeyName: socks_pk
+                    nullable: false
