@@ -22,6 +22,8 @@ public class SockController {
             return ResponseEntity.status(200).body(goodsCounts);
         } catch (NullPointerException exception) {
             return ResponseEntity.status(400).build();
+        } catch (Exception exception){
+            return ResponseEntity.status(500).build();
         }
     }
 
