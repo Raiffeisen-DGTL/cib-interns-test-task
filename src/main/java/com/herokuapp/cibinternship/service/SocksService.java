@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import com.herokuapp.cibinternship.repository.SocksRepository;
 import com.herokuapp.cibinternship.model.Socks;
 import com.herokuapp.cibinternship.model.SocksId;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityNotFoundException;
 import java.util.Optional;
@@ -20,6 +21,7 @@ public class SocksService {
         this.socksRepository = socksRepository;
     }
 
+    @Transactional
     public void registerSocksIncome(Socks socks) {
         SocksId id = new SocksId(socks.getColor(), socks.getCottonPart());
         Optional<Socks> socksOptional = socksRepository.findById(id);
@@ -32,7 +34,7 @@ public class SocksService {
         else socksRepository.save(socks);
     }
 
-
+    @Transactional
     public void registerSocksOutcome(Socks socks) {
         SocksId id = new SocksId(socks.getColor(), socks.getCottonPart()) ;
         Optional<Socks> socksOptional = socksRepository.findById(id);

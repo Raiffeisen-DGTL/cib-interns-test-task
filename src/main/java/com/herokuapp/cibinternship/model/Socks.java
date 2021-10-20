@@ -19,7 +19,6 @@ public class Socks implements Serializable {
 
     @Id
     @Min(0) @Max(100)
-    @NotNull
     private int cottonPart;
 
     @Min(1)
