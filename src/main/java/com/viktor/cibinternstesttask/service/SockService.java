@@ -4,6 +4,7 @@ import com.viktor.cibinternstesttask.dao.SockDao;
 import com.viktor.cibinternstesttask.dto.SockDto;
 import com.viktor.cibinternstesttask.dto.SockParamsDto;
 import com.viktor.cibinternstesttask.entity.Sock;
+import com.viktor.cibinternstesttask.exception.WrongParameterException;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -66,7 +67,7 @@ public class SockService {
         }
     }
 
-    public Long getSumOfNecessarySocks(SockParamsDto sockParamsDto) throws IllegalArgumentException {
+    public Long getSumOfNecessarySocks(SockParamsDto sockParamsDto) {
         Long sum = 0L;
         String operation = sockParamsDto.getOperation();
 
@@ -84,7 +85,7 @@ public class SockService {
                 break;
 
             case NONE:
-                throw new IllegalArgumentException("Wrong comparison value");
+                throw new WrongParameterException("Wrong comparison value");
 
         }
 
