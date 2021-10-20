@@ -1,0 +1,25 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+
+    <changeSet id="1" author="aleksandr.samusev">
+        <createTable tableName="pair_socks">
+            <column name="id" autoIncrement="true" type="BIGSERIAL">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="pair_socks_pkey"/>
+            </column>
+            <column name="color" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="cotton_part" type="INTEGER">
+                <constraints nullable="false"/>
+            </column>
+            <column name="quantity" type="BIGINT" defaultValue="0" />
+        </createTable>
+
+        <addUniqueConstraint tableName="pair_socks" columnNames="color, cotton_part" />
+    </changeSet>
+
+</databaseChangeLog>
