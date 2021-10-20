@@ -42,7 +42,9 @@ public class SockService {
             this.label = label;
         }
 
-        public String getLabel() { return this.label; }
+        public String getLabel() {
+            return this.label;
+        }
 
         public static Operation get(String label) {
             return lookup.getOrDefault(label, Operation.NONE);

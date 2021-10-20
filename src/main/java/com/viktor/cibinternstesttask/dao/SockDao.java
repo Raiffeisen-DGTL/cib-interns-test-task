@@ -16,14 +16,14 @@ public class SockDao {
 
     public void updateIncome(Sock sock) {
         jdbcTemplate.update("insert into socks (color, cotton_part, quantity) " +
-                "values (?, ?, ?) on conflict (color, cotton_part) do update set quantity = socks.quantity + ?",
+                        "values (?, ?, ?) on conflict (color, cotton_part) do update set quantity = socks.quantity + ?",
                 sock.getColor(), sock.getCottonPart(), sock.getQuantity(), sock.getQuantity());
     }
 
     public void updateOutcome(Sock sock) {
         jdbcTemplate.update("update socks set quantity = socks.quantity - ? " +
-                                "where color = ? and cotton_part = ?",
-                                sock.getQuantity(), sock.getColor(), sock.getCottonPart());
+                        "where color = ? and cotton_part = ?",
+                sock.getQuantity(), sock.getColor(), sock.getCottonPart());
     }
 
     public Long countSockWithMoreThanCottonPart(String color, Integer cottonPart) {
