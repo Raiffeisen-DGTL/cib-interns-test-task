@@ -1,0 +1,1 @@
+web: java -jar build/lib/cib-interns-test-task-0.0.1-SNAPSHOT-plain.jar -Dspring.profiles.active=heroku

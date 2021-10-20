@@ -1,0 +1,26 @@
+#Server
+server:
+  port: 8080
+  error:
+    whitelabel:
+      enabled: false
+    include-stacktrace: never
+    include-exception: false
+    include-message: always
+
+#Spring
+spring:
+  application:
+    name: cib-interns-test-task
+  profiles:
+    active: dev
+  main:
+    banner-mode: off
+  output:
+    ansi:
+      enabled: always
+
+#Logging
+logging:
+  file:
+    name: ./logs/cib-interns-test-task.log

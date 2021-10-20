@@ -1,0 +1,26 @@
+logging:
+  level:
+    root: warn
+    web: info
+    org:
+      hibernate:
+        SQL: info
+
+spring:
+  datasource:
+    url: jdbc:postgres://ec2-44-195-240-222.compute-1.amazonaws.com:5432/db9k2l3ijd9ou8
+    username: oopsukczuphuli
+    password: d0559eb69e76fc05e4d5f68987e8f3009e67ef459de75a44df11e022fc576444
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQL10Dialect
+        jdbc:
+          batch_size: 10
+          order_inserts: true
+        generate_statistics: false
+    hibernate:
+      ddl-auto: none
+  liquibase:
+    enabled: true
