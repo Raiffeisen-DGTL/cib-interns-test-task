@@ -3,8 +3,11 @@ version: "3.3"
 services:
   app:
     restart: always
+    image: springboot-postgresql
     build: .
     container_name: springRestApplication
+    ports:
+      - "8080:8080"
     depends_on:
       - db
     environment:
@@ -16,7 +19,7 @@ services:
     restart: always
     environment:
       POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: aq1sw2de34
+      POSTGRES_PASSWORD: postgres
       POSTGRES_DB: socks
     ports:
       - "5432:5432"
