@@ -1,3 +1,19 @@
+# Реализация
+* Приложение написано с использованием Spring Boot
+* Базы данных PostgreSQL
+* С системой версионирования Flyway
+* База данных поднимается в докер-контейнере
+
+
+## Для поднятия базы данных:
+Из корневой директории проекта вызвать команду <code>docker-compose up</code>
+
+## API
+* POST `http://localhost:8080/api/socks/income`
+* POST `http://localhost:8080/api/socks/outcome`
+* GET `http://localhost:8080/api/socks`
+
+
 # Тестовое задание для Java стажеров
 
 Привет!
