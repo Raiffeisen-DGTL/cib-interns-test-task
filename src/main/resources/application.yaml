@@ -1,0 +1,24 @@
+server:
+  port: 8080
+  servlet:
+    context-path: /api/v1
+spring:
+  jpa:
+    show-sql: true
+  datasource:
+    url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://localhost:5432/postgres}
+    username: ${SPRING.DATASOURCE.USERNAME:postgres}
+    password: ${SPRING.DATASOURCE.USERNAME:root}
+    driver-class-name: org.postgresql.Driver
+  flyway:
+    locations: classpath:db/migration
+    enabled: true
+    validate-on-migrate: true
+    baseline-on-migrate: true
+  h2:
+    console:
+      enabled: true
+      settings:
+        web-allow-others: false
+  jooq:
+    sql-dialect: org.hibernate.dialect.PostgreSQLDialect
