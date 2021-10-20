@@ -1,0 +1,26 @@
+version: '2'
+
+services:
+  app:
+    image: 'zamuruev92/socks-storage-2:latest'
+    build:
+      context: .
+    container_name: app
+    ports:
+      - 127.0.0.1:8080:8080
+    depends_on:
+      - postgres
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/postgres
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=postgres
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+
+  postgres:
+    image: 'postgres:13.1-alpine'
+    container_name: postgres
+    ports:
+      - 127.0.0.1:5432:5432
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
