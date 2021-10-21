@@ -1,9 +1,9 @@
 package ru.mirraim.cib_interns_test_task.exception_handling;
 
-public class SocksIncorrectData {
+public class SocksInfo {
     private String info;
 
-    public SocksIncorrectData() {
+    public SocksInfo() {
     }
 
     public String getInfo() {

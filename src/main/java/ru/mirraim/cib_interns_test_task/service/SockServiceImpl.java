@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.mirraim.cib_interns_test_task.dao.SockRepository;
 import ru.mirraim.cib_interns_test_task.entity.Sock;
+import ru.mirraim.cib_interns_test_task.exception_handling.NoSuchSocksException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -57,12 +58,13 @@ public class SockServiceImpl implements SockService {
                 sock.getColor(), sock.getCottonPart()
         );
         if (saved == null) {
-            store.save(sock);
-            return null;
+            throw new NoSuchSocksException ("невозможно удалить отсутствующйи объект");
         }
         int quantity = saved.getQuantity() - sock.getQuantity();
         if (quantity < 0) {
-            System.out.println("на складе недостаточно позиций для совершения операции");
+            throw new NoSuchSocksException(
+                    "на складе недостаточно позиций для совершения операции"
+            );
         }
         saved.setQuantity(quantity);
         return saved;

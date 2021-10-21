@@ -28,7 +28,10 @@ public class SockController {
                     "содержание хлопка должно быть в пределах от 0 до 100"
             );
         }
-        service.income(sock);
+        sock = service.income(sock);
+        if (sock == null) {
+            throw new IllegalStateException("не удалось произвести добавление");
+        }
         return sock;
     }
 
@@ -37,12 +40,12 @@ public class SockController {
         if (sock.getQuantity() < 0) {
             throw new NoSuchSocksException("некорректно введено количество");
         }
-        service.outcome(sock);
+        sock = service.outcome(sock);
         return sock;
     }
 
     @GetMapping("/socks")
-    public Integer find(@RequestParam("color") String color,
+    public Integer find(@RequestParam(name = "color") String color,
                             @RequestParam("operation") String operation,
                             @RequestParam("cottonPart") int cottonPart) {
         if (cottonPart < 0 || cottonPart > 100) {
