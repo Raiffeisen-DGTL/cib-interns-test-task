@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Count socks</title>
+</head>
+<body>
+<p th:text="'Цвет носков -' + ${color} +
+            ', Операция -' +  ${operation} +
+             ', Процент хлопка в составе -' + ${cottonPart} +
+             ', Количество пар на складе -' + ${count}"></p>
+</body>
+<br>
+<a th:href="@{/wareHouse}">Back to warehouse</a>
+</html>

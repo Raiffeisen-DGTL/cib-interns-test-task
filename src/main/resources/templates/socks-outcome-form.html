@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Outcome socks</title>
+</head>
+<body>
+
+<form action="#" th:action="@{/api/socks/outcome}" th:object="${socks}" method="post">
+    <label for="color">Сolor</label>
+    <input type="text" th:field="*{color}" id="color" placeholder="Сolor">
+    <label for="cottonPart">Cotton Part</label>
+    <input type="number" th:field="*{cottonPart}" id="cottonPart" placeholder="Cotton Part">
+    <label for="quantity">Quantity</label>
+    <input type="number" th:field="*{quantity}" id="quantity" placeholder="Quantity">
+    <input type="submit" value="Outcome from the warehouse">
+</form>
+<br>
+<a th:href="@{/wareHouse}">Back to warehouse</a>
+</body>
+</html>

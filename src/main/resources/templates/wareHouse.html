@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Warehouse</title>
+</head>
+<body>
+<h2>Socks</h2>
+<table>
+    <thead>
+    <tr>
+        <th>Id</th>
+        <th>Color</th>
+        <th>Cotton part</th>
+        <th>Quantity</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="socks : ${socksList}">
+         <td th:text="${socks.id}"></td>
+        <td th:text="${socks.color}"></td>
+        <td th:text="${socks.cottonPart}"></td>
+        <td th:text="${socks.quantity}"></td>
+    </tr>
+    </tbody>
+</table>
+<a th:href="@{/api/socks/income}">Income socks to warehouse</a>
+<br>
+<a th:href="@{/api/socks/outcome}">Outcome socks from the warehouse</a>
+</body>
+</html>
