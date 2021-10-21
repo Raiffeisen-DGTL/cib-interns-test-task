@@ -1,0 +1,63 @@
+POST http://localhost:8080/api/socks/income?color=black&cottonPart=10&quantity=1
+
+###
+
+POST http://localhost:8080/api/socks/income?color=black&cottonPart=10&quantity=-1
+
+###
+
+POST http://localhost:8080/api/socks/income?color=black&cottonPart=10&quantity=0
+
+###
+
+POST http://localhost:8080/api/socks/income?color=black&cottonPart=10
+
+###
+
+POST http://localhost:8080/api/socks/income?color=secret_color&cottonPart=0&quantity=333
+
+###
+
+POST http://localhost:8080/api/socks/outcome?color=secret_color&cottonPart=0&quantity=333
+
+###
+
+POST http://localhost:8080/api/socks/outcome?color=rainbow&cottonPart=10&quantity=1
+
+###
+
+POST http://localhost:8080/api/socks/outcome?color=black&cottonPart=10
+
+
+
+###
+
+GET http://localhost:8080/api/socks?color=black&operation=lessThan&cottonPart=60
+
+###
+
+GET http://localhost:8080/api/socks?color=red&operation=moreThan&cottonPart=40
+
+###
+
+GET http://localhost:8080/api/socks?color=red&operation=equal&cottonPart=50
+
+###
+
+GET http://localhost:8080/api/socks?color=green&operation=lessThan&cottonPart=101
+
+###
+
+GET http://localhost:8080/api/socks?color=green&operation=moreThan&cottonPart=100
+
+###
+
+GET http://localhost:8080/api/socks?color=green&operation=equal&cottonPart=100
+
+###
+
+GET http://localhost:8080/api/socks?color=green&operation=EQUAL&cottonPart=100
+
+###
+
+GET http://localhost:8080/api/socks?color=green&operation=equal

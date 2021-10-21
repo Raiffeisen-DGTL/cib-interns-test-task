@@ -1,0 +1,11 @@
+version: '3.7'
+services:
+  db:
+    image: postgres:alpine
+    command: ["postgres", "-c", "log_statement=all"]
+    ports:
+      - 5432:5432
+    environment:
+      - POSTGRES_DB=socks_db
+      - POSTGRES_USER=user
+      - POSTGRES_PASSWORD=pass

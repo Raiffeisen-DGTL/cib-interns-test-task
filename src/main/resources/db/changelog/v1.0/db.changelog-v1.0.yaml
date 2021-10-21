@@ -1,0 +1,7 @@
+databaseChangeLog:
+  - include:
+      file: 01-changeset-socks-table.yaml
+      relativeToChangelogFile: true
+  - include:
+      file: 10-changeset-fill-socks-table.yaml
+      relativeToChangelogFile: true

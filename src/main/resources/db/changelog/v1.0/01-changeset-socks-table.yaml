@@ -1,0 +1,22 @@
+databaseChangeLog:
+  - changeSet:
+      id: socks-table
+      author: leo
+      changes:
+        - sqlFile:
+            dbms: postgresql
+            encoding: utf-8
+            endDelimiter: \n60
+            relativeToChangelogFile: true
+            splitStatements: true
+            stripComments: true
+            path: 01-create-socks-table.sql
+      rollback:
+        - sqlFile:
+            dbms: postgresql
+            encoding: utf-8
+            endDelimiter: \n60
+            relativeToChangelogFile: true
+            splitStatements: true
+            stripComments: true
+            path: 01-drop-socks-table.sql

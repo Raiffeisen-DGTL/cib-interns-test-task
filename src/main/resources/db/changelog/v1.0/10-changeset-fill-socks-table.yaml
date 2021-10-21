@@ -1,0 +1,13 @@
+databaseChangeLog:
+  - changeSet:
+      id: fill-socks-table
+      author: leo
+      changes:
+        - sqlFile:
+            dbms: postgresql
+            encoding: utf-8
+            endDelimiter: \n60
+            relativeToChangelogFile: true
+            splitStatements: true
+            stripComments: true
+            path: 10-fill-socks-table.sql
