@@ -1,0 +1,25 @@
+version: "3"
+volumes:
+  pgdata:
+services:
+  komek_109_db:
+    build: ./src/main/resources/db
+    container_name: db
+    labels:
+      name: "main OLTP rest api database"
+    environment:
+      - TZ=Asia/Almaty
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=1
+      - POSTGRES_DB=kmk109
+    restart: on-failure
+    ports:
+      - 5432:5432
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    networks:
+      - backend
+
+
+networks:
+  backend:
