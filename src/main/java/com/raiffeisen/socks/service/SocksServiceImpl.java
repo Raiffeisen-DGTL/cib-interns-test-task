@@ -40,7 +40,7 @@ public class SocksServiceImpl implements SocksService {
         repository.getSockByColorAndCottonPart(sockDto.getColor(), sockDto.getCottonPart())
                 .ifPresentOrElse(sock -> deleteCertainQuantityOfSocks(sock, sockDto.getQuantity()),
                         () -> {
-                            throw new NotFoundSockException("Носки с заданными параметрами не найдены");
+                            throw new NotFoundSockException("Not found socks with such parameters");
                         }
                 );
     }
@@ -54,7 +54,7 @@ public class SocksServiceImpl implements SocksService {
         sockDto.setQuantity(0);
         List<Sock> sockList = getSocksListsByOperation(color, operation, cottonPart);
         if (sockList.isEmpty()) {
-            throw new NotFoundSockException("Носки с данными параметрами не найдены");
+            throw new NotFoundSockException("Not found socks with such parameters");
         }
         sockList.forEach(sock -> sockDto.setQuantity(sock.getQuantity() + sockDto.getQuantity()));
         return sockDto;
@@ -69,7 +69,7 @@ public class SocksServiceImpl implements SocksService {
             case "moreThan":
                 return repository.findByColorAndCottonPartGreaterThan(color, cottonPart);
             default:
-                throw new IncorrectSockFormatException("Некорректный оператор");
+                throw new IncorrectSockFormatException("Incorrect comparison operator");
         }
     }
 
@@ -78,7 +78,7 @@ public class SocksServiceImpl implements SocksService {
                 || sockDto.getCottonPart() == null
                 || sockDto.getQuantity() == null || sockDto.getQuantity() <= 0
                 || sockDto.getCottonPart() < 0 || sockDto.getCottonPart() > 100) {
-            throw new IncorrectSockFormatException("Некорректный формат объекта");
+            throw new IncorrectSockFormatException("Wrong object format");
         }
     }
 
@@ -93,7 +93,7 @@ public class SocksServiceImpl implements SocksService {
     private void deleteCertainQuantityOfSocks(Sock sock, Integer quantity) {
         Integer quantityValueFromDB = sock.getQuantity();
         if (quantityValueFromDB < quantity) {
-            throw new IncorrectSockFormatException("Такого количества на складе нет");
+            throw new IncorrectSockFormatException("There is no such amount of socks in stock");
         }
         if (quantityValueFromDB.equals(quantity)) {
             repository.delete(sock);
