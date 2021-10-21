@@ -2,7 +2,7 @@ services:
   postgresql:
     image: postgres:13
     ports:
-      - 5433:5432
+      - 5432:5432
     restart: always
     environment:
       - POSTGRES_DB=root
@@ -10,6 +10,13 @@ services:
       - POSTGRES_PASSWORD=root
     volumes:
       - postgres_volume:/var/lib/postgresql/data/
+
+  app:
+    build: .
+    ports:
+      - 8080:8080
+    environment:
+      database.bd: jdbc:postgresql://localhost:5432/root
 
 volumes:
   postgres_volume: {}
