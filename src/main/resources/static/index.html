@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Socks Accounting</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous" />
+</head>
+<body>
+<div class="container">
+    <div class="row">
+        <h3 style="padding-left: 0; margin: 30px 0">LIST OF APIs:</h3>
+        <table class="table">
+            <thead>
+            <tr>
+                <th scope="col">TYPE</th>
+                <th scope="col">API</th>
+                <th scope="col">INFO</th>
+                <th scope="col">PARAMS</th>
+                <th scope="col">EXAMPLE</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <th scope="row">GET</th>
+                <td>/api/socks</td>
+                <td>Returns the total number of socks in stock that match the query criteria passed in the parameters</td>
+                <td><span style="font-weight: 600">color</span> - color of socks <br>
+                    <span style="font-weight: 600">operation</span>  - comparison operator of the amount of cotton in the composition of socks, one value from: moreThan, lessThan, equal <br>
+                    <span style="font-weight: 600">cottonPart</span>  - the value of the percentage of cotton in the composition of socks from the comparison</td>
+                <td><span style="font-weight: 600">/api/socks?color=red&operation=moreThan&cottonPart=90</span> — must return the total number of red socks with more than 90% cotton <br>
+                    <span style="font-weight: 600">/api/socks?color=black&operation=lessThan?cottonPart=10</span> — must return the total number of black socks with less than 10% cotton</td>
+            </tr>
+            <tr>
+                <th scope="row">POST</th>
+                <td>/api/socks/income</td>
+                <td>Add income</td>
+                <td><span style="font-weight: 600">color</span> - the color of the socks, the string (e.g., black, red, yellow) <br>
+                    <span style="font-weight: 600">cottonPart </span>  - the percentage of cotton in the composition of the socks, an integer between 0 and 100 (e.g. 30, 18, 42) <br>
+                    <span style="font-weight: 600">quantity</span>  - the number of pairs of socks, an integer greater than 0 </td>
+            </tr>
+            <tr>
+                <th scope="row">POST</th>
+                <td>/api/socks/outcome</td>
+                <td>Add outcome</td>
+                <td>the same as in income</td>
+            </tr>
+            </tbody>
+        </table>
+
+        <h3 style="padding-left: 0; margin: 50px 0 30px 0">СПИСОК APIs:</h3>
+        <table class="table" style="margin-bottom: 50px">
+            <thead>
+            <tr>
+                <th scope="col">ТИП</th>
+                <th scope="col">API</th>
+                <th scope="col">ИНФО</th>
+                <th scope="col">ПАРАМЕТРЫ</th>
+                <th scope="col">ПРИМЕРЫ</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <th scope="row">GET</th>
+                <td>/api/socks</td>
+                <td>Возвращает общее количество носков на складе, соответствующих переданным в параметрах критериям запроса</td>
+                <td><span style="font-weight: 600">color</span> - цвет носков <br>
+                    <span style="font-weight: 600">operation</span>  - оператор сравнения значения количества хлопка в составе носков, одно значение из: moreThan, lessThan, equal <br>
+                    <span style="font-weight: 600">cottonPart</span>  - значение процента хлопка в составе носков из сравнения</td>
+                <td><span style="font-weight: 600">/api/socks?color=red&operation=moreThan&cottonPart=90</span> — должен вернуть общее количество красных носков с долей хлопка более 90% <br>
+                    <span style="font-weight: 600">/api/socks?color=black&operation=lessThan?cottonPart=10</span> — должен вернуть общее количество черных носков с долей хлопка менее 10%</td>
+            </tr>
+            <tr>
+                <th scope="row">POST</th>
+                <td>/api/socks/income</td>
+                <td>Добавляет приход</td>
+                <td><span style="font-weight: 600">color</span> - цвет носков, строка (например, black, red, yellow) <br>
+                    <span style="font-weight: 600">cottonPart </span>  - процентное содержание хлопка в составе носков, целое число от 0 до 100 (например, 30, 18, 42) <br>
+                    <span style="font-weight: 600">quantity</span>  - процентное содержание хлопка в составе носков, целое число от 0 до 100 (например, 30, 18, 42) </td>
+            </tr>
+            <tr>
+                <th scope="row">POST</th>
+                <td>/api/socks/outcome</td>
+                <td>Добавляет расход</td>
+                <td>такие же, как и у income запроса</td>
+            </tr>
+            </tbody>
+        </table>
+
+    </div>
+</div>
+
+</body>
+</html>
