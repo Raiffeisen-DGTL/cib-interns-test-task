@@ -1,0 +1,1 @@
+web: java -jar target/cib-interns-test-task-0.0.1-SNAPSHOT.jar --spring.config.location=heroku.properties
