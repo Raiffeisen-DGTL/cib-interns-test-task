@@ -1,0 +1,15 @@
+services:
+  postgresql:
+    image: postgres:13
+    ports:
+      - 5433:5432
+    restart: always
+    environment:
+      - POSTGRES_DB=root
+      - POSTGRES_USER=root
+      - POSTGRES_PASSWORD=root
+    volumes:
+      - postgres_volume:/var/lib/postgresql/data/
+
+volumes:
+  postgres_volume: {}
