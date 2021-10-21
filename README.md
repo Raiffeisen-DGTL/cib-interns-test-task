@@ -1,6 +1,6 @@
 <h3> IF YOU ARE READING THIS YOU CAN TEST OUT THE DEPLOYED API AT 
 
-http://130.193.54.99:8080/api/socks
+http://62.84.121.132:8080/api/socks
 
 
 # Тестовое задание для Java стажеров
