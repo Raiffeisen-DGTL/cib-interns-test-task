@@ -1,0 +1,6 @@
+-- INSERT INTO socks VALUES
+-- (1, 'red', 50),
+-- (1, 'green', 20),
+-- (1, 'green', 30),
+-- (2, 'gray', 20),
+-- (2, 'gray', 10);
