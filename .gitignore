@@ -1,5 +1,8 @@
 # Ignore Gradle project-specific cache directory
 .gradle
+.idea
+demo/HELP.md
+demo/gradle/wrapper
 
 # Ignore Gradle build output directory
 demo/build
