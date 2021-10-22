@@ -1,0 +1,14 @@
+spring:
+  liquibase:
+    change-log: classpath:/migrations/changelog.yml
+  jpa:
+    hibernate:
+      ddl-auto: none
+  datasource:
+    url: ${DB_URL:jdbc:mysql://localhost:3308/socks?useJvmCharsetConverters=true}
+    username: ${DB_USERNAME:root}
+    password: ${DB_PASSWORD:my-secret-pw}
+    driver-class-name: com.mysql.jdbc.Driver
+
+
+

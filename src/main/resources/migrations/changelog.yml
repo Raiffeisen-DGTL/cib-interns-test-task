@@ -1,0 +1,11 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1634835911
+      author: Kirill Silantev
+      changes:
+        - sqlFile:
+            encoding: utf8
+            path: classpath:/migrations/sql/1634835911_init.sql
+            splitStatements: false
+
+
