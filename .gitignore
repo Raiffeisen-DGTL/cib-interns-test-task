@@ -1,0 +1,14 @@
+# Ignore Gradle project-specific cache directory
+.gradle
+
+# Ignore Gradle build output directory
+demo/build
+demo/gradlew
+demo/.jpb
+demo/build.gradle
+demo/gradlew
+demo/gradlew.bat
+demo/Procfile
+demo/settings.gradle
+demo/system.properties
+demo/src/main/resoruces/application.resources
