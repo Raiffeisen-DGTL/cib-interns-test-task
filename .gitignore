@@ -14,4 +14,4 @@ demo/gradlew.bat
 demo/Procfile
 demo/settings.gradle
 demo/system.properties
-demo/src/main/resoruces/application.resources
+demo/src/main/resoruces/application.properties
