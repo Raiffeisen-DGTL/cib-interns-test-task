@@ -1,0 +1,25 @@
+databaseChangeLog:
+
+  - changeSet:
+      id: DEV-1
+      author: Roman Kucherenko
+      changes:
+        - createTable:
+            tableName: socks
+            remarks: Носки
+            columns:
+              - column:
+                  name: id
+                  type: integer
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+              - column:
+                  name: color
+                  type: varchar(50)
+              - column:
+                  name: cotton_part
+                  type: integer
+              - column:
+                  name: quantity
+                  type: integer
