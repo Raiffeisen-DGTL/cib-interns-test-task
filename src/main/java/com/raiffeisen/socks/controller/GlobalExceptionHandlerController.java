@@ -24,7 +24,7 @@ public class GlobalExceptionHandlerController {
 
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     @ExceptionHandler()
-    public ErrorMessage onNullResult(Exception exception) {
+    public ErrorMessage InternalServerExceptionHandler(Exception exception) {
         return new ErrorMessage(HttpStatus.INTERNAL_SERVER_ERROR.value(), exception.getMessage());
     }
 }

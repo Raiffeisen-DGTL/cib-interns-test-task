@@ -1,12 +1,16 @@
 package com.raiffeisen.socks.model;
 
-import lombok.Data;
+import lombok.*;
 
 import javax.persistence.*;
+import java.util.Objects;
 
 @Entity
 @Table(name = "socks")
-@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@Setter
+@Getter
 public class Sock {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -17,4 +21,20 @@ public class Sock {
     private Integer cottonPart;
     @Column
     private Integer quantity;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Sock sock = (Sock) o;
+        return Objects.equals(id, sock.id) &&
+                Objects.equals(color, sock.color) &&
+                Objects.equals(cottonPart, sock.cottonPart) &&
+                Objects.equals(quantity, sock.quantity);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, color, cottonPart, quantity);
+    }
 }

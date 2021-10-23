@@ -23,7 +23,7 @@ public class SocksServiceImpl implements SocksService {
 
     @Transactional
     @Override
-    public void registerSocks(@NonNull SockDto sockDto) {
+    public void registerSocks(SockDto sockDto) {
         sockDtoValidation(sockDto);
         repository.getSockByColorAndCottonPart(sockDto.getColor(), sockDto.getCottonPart())
                 .ifPresentOrElse(sock -> {
@@ -35,7 +35,7 @@ public class SocksServiceImpl implements SocksService {
 
     @Transactional
     @Override
-    public void outcomeSocks(@NonNull SockDto sockDto) {
+    public void outcomeSocks(SockDto sockDto) {
         sockDtoValidation(sockDto);
         repository.getSockByColorAndCottonPart(sockDto.getColor(), sockDto.getCottonPart())
                 .ifPresentOrElse(sock -> deleteCertainQuantityOfSocks(sock, sockDto.getQuantity()),
