@@ -21,8 +21,8 @@ public class SocksController {
     }
 
     @PostMapping(path = "api/socks/outcome")
-    public void removeSocks(@RequestBody Socks socks) {
-        socksService.removeSocks(socks);
+    public void reduceSocks(@RequestBody Socks socks) {
+        socksService.reduceSocks(socks);
 
     }
 }

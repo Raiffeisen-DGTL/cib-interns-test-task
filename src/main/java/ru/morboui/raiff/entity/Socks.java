@@ -9,7 +9,7 @@ public class Socks {
 
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
-  private Long id;
+  private Integer id;
 
   @Column
   private String color;
@@ -20,7 +20,7 @@ public class Socks {
   @Column
   private Long quantity;
 
-  public Socks(Long id, String color, Long cottonPart, Long quantity) {
+  public Socks(Integer id, String color, Long cottonPart, Long quantity) {
     this.id = id;
     this.color = color;
     this.cottonPart = cottonPart;
@@ -37,11 +37,11 @@ public class Socks {
 
   }
 
-  public Long getId() {
+  public Integer getId() {
     return id;
   }
 
-  public void setId(Long id) {
+  public void setId(Integer id) {
     this.id = id;
   }
 
