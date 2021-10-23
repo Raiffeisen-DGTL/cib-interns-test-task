@@ -1,7 +1,6 @@
 package ru.morboui.raiff.entity;
 
 import javax.persistence.*;
-import java.util.Objects;
 
 @Entity
 @Table(name = "socks")
