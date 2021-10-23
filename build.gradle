@@ -19,12 +19,16 @@ repositories {
 }
 
 dependencies {
-  //implementation 'org.springframework.boot:spring-boot-starter-data-jpa:2.5.5'
+  implementation 'org.springframework.boot:spring-boot-starter-data-jpa:2.5.5'
   implementation 'org.springframework.boot:spring-boot-starter-web:2.5.5'
+  implementation 'org.springframework.boot:spring-boot-starter-data-jpa:2.5.5'
   compileOnly 'org.projectlombok:lombok:1.18.22'
   developmentOnly 'org.springframework.boot:spring-boot-devtools:2.5.5'
   annotationProcessor 'org.projectlombok:lombok:1.18.22'
   testImplementation 'org.springframework.boot:spring-boot-starter-test:2.5.5'
+  // https://mvnrepository.com/artifact/mysql/mysql-connector-java
+  implementation group: 'mysql', name: 'mysql-connector-java', version: '8.0.27'
+
 }
 
 test {
