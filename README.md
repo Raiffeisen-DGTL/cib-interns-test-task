@@ -8,5 +8,4 @@
 GET(запрос) – url: https://socks-application-postgres.herokuapp.com . Дальше /api/socks и параметры запроса. Например: ?color=red&operation=moreThan&cottonPart=10
 Все как было сказано по заданию. Тестировалось в POSTMAN.
 
-Можно также поднять данное приложение клонировав github репозиторий в IDEA использовав docker-compose up в консоли из корневой папки приложения. 
-Перед запуском нужно запустить Tasks build/clean , потом build/build. После сборки проекта можно поднимать через docker-compose up
+
