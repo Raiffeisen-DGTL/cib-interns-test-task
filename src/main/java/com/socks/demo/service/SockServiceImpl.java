@@ -69,7 +69,7 @@ public class SockServiceImpl implements SockService {
     }
 
     @Override
-    public Integer amountSocks(String color, String operation, Integer cottonPart) throws IncorrectParametersException {
+    public Integer amountSocks(String color, String operation, Integer cottonPart) {
         if(cottonPart <= 0 || cottonPart > 100) {
             throw new IncorrectCottonPartException();
         }
@@ -89,7 +89,7 @@ public class SockServiceImpl implements SockService {
         return sumSock;
     }
 
-    private List<Sock> sortSocks(String color, String operation, Integer cottonPart) throws IncorrectParametersException {
+    private List<Sock> sortSocks(String color, String operation, Integer cottonPart) {
         switch (operation) {
             case "moreThan":
                 return sockRepo.calcOperationMore(color, cottonPart);

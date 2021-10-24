@@ -9,6 +9,6 @@ public interface SockService {
 
     void deleteSocks(Sock sock);
 
-    Integer amountSocks(String color, String operation, Integer cottonPart) throws IncorrectParametersException;
+    Integer amountSocks(String color, String operation, Integer cottonPart);
 
 }

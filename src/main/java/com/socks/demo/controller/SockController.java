@@ -29,7 +29,7 @@ public class SockController {
     }
 
     @GetMapping()
-    public ResponseEntity<Integer> getAmountSocks(@RequestParam String color, String operation, Integer cottonPart) throws IncorrectParametersException {
+    public ResponseEntity<Integer> getAmountSocks(@RequestParam String color, String operation, Integer cottonPart) {
         return ResponseEntity.ok(sockService.amountSocks(color, operation, cottonPart));
     }
 
