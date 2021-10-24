@@ -1,6 +1,8 @@
 package com.socks.demo.service;
 
+import com.socks.demo.exception.IncorrectCottonPartException;
 import com.socks.demo.exception.IncorrectParametersException;
+import com.socks.demo.exception.IncorrectQuantityException;
 import com.socks.demo.exception.NotEnoughSocksException;
 import com.socks.demo.model.Sock;
 import com.socks.demo.repository.SockRepo;
@@ -26,6 +28,13 @@ public class SockServiceImpl implements SockService {
         Integer cottonPart = sock.getCottonPart();
         Integer quantity = sock.getQuantity();
 
+        if(cottonPart < 0 || cottonPart > 100) {
+            throw new IncorrectCottonPartException();
+        }
+        if(quantity < 0) {
+            throw new IncorrectQuantityException();
+        }
+
         Sock newSock = sockRepo.findSockByColorAndCottonPart(color, cottonPart);
 
         if (newSock == null) {
@@ -42,6 +51,13 @@ public class SockServiceImpl implements SockService {
         Integer cottonPart = sock.getCottonPart();
         Integer quantity = sock.getQuantity();
 
+        if(cottonPart < 0 || cottonPart > 100) {
+            throw new IncorrectCottonPartException();
+        }
+        if(quantity < 0) {
+            throw new IncorrectQuantityException();
+        }
+
         Sock newSock = sockRepo.findSockByColorAndCottonPart(color, cottonPart);
 
         if (newSock.getQuantity() < sock.getQuantity()) {
@@ -54,6 +70,10 @@ public class SockServiceImpl implements SockService {
 
     @Override
     public Integer amountSocks(String color, String operation, Integer cottonPart) throws IncorrectParametersException {
+        if(cottonPart < 0 || cottonPart > 100) {
+            throw new IncorrectCottonPartException();
+        }
+
         List<Sock> sockList = sortSocks(color, operation, cottonPart);
         List<Integer> socksAmount = new ArrayList<>();
         Integer sumSock = 0;
