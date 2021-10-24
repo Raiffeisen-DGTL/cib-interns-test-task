@@ -1,1 +1,1 @@
-web: java -jar build/libs/cib-interns-test-task-1.0-SNAPSHOT.jar
+web: java -Dserver.port=$PORT -jar build/libs/cib-interns-test-task-1.0-SNAPSHOT.jar
