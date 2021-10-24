@@ -1,0 +1,1 @@
+CREATE TABLE IF NOT EXISTS socks (color TEXT NOT NULL, cotton_part INT NOT NULL, quantity BIGINT NOT NULL);
