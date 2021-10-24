@@ -1,9 +1,6 @@
 package com.socks.demo.advice;
 
-import com.socks.demo.exception.IncorrectCottonPartException;
-import com.socks.demo.exception.IncorrectParametersException;
-import com.socks.demo.exception.IncorrectQuantityException;
-import com.socks.demo.exception.NotEnoughSocksException;
+import com.socks.demo.exception.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -30,6 +27,11 @@ public class MyControllerAdvice {
     @ExceptionHandler(IncorrectQuantityException.class)
     public ResponseEntity<String> incorrectQuantityException(IncorrectQuantityException incorrectQuantityException) {
         return new ResponseEntity<>(incorrectQuantityException.getErrorMessage(), HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(IncorrectColorException.class)
+    public ResponseEntity<String> incorrectColorException(IncorrectColorException incorrectColorException) {
+        return new ResponseEntity<>(incorrectColorException.getErrorMessage(), HttpStatus.BAD_REQUEST);
     }
 
 }

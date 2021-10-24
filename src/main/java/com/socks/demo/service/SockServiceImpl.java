@@ -1,9 +1,6 @@
 package com.socks.demo.service;
 
-import com.socks.demo.exception.IncorrectCottonPartException;
-import com.socks.demo.exception.IncorrectParametersException;
-import com.socks.demo.exception.IncorrectQuantityException;
-import com.socks.demo.exception.NotEnoughSocksException;
+import com.socks.demo.exception.*;
 import com.socks.demo.model.Sock;
 import com.socks.demo.repository.SockRepo;
 import lombok.RequiredArgsConstructor;
@@ -34,6 +31,9 @@ public class SockServiceImpl implements SockService {
         if(quantity <= 0) {
             throw new IncorrectQuantityException();
         }
+        if(color == null) {
+            throw new IncorrectColorException();
+        }
 
         Sock newSock = sockRepo.findSockByColorAndCottonPart(color, cottonPart);
 
@@ -57,6 +57,9 @@ public class SockServiceImpl implements SockService {
         if(quantity <= 0) {
             throw new IncorrectQuantityException();
         }
+        if(color == null) {
+            throw new IncorrectColorException();
+        }
 
         Sock newSock = sockRepo.findSockByColorAndCottonPart(color, cottonPart);
 
@@ -72,6 +75,9 @@ public class SockServiceImpl implements SockService {
     public Integer amountSocks(String color, String operation, Integer cottonPart) {
         if(cottonPart <= 0 || cottonPart > 100) {
             throw new IncorrectCottonPartException();
+        }
+        if(color == null) {
+            throw new IncorrectColorException();
         }
 
         List<Sock> sockList = sortSocks(color, operation, cottonPart);
