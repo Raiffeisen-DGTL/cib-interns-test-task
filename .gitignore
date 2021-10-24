@@ -9,3 +9,4 @@ out/
 !.jar
 !target/cib-interns-test-task.jar
 
+/target/
