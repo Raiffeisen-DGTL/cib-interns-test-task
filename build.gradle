@@ -26,8 +26,10 @@ dependencies {
   developmentOnly 'org.springframework.boot:spring-boot-devtools:2.5.5'
   annotationProcessor 'org.projectlombok:lombok:1.18.22'
   testImplementation 'org.springframework.boot:spring-boot-starter-test:2.5.5'
-  // https://mvnrepository.com/artifact/mysql/mysql-connector-java
   implementation group: 'mysql', name: 'mysql-connector-java', version: '8.0.27'
+  // https://mvnrepository.com/artifact/org.flywaydb/flyway-core
+  implementation group: 'org.flywaydb', name: 'flyway-core', version: '8.0.2'
+
 
 }
 

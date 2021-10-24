@@ -1,11 +1,11 @@
 package ru.morboui.raiff.entity;
 
 
-public class ErrorResponce {
+public class ErrorResponse {
     private final String code;
     private final String message;
 
-    public ErrorResponce(String code, String message) {
+    public ErrorResponse(String code, String message) {
         this.code = code;
         this.message = message;
     }
