@@ -21,9 +21,9 @@ public class SocksService {
     }
 
     public void addNewSocks(@NonNull Socks socks) {
-        if(!(socks.getQuantity() != 0 && socks.getCottonPart() > 0 && socks.getCottonPart() <= 100)) {
+        if (!(socks.getQuantity() != 0 && socks.getCottonPart() > 0 && socks.getCottonPart() <= 100)) {
             throw new IncorrectParametersException("Quantity should be greater than 0 and CottonPart should be from 0 to 100");
-        }else if (socksRepository.findSocksByColorAndCottonPartEquals(socks.getColor(), socks.getCottonPart()).isEmpty())
+        } else if (socksRepository.findSocksByColorAndCottonPartEquals(socks.getColor(), socks.getCottonPart()).isEmpty())
             socksRepository.save(socks);
         else {
             Socks socksInBD = socksRepository.findSocksByColorAndCottonPartEquals(socks.getColor(), socks.getCottonPart()).get();
