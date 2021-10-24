@@ -22,6 +22,10 @@ public class SocksRequest {
     @NotNull
     private Integer quantity;
 
+    public void setColor(String color) {
+        this.color = color.trim();
+    }
+
     @Override
     public String toString() {
         return "color: " + color +
