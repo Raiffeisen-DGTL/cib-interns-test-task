@@ -1,0 +1,30 @@
+databaseChangeLog:
+- changeSet:
+    id: 1635086090698-1
+    author: f0xy (generated)
+    changes:
+    - createTable:
+        columns:
+        - column:
+            autoIncrement: true
+            constraints:
+              nullable: false
+              primaryKey: true
+              primaryKeyName: sockPK
+            name: id
+            type: BIGINT
+        - column:
+            name: color
+            type: VARCHAR(255)
+        - column:
+            constraints:
+              nullable: false
+            name: cotton_part
+            type: INTEGER
+        - column:
+            constraints:
+              nullable: false
+            name: quantity
+            type: INTEGER
+        tableName: sock
+

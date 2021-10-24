@@ -1,0 +1,8 @@
+databaseChangeLog:
+  - changeSet:
+      id: 9999999999999-1
+      author: service_user
+      changes: []
+
+  - includeAll:
+      path: db/changelogs/
