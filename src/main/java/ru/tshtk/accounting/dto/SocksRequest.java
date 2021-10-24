@@ -6,6 +6,7 @@ import lombok.Setter;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 @Getter
 @Setter
@@ -15,9 +16,11 @@ public class SocksRequest {
     private String color;
     @Min(0)
     @Max(100)
-    private int cottonPart;
+    @NotNull
+    private Integer cottonPart;
     @Min(1)
-    private int quantity;
+    @NotNull
+    private Integer quantity;
 
     @Override
     public String toString() {
