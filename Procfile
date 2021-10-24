@@ -1,0 +1,1 @@
+web: java -jar build/libs/cib-interns-test-task1-1.0-SNAPSHOT.jar
