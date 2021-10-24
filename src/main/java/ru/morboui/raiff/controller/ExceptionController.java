@@ -19,6 +19,6 @@ public class ExceptionController {
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     @ExceptionHandler(InvalidResultException.class)
     public ErrorResponse onInvalidResult(InvalidResultException exception) {
-        return new ErrorResponse("Null result", exception.getMessage());
+        return new ErrorResponse("Null resul", exception.getMessage());
     }
 }

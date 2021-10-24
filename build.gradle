@@ -4,6 +4,9 @@ plugins {
   id 'java'
 }
 
+
+
+
 group = 'ru.morboui'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '11'
@@ -13,6 +16,7 @@ configurations {
     extendsFrom annotationProcessor
   }
 }
+
 
 repositories {
   mavenCentral()
@@ -27,12 +31,12 @@ dependencies {
   annotationProcessor 'org.projectlombok:lombok:1.18.22'
   testImplementation 'org.springframework.boot:spring-boot-starter-test:2.5.5'
   implementation group: 'mysql', name: 'mysql-connector-java', version: '8.0.27'
-  // https://mvnrepository.com/artifact/org.flywaydb/flyway-core
   implementation group: 'org.flywaydb', name: 'flyway-core', version: '8.0.2'
 
 
 }
-
 test {
   useJUnitPlatform()
 }
+
+
