@@ -5,7 +5,6 @@ public enum OperationSocks {
     moreThan(">"),
     lessThan("<");
 
-    String text;
     String symbol;
 
     OperationSocks(String symbol) {
