@@ -22,7 +22,6 @@ public class SockController {
     public ResponseEntity<List<SockBatchDto>> findByColorAndOperationAndCottonPart(@RequestParam(value = "color", required = false, defaultValue = "all") String color,
                                                                                    @RequestParam(value = "operation", required = false, defaultValue = "greaterThan") String operation,
                                                                                    @RequestParam(value = "cottonPart", required = false, defaultValue = "0") Integer cottonPart) {
-        Arrays.binarySearch()
         return new ResponseEntity<>(sockService.findByColorAndOperationAndCottonPart(color, operation, cottonPart), HttpStatus.OK);
     }
 
