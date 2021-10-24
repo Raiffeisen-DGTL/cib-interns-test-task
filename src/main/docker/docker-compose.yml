@@ -1,0 +1,33 @@
+version: '3.8'
+
+services:
+  postgres:
+    build:
+      context: postgres
+      dockerfile: Dockerfile
+    image: 'docker-postgres'
+    ports:
+      - "5433:5432"
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_DB=postgres
+      - POSTGRES_PASSWORD=postgres
+    volumes:
+      - "db-data:/var/lib/postgresql/data"
+
+
+  app:
+    build:
+      context: app
+      dockerfile: Dockerfile
+    environment:
+      - PORT=8080
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres/postgres
+    image: 'docker-accounting-socks'
+    ports:
+      - "8080:8080"
+    depends_on:
+      - postgres
+
+volumes:
+  db-data:
