@@ -28,10 +28,10 @@ public class SockServiceImpl implements SockService {
         Integer cottonPart = sock.getCottonPart();
         Integer quantity = sock.getQuantity();
 
-        if(cottonPart < 0 || cottonPart > 100) {
+        if(cottonPart <= 0 || cottonPart > 100) {
             throw new IncorrectCottonPartException();
         }
-        if(quantity < 0) {
+        if(quantity <= 0) {
             throw new IncorrectQuantityException();
         }
 
@@ -54,7 +54,7 @@ public class SockServiceImpl implements SockService {
         if(cottonPart <= 0 || cottonPart > 100) {
             throw new IncorrectCottonPartException();
         }
-        if(quantity < 0) {
+        if(quantity <= 0) {
             throw new IncorrectQuantityException();
         }
 
