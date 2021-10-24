@@ -1,0 +1,30 @@
+databaseChangeLog:
+  - logicalFilePath: db/changelog/db.changelog-db.yaml
+  - changeSet:
+      id: 1
+      author: socks_admin
+      changes:
+        - createTable:
+            tableName: socks
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: color
+                  type: varchar(50)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: cotton_part
+                  type: int
+              - column:
+                  name: quantity
+                  type: int
+                  constraints:
+                    nullable: false
+
