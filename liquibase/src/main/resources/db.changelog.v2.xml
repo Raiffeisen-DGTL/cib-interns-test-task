@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+
+    <changeSet id="2" author="L-san">
+        <createTable tableName="sock">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="color" type="varchar"/>
+            <column name="cotton_part" type="bigint"/>
+        </createTable>
+
+        <createTable tableName="income">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="date_time" type="datetime"/>
+            <column name="sock_id" type="bigint"/>
+        </createTable>
+
+        <addForeignKeyConstraint baseTableName="income" baseColumnNames="sock_id" constraintName="fk_sock_income"
+                                 referencedTableName="sock"
+                                 referencedColumnNames="id"/>
+
+        <createTable tableName="outcome">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="date_time" type="datetime"/>
+            <column name="sock_id" type="bigint"/>
+        </createTable>
+
+        <addForeignKeyConstraint baseTableName="outcome" baseColumnNames="sock_id" constraintName="fk_sock_outcome"
+                                 referencedTableName="sock"
+                                 referencedColumnNames="id"/>
+    </changeSet>
+
+    <changeSet id="3" author="L-san">
+        <addColumn tableName="income">
+            <column name="quantity" type="bigint"/>
+        </addColumn>
+        <addColumn tableName="outcome">
+            <column name="quantity" type="bigint"/>
+        </addColumn>
+    </changeSet>
+
+    <changeSet id="4" author="L-san">
+        <addColumn tableName="sock">
+            <column name="stored" type="bigint"/>
+        </addColumn>
+        <sql>ALTER TABLE sock ADD CONSTRAINT checkSgn CHECK(sock.stored>=0)</sql>
+    </changeSet>
+
+    <changeSet id="5" author="L-san">
+        <sql>ALTER TABLE sock ALTER COLUMN stored SET DEFAULT 0</sql>
+    </changeSet>
+</databaseChangeLog>

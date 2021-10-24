@@ -1,0 +1,34 @@
+services:
+  postgresql:
+    image: postgres:13
+    ports:
+      - 5432:5432
+    restart: always
+    environment:
+      - POSTGRES_DB=root
+      - POSTGRES_USER=root
+      - POSTGRES_PASSWORD=root
+    volumes:
+      - postgres_volume:/var/lib/postgresql/data/
+
+  liquibase:
+    image: liquibase/liquibase
+    volumes:
+      - ./liquibase/src/main/resources:/liquibase/changelog
+    command: "update --url=\"jdbc:postgresql://postgresql:5432/root\" --changeLogFile=db.changelog.v2.xml --username=root --password=root"
+    environment:
+      INSTALL_POSTGRESQL: 'true'
+    depends_on:
+      - postgresql
+
+  app:
+    build: .
+    ports:
+      - 8080:8080
+    environment:
+      database.bd: jdbc:postgresql://postgresql:5432/root
+    depends_on:
+      - liquibase
+
+volumes:
+  postgres_volume: {}
