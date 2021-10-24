@@ -14,6 +14,13 @@ import java.util.Collections;
 import java.util.List;
 
 public class SocksServiceTest {
+    private static final String INCORRECT_OPERATION = "FAKE";
+    private static final String LESS_THAN_OPERATOR = "lessThan";
+    private static final String RED_COLOR = "red";
+    private static final String GREEN_COLOR = "green";
+    private static final Integer VERY_LARGE_QUANTITY = 100000000;
+
+
     private static SocksService socksService;
     private static SocksRepository socksRepositoryMock;
     private static List<Sock> sockList;
@@ -21,9 +28,9 @@ public class SocksServiceTest {
     @BeforeAll
     public static void setUp() {
         sockList = List.of(
-                new Sock(1L, "green", 43, 130),
-                new Sock(2L, "green", 46, 120),
-                new Sock(3L, "red", 88, 30)
+                new Sock(1L, GREEN_COLOR, 43, 130),
+                new Sock(2L, GREEN_COLOR, 46, 120),
+                new Sock(3L, RED_COLOR, 88, 30)
         );
         socksRepositoryMock = Mockito.mock(SocksRepository.class);
         socksService = new SocksServiceImpl(socksRepositoryMock);
@@ -52,14 +59,14 @@ public class SocksServiceTest {
     @Test
     public void registerSockWithNullParamTestShouldReturnIncorrectSockFormatException() {
         Assertions.assertThrows(IncorrectSockFormatException.class, () -> {
-            socksService.registerSocks(new SockDto("red", 32, null));
+            socksService.registerSocks(new SockDto(RED_COLOR, 32, null));
         });
     }
 
     @Test
     public void registerSockWithIncorrectParamTestShouldReturnIncorrectSockFormatException() {
         Assertions.assertThrows(IncorrectSockFormatException.class, () -> {
-            socksService.registerSocks(new SockDto("red", 132, 32));
+            socksService.registerSocks(new SockDto(RED_COLOR, 132, 32));
         });
     }
 
@@ -83,7 +90,7 @@ public class SocksServiceTest {
                 sockList.get(1).getCottonPart(),
                 sockList.get(1).getQuantity()
         );
-        Mockito.when(socksRepositoryMock.getSockByColorAndCottonPart("green", 46))
+        Mockito.when(socksRepositoryMock.getSockByColorAndCottonPart(GREEN_COLOR, 46))
                 .thenReturn(java.util.Optional.ofNullable(sockList.get(1)));
         socksService.outcomeSocks(sockDto);
         Mockito.verify(socksRepositoryMock, Mockito.times(0)).save(sockList.get(1));
@@ -92,45 +99,45 @@ public class SocksServiceTest {
     }
 
     @Test
-    public void outcomeSockWithIncorrectParamTestShouldReturnIncorrectSockFormatException() {
+    public void outcomeSockWithLargeQuantityShouldReturnIncorrectSockFormatException() {
         Mockito.when(socksRepositoryMock.getSockByColorAndCottonPart(
                 sockList.get(1).getColor(),
                 sockList.get(1).getCottonPart()))
                 .thenReturn(java.util.Optional.ofNullable(sockList.get(1)));
 
         Assertions.assertThrows(IncorrectSockFormatException.class, () -> {
-            socksService.outcomeSocks(new SockDto("green", 46, 324));
+            socksService.outcomeSocks(new SockDto(GREEN_COLOR, 46, VERY_LARGE_QUANTITY));
         });
     }
 
     @Test
     public void getSocksWhereCottonPartGreaterThanTest() {
         SockDto sockDto = new SockDto(
-                "green",
+                GREEN_COLOR,
                 40,
                 sockList.get(0).getQuantity() + sockList.get(1).getQuantity());
 
-        Mockito.when(socksRepositoryMock.findByColorAndCottonPartGreaterThan("green", 40))
+        Mockito.when(socksRepositoryMock.findByColorAndCottonPartGreaterThan(GREEN_COLOR, 40))
                 .thenReturn(List.of(sockList.get(0), sockList.get(1)));
-        Assertions.assertEquals(sockDto, socksService.getSocksByParams("green", "moreThan", 40));
+        Assertions.assertEquals(sockDto, socksService.getSocksByParams(GREEN_COLOR, "moreThan", 40));
     }
 
     @Test
     public void getSocksWhereCottonPartLessThanTest() {
         SockDto sockDto = new SockDto(
-                "red",
+                RED_COLOR,
                 90,
                 sockList.get(2).getQuantity());
 
-        Mockito.when(socksRepositoryMock.findByColorAndCottonPartLessThan("red", 90))
+        Mockito.when(socksRepositoryMock.findByColorAndCottonPartLessThan(RED_COLOR, 90))
                 .thenReturn(List.of(sockList.get(2)));
-        Assertions.assertEquals(sockDto, socksService.getSocksByParams("red", "lessThan", 90));
+        Assertions.assertEquals(sockDto, socksService.getSocksByParams(RED_COLOR, LESS_THAN_OPERATOR, 90));
     }
 
     @Test
     public void getSocksWhereCottonPartEqualTest() {
         SockDto sockDto = new SockDto(
-                "red",
+                RED_COLOR,
                 sockList.get(2).getCottonPart(),
                 sockList.get(2).getQuantity());
 
@@ -145,17 +152,17 @@ public class SocksServiceTest {
     @Test
     public void getSockByParamsWithIncorrectParamTestShouldReturnIncorrectSockFormatException() {
         Assertions.assertThrows(IncorrectSockFormatException.class, () -> {
-            socksService.getSocksByParams("red", "FAKE", 32);
+            socksService.getSocksByParams(RED_COLOR, INCORRECT_OPERATION, 32);
         });
     }
 
     @Test
     public void getSockByParamsWithIncorrectParamTestShouldReturnNotFoundSockException() {
-        Mockito.when(socksRepositoryMock.findByColorAndCottonPartLessThan("red", 32))
+        Mockito.when(socksRepositoryMock.findByColorAndCottonPartLessThan(RED_COLOR, 32))
                 .thenReturn(Collections.emptyList());
 
         Assertions.assertThrows(NotFoundSockException.class, () -> {
-            socksService.getSocksByParams("red", "lessThan", 32);
+            socksService.getSocksByParams(RED_COLOR, LESS_THAN_OPERATOR, 32);
         });
     }
 
