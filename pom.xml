@@ -16,8 +16,7 @@
     <description>Project API Socks</description>
 
     <properties>
-        <maven.compiler.source>15</maven.compiler.source>
-        <maven.compiler.target>15</maven.compiler.target>
+        <java.version>11</java.version>
     </properties>
 
     <dependencies>
