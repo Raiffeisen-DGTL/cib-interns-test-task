@@ -6,68 +6,67 @@ import javax.persistence.*;
 @Table(name = "socks")
 public class Socks {
 
-  @Id
-  @GeneratedValue(strategy = GenerationType.AUTO)
-  private Integer id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Integer id;
 
-  @Column
-  private String color;
+    @Column
+    private String color;
 
-  @Column
-  private Long cottonPart;
+    @Column
+    private Long cottonPart;
 
-  @Column
-  private Long quantity;
+    @Column
+    private Long quantity;
 
-  public Socks(Integer id, String color, Long cottonPart, Long quantity) {
-    this.id = id;
-    this.color = color;
-    this.cottonPart = cottonPart;
-    this.quantity = quantity;
-  }
+    public Socks(Integer id, String color, Long cottonPart, Long quantity) {
+        this.id = id;
+        this.color = color;
+        this.cottonPart = cottonPart;
+        this.quantity = quantity;
+    }
 
-  public Socks(String color, Long cottonPart, Long quantity) {
-    this.color = color;
-    this.cottonPart = cottonPart;
-    this.quantity = quantity;
-  }
+    public Socks(String color, Long cottonPart, Long quantity) {
+        this.color = color;
+        this.cottonPart = cottonPart;
+        this.quantity = quantity;
+    }
 
-  public Socks() {
+    public Socks() {
 
-  }
+    }
 
-  public Integer getId() {
-    return id;
-  }
+    public Integer getId() {
+        return id;
+    }
 
-  public void setId(Integer id) {
-    this.id = id;
-  }
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
-  public String getColor() {
-    return color;
-  }
+    public String getColor() {
+        return color;
+    }
 
-  public void setColor(String color) {
-    this.color = color;
-  }
+    public void setColor(String color) {
+        this.color = color;
+    }
 
-  public Long getCottonPart() {
-    return cottonPart;
-  }
+    public Long getCottonPart() {
+        return cottonPart;
+    }
 
-  public void setCottonPart(Long cottonPart) {
-    this.cottonPart = cottonPart;
-  }
+    public void setCottonPart(Long cottonPart) {
+        this.cottonPart = cottonPart;
+    }
 
-  public Long getQuantity() {
-    return quantity;
-  }
+    public Long getQuantity() {
+        return quantity;
+    }
 
-  public void setQuantity(Long quantity) {
-    this.quantity = quantity;
-  }
-
+    public void setQuantity(Long quantity) {
+        this.quantity = quantity;
+    }
 
 
 }
