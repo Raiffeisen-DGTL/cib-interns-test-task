@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div class="container">
+    <table class="table table_hover">
+        <thead>
+        <tr>
+            <th>Color</th>
+            <th>CottonPart</th>
+            <th>Quantity</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="sock : ${socks}">
+            <td th:text="${sock.id}" type="hidden"></td>
+            <td th:text="${sock.color}"></td>
+            <td th:text="${sock.cottonPart}"></td>
+            <td th:text="${sock.quantity}"></td>
+        </tr>
+        </tbody>
+
+
+    </table>
+
+
+</div>
+</body>
+</html>

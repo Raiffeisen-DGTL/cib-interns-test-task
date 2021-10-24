@@ -1,0 +1,23 @@
+<!--<?xml version = "1.0" encoding = "utf-8"?>-->
+<!--<!DOCTYPE hibernate-configuration PUBLIC-->
+<!--        "-//Hibernate/Hibernate Configuration DTD 3.0//EN"-->
+<!--        "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">-->
+
+<!--<hibernate-configuration>-->
+<!--    <session-factory>-->
+
+<!--        <property name="connection.url">jdbc:postgresql://localhost:5432/postgres?currentSchema=boot</property> &lt;!&ndash; BD Mane &ndash;&gt;-->
+<!--        <property name="connection.driver_class">org.postgresql.Driver</property> &lt;!&ndash; DB Driver &ndash;&gt;-->
+<!--        <property name="connection.username">postgres</property> &lt;!&ndash; DB User &ndash;&gt;-->
+<!--        <property name="connection.password">4132</property> &lt;!&ndash; DB Password &ndash;&gt;-->
+
+<!--        <property name="dialect">org.hibernate.dialect.PostgreSQLDialect</property> &lt;!&ndash; DB Dialect &ndash;&gt;-->
+<!--        <property name="hbm2ddl.auto">update</property> &lt;!&ndash; create / create-drop / update &ndash;&gt;-->
+
+<!--        <property name="show_sql">true</property> &lt;!&ndash; Show SQL in console &ndash;&gt;-->
+<!--        <property name="format_sql">true</property> &lt;!&ndash; Show SQL formatted &ndash;&gt;-->
+
+<!--        <mapping class="beans.Task"/>-->
+
+<!--    </session-factory>-->
+<!--</hibernate-configuration>-->
