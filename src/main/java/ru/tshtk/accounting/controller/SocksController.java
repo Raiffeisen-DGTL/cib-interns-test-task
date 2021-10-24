@@ -9,7 +9,6 @@ import ru.tshtk.accounting.dto.SocksRequest;
 import ru.tshtk.accounting.exception.OutcomeImpossibleException;
 import ru.tshtk.accounting.service.SocksService;
 
-
 import javax.validation.Valid;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
@@ -46,6 +45,4 @@ public class SocksController {
         int count = socksService.countQuantity(color, operation, cottonPart);
         return new ResponseEntity<>(Integer.toString(count), HttpStatus.OK);
     }
-
-
 }

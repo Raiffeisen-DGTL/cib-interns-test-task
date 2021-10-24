@@ -12,7 +12,6 @@ import java.util.Optional;
 
 @Service
 public class SocksService {
-
     private final SocksRepository socksRepository;
 
     @Autowired
@@ -44,7 +43,6 @@ public class SocksService {
         else throw new OutcomeImpossibleException("Запрашиваемые носки отсутствуют на складе");
     }
 
-
     public int countQuantity (String requestColor, String operation, int requestCottonPart) {
         Optional<Integer> count;
         switch (operation) {
@@ -59,5 +57,4 @@ public class SocksService {
         }
         return count.isPresent() ? count.get() : 0;
     }
-
 }

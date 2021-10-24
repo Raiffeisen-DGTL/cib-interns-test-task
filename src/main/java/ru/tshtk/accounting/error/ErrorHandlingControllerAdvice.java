@@ -13,7 +13,6 @@ import javax.validation.ValidationException;
 
 @ControllerAdvice
 public class ErrorHandlingControllerAdvice {
-
     @ExceptionHandler({
             ValidationException.class,
             MethodArgumentNotValidException.class,
@@ -27,9 +26,4 @@ public class ErrorHandlingControllerAdvice {
     public ResponseEntity<String> handleOutcomeImpossibleException(OutcomeImpossibleException e) {
         return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
     }
-
-
-
-
-
 }

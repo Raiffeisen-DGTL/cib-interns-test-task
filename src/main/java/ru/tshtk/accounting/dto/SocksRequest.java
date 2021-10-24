@@ -11,7 +11,6 @@ import javax.validation.constraints.NotNull;
 @Getter
 @Setter
 public class SocksRequest {
-
     @NotBlank
     private String color;
     @Min(0)

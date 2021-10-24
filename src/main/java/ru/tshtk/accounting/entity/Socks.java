@@ -12,7 +12,6 @@ import javax.persistence.*;
 @Getter
 @Setter
 public class Socks {
-
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
