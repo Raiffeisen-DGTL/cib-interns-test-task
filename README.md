@@ -20,6 +20,14 @@
 
 Внешний интерфейс приложения представлен в виде HTTP API (REST, если хочется).
 
+## Описание решения
+
+Решение реализовано с помощью Java 8, Spring Boot 2.5.6, Liquibase, Hibernate ORM, PostgreSQL и Maven. База данных расположена на сервере Heroku.
+
+Запуск программы может быть произведен с помощью команды `./mvnw spring-boot:run`
+
+Также, доступ к приложению может быть осуществлен по адресу: raiff-cib-interns-test-task.herokuapp.com
+
 ## Список URL HTTP-методов
 
 ### POST /api/socks/income
