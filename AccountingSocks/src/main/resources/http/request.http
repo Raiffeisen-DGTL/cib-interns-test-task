@@ -1,0 +1,31 @@
+POST localhost/api/socks/outcome
+Content-Type: application/json
+
+{
+  "color" : "black",
+  "quantity" : 11,
+  "cottonPart" : 20
+}
+
+###
+
+POST localhost/api/socks/income
+Content-Type: application/json
+
+{
+  "color" : "black",
+  "quantity" : 30,
+  "cottonPart" : 20
+}
+
+###
+
+GET localhost/api/socks?color=red&operation=moreThan&cottonPart=20
+
+###
+
+GET localhost/api/socks?color=sdfsdf&operation=equal&cottonPart=40
+
+###
+
+GET localhost/api/socks?color=red&operation=lessThan&cottonPart=40
