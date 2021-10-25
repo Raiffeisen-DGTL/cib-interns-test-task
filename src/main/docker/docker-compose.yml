@@ -1,0 +1,26 @@
+version: '2'
+
+services:
+  app:
+    image: 'docker-socks:latest'
+    build:
+      context: .
+    container_name: app
+    depends_on:
+      - db
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/socks
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=mysecretpassword
+    ports:
+      - "8080:8080"
+
+  db:
+    image: 'postgres:13.1-alpine'
+    container_name: db
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=mysecretpassword
+      - POSTGRES_DB=socks
+    volumes:
+      - ./migrate.sql:/docker-entrypoint-initdb.d/init.sql
