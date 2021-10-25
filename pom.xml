@@ -82,6 +82,11 @@
             <artifactId>junit</artifactId>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-dependency-plugin</artifactId>
+            <version>3.2.0</version>
+        </dependency>
     </dependencies>
 
     <build>
@@ -97,7 +102,7 @@
                     <password></password>
                 </configuration>
             </plugin>
-            <!--<plugin>
+            <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
@@ -108,7 +113,27 @@
                         </exclude>
                     </excludes>
                 </configuration>
-            </plugin>-->
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-dependency-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals><goal>copy</goal></goals>
+                        <configuration>
+                            <artifactItems>
+                                <artifactItem>
+                                    <groupId>com.heroku</groupId>
+                                    <artifactId>webapp-runner</artifactId>
+                                    <version>9.0.41.0</version>
+                                    <destFileName>webapp-runner.jar</destFileName>
+                                </artifactItem>
+                            </artifactItems>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
         </plugins>
     </build>
 
