@@ -1,1 +1,1 @@
-web: java -jar cib-interns-test-task.jar
+web: java $JAVA_OPTS -Dserver.port=$PORT -jar target/*.jar
