@@ -1,0 +1,5 @@
+databaseChangeLog:
+  - changeSet:
+      id: 9999999999998-1
+      author: service_user
+      changes: []
