@@ -4,15 +4,16 @@
 - Загрузить и распаковать репозиторий
 - Запустить терминал в папке проекта
 - Запустить команду сборки, передавая имя образа в опции -t 
-'docker build -t cib-interns-test-task .'
-- Проверить, что образ отображается при выполнении команды docker images --all
+`docker build -t cib-interns-test-task .`
+- Проверить, что образ отображается при выполнении команды 
+`docker images --all`
 - Выполнить команду 
-'docker-compose up'
+`docker-compose up`
 - Приложение доступно по: http://localhost:8080
 
 #### 2. Heroku:
-- Ссылка на приложение
-
+- Ссылка на приложение:
+https://cib-interns-test-task-by-simbi.herokuapp.com/
 
 ### Список URL HTTP-методов
 - POST /api/socks/income
