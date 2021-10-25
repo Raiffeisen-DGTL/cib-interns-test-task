@@ -1,7 +1,14 @@
 package api.dto;
 
-public enum OperationDTO {
-    moreThan,
-    lessThan,
-    equal
+import lombok.Getter;
+
+@Getter
+public class OperationDTO {
+
+    private final String operation;
+
+    public OperationDTO(String operation) {
+        this.operation = operation;
+    }
 }
+

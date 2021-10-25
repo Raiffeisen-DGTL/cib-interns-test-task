@@ -13,15 +13,15 @@ public interface SockService {
 
     void delete(@NonNull Sock sock);
 
-    int countSocks(@NonNull String color, @NonNull int cottonPart, @NonNull Operation operation);
+    int countSocks(@NonNull String color, int cottonPart, @NonNull Operation operation);
 
     void addSocks(@NonNull Sock sock);
 
     void subtractSocks(@NonNull Sock sock);
 
-    List<Sock> findByColorAndCottonPartGreaterThan(@NonNull String color, @NonNull int cottonPart);
+    List<Sock> findByColorAndCottonPartGreaterThan(@NonNull String color, int cottonPart);
 
-    List<Sock> findByColorAndCottonPartLessThan(@NonNull String color,@NonNull int cottonPart);
+    List<Sock> findByColorAndCottonPartLessThan(@NonNull String color, int cottonPart);
 
-    Optional<Sock> findByColorAndCottonPartEquals(@NonNull String color,@NonNull int cottonPart);
+    Optional<Sock> findByColorAndCottonPartEquals(@NonNull String color, int cottonPart);
 }

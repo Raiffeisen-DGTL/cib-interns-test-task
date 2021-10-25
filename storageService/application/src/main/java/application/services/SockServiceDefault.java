@@ -26,11 +26,11 @@ public class SockServiceDefault implements SockService {
 
     @Override
     @Transactional(readOnly = true)
-    public int countSocks(@NonNull String color, @NonNull int cottonPart, @NonNull Operation operation) throws CustomException{
+    public int countSocks(@NonNull String color, int cottonPart, @NonNull Operation operation) throws CustomException{
         switch (operation) {
-            case moreThan: return countQuantities(findByColorAndCottonPartGreaterThan(color, cottonPart));
-            case lessThan: return countQuantities(findByColorAndCottonPartLessThan(color, cottonPart));
-            case equal: return countQuantities(findByColorAndCottonPartEquals(color, cottonPart));
+            case MORE_THAN: return countQuantities(findByColorAndCottonPartGreaterThan(color, cottonPart));
+            case LESS_THAN: return countQuantities(findByColorAndCottonPartLessThan(color, cottonPart));
+            case EQUAL: return countQuantities(findByColorAndCottonPartEquals(color, cottonPart));
             default: throw new CustomException("Operation is not correct", HttpStatus.BAD_REQUEST);
         }
     }
@@ -80,21 +80,21 @@ public class SockServiceDefault implements SockService {
 
     @Override
     @Transactional
-    public List<Sock> findByColorAndCottonPartGreaterThan(@NonNull String color, @NonNull int cottonPart) throws CustomException {
+    public List<Sock> findByColorAndCottonPartGreaterThan(@NonNull String color, int cottonPart) throws CustomException {
         checkCottonPart(cottonPart);
         return sockRepository.findByColorAndCottonPartGreaterThan(color, cottonPart);
     }
 
     @Override
     @Transactional
-    public List<Sock> findByColorAndCottonPartLessThan(@NonNull String color, @NonNull int cottonPart) throws CustomException{
+    public List<Sock> findByColorAndCottonPartLessThan(@NonNull String color, int cottonPart) throws CustomException{
         checkCottonPart(cottonPart);
         return sockRepository.findByColorAndCottonPartLessThan(color, cottonPart);
     }
 
     @Override
     @Transactional
-    public Optional<Sock> findByColorAndCottonPartEquals(@NonNull String color, @NonNull int cottonPart) throws CustomException{
+    public Optional<Sock> findByColorAndCottonPartEquals(@NonNull String color, int cottonPart) throws CustomException{
         checkCottonPart(cottonPart);
         return sockRepository.findByColorAndCottonPartEquals(color, cottonPart);
     }

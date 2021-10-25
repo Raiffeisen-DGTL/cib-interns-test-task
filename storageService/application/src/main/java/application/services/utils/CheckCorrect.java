@@ -7,7 +7,7 @@ import security.exceptions.CustomException;
 
 public class CheckCorrect {
 
-    public static void checkCottonPart(@NonNull int cottonPart) throws CustomException{
+    public static void checkCottonPart(int cottonPart) throws CustomException{
         if (cottonPart < 0 | cottonPart > 100) {
             throw new CustomException("Cotton part is not correct", HttpStatus.BAD_REQUEST);
         }
@@ -15,7 +15,7 @@ public class CheckCorrect {
 
     public static void checkColor(@NonNull String color) throws CustomException {}
 
-    public static void checkQuantity(@NonNull int quantity) throws CustomException{
+    public static void checkQuantity(int quantity) throws CustomException{
         if (quantity <= 0) {
             throw new CustomException("Quantity is not correct", HttpStatus.BAD_REQUEST);
         }
@@ -27,7 +27,7 @@ public class CheckCorrect {
         checkColor(sock.getColor());
     }
 
-    public static void check(@NonNull int cottonPart, @NonNull int quantity) throws CustomException{
+    public static void check(int cottonPart, @NonNull int quantity) throws CustomException{
         checkCottonPart(cottonPart);
         checkQuantity(quantity);
     }

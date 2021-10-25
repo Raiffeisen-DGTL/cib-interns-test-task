@@ -1,7 +1,7 @@
 package model.enums;
 
 public enum Operation {
-    moreThan,
-    lessThan,
-    equal
+    MORE_THAN,
+    LESS_THAN,
+    EQUAL
 }
