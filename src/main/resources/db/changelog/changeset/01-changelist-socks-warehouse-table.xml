@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:pro="http://www.liquibase.org/xml/ns/pro"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.5.xsd
+        http://www.liquibase.org/xml/ns/pro
+        http://www.liquibase.org/xml/ns/pro/liquibase-pro-4.5.xsd">
+
+        <changeSet id="3" author="AmirSalyakhov">
+            <sqlFile dbms="postgresql"
+                     encoding="UTF-8"
+                     relativeToChangelogFile="true"
+                     stripComments="true"
+                     path="01-create-socks-warehouse-table.sql"/>
+        </changeSet>
+</databaseChangeLog>
