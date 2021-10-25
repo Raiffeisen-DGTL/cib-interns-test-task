@@ -1,0 +1,1 @@
+web: java -jar target/accounting-of-socks-1.0.jar
