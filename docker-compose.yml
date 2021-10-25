@@ -1,0 +1,25 @@
+version: '3.8'
+
+services:
+  spring:
+    build:
+      context: .
+    container_name: app
+    depends_on:
+      - db
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/postgres
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=postgres
+    ports:
+      - "8080:8080"
+    expose:
+      - '8080'
+    stdin_open: true
+  db:
+    image: 'postgres:13.1-alpine'
+    container_name: db
+    restart: unless-stopped
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
