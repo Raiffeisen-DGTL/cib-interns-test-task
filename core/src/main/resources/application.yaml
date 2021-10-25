@@ -1,0 +1,9 @@
+spring:
+  application.name: user-service
+  datasource:
+    url: jdbc:postgresql://localhost:5432/cib-interns-test-task
+    username: postgres
+    password: postgres
+  jpa:
+    hibernate:
+      ddl-auto: update
