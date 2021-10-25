@@ -16,6 +16,13 @@
         <maven.compiler.target>11</maven.compiler.target>
         <timestamp>${maven.build.timestamp}</timestamp>
         <maven.build.timestamp.format>yyyyMMdd-HHmmssSSS</maven.build.timestamp.format>
+        <liquibase-core.version>4.3.1</liquibase-core.version>
+        <maven-shade-plugin.version>3.2.4</maven-shade-plugin.version>
+        <liquibase-maven-plugin.version>4.3.1</liquibase-maven-plugin.version>
+        <liquibase-hibernate5.version>4.3.1</liquibase-hibernate5.version>
+        <postgresql.version>42.2.19</postgresql.version>
+        <spring-boot-starter-data-jpa.version>2.4.2</spring-boot-starter-data-jpa.version>
+        <validation-api.version>2.0.1.Final</validation-api.version>
     </properties>
 
     <dependencies>
@@ -28,7 +35,7 @@
         <dependency>
             <groupId>org.liquibase</groupId>
             <artifactId>liquibase-core</artifactId>
-            <version>4.3.1</version>
+            <version>${liquibase-core.version}</version>
         </dependency>
 
         <dependency>
@@ -62,7 +69,7 @@
         <dependency>
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-shade-plugin</artifactId>
-            <version>3.2.4</version>
+            <version>${maven-shade-plugin.version}</version>
         </dependency>
     </dependencies>
 
@@ -87,7 +94,7 @@
             <plugin>
                 <groupId>org.liquibase</groupId>
                 <artifactId>liquibase-maven-plugin</artifactId>
-                <version>4.3.1</version>
+                <version>${liquibase-maven-plugin.version}</version>
                 <configuration>
                     <skip>false</skip>
                     <propertyFile>src/main/resources/liquibase.properties</propertyFile>
@@ -97,22 +104,22 @@
                     <dependency>
                         <groupId>org.liquibase.ext</groupId>
                         <artifactId>liquibase-hibernate5</artifactId>
-                        <version>4.3.1</version>
+                        <version>${liquibase-hibernate5.version}</version>
                     </dependency>
                     <dependency>
                         <groupId>org.postgresql</groupId>
                         <artifactId>postgresql</artifactId>
-                        <version>42.2.19</version>
+                        <version>${postgresql.version}</version>
                     </dependency>
                     <dependency>
                         <groupId>org.springframework.boot</groupId>
                         <artifactId>spring-boot-starter-data-jpa</artifactId>
-                        <version>2.4.2</version>
+                        <version>${spring-boot-starter-data-jpa.version}</version>
                     </dependency>
                     <dependency>
                         <groupId>javax.validation</groupId>
                         <artifactId>validation-api</artifactId>
-                        <version>2.0.1.Final</version>
+                        <version>${validation-api.version}</version>
                     </dependency>
                 </dependencies>
             </plugin>
