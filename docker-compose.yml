@@ -1,32 +1,32 @@
-version: '3.1'
-
-services:
-  mysql-standalone:
-    image: mysql:8.0.27
-    ports:
-      - "3307:3306"
-    environment:
-      MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: taskex
-      MYSQL_PASSWORD: root
-      restart: always
-
-
-
-  app:
-    image: morboui/socks-mysql:socks-mysql5
-    container_name: application
-    ports:
-      - "8080:8080"
-    environment:
-          SPRING_DATASOURCE_URL: jdbc:mysql://raiff-mysql-standalone-1:3306/taskex
-          SPRING_DATASOURCE_USERNAME: "root"
-          SPRING_DATASOURCE_PASSWORD: "root"
-    build:
-          context: "./"
-          dockerfile: "DockerFile"
-    depends_on:
-            - mysql-standalone
-    links:
-      - mysql-standalone
-    restart: always
+#version: '3.1'
+#
+#services:
+#  mysql-standalone:
+#    image: mysql:8.0.27
+#    ports:
+#      - "3307:3306"
+#    environment:
+#      MYSQL_ROOT_PASSWORD: root
+#      MYSQL_DATABASE: taskex
+#      MYSQL_PASSWORD: root
+#      restart: always
+#
+#
+#
+#  app:
+#    image: morboui/socks-mysql:socks-mysql5
+#    container_name: application
+#    ports:
+#      - "8080:8080"
+#    environment:
+#          SPRING_DATASOURCE_URL: jdbc:mysql://xtwcnzmyfnqavm:8940e4ea72dad5c8f43bf873575da999a3655372b5b4e830646d2942b6d7e32a@ec2-52-0-234-93.compute-1.amazonaws.com:5432/d833q7ep1bf4dt
+#          SPRING_DATASOURCE_USERNAME: "be31faf8695696"
+#          SPRING_DATASOURCE_PASSWORD: "de8b0917"
+#    build:
+#          context: "./"
+#          dockerfile: "DockerFile"
+#    depends_on:
+#            - mysql-standalone
+#    links:
+#      - mysql-standalone
+#    restart: always

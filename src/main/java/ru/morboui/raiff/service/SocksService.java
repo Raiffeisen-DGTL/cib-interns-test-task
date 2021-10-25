@@ -9,6 +9,8 @@ import ru.morboui.raiff.enums.Operations;
 import ru.morboui.raiff.exceptions.InvalidResultException;
 import ru.morboui.raiff.repository.SocksRepository;
 
+import java.util.Optional;
+
 
 @Service
 public class SocksService {
@@ -43,17 +45,20 @@ public class SocksService {
                 throw new IncorrectParametersException("Not enough socks for the outcome");
             }
             socksRepository.save(socksInBD);
-        }
+        } else throw new IncorrectParametersException("There's no socks with such color or CottonPart");
     }
 
     public @NonNull Socks getByColorAndCottonPart(@NonNull String color, @NonNull Operations operation, @NonNull Long cottonPart) {
         switch (operation) {
             case moreThan:
-                return socksRepository.getSocksByColorAndCottonPartIsGreaterThan(color, cottonPart).orElseThrow(() -> new IncorrectParametersException("Nothing was found for this "));
+                return socksRepository.getSocksByColorAndCottonPartIsGreaterThan(color, cottonPart).orElseThrow(() ->
+                        new IncorrectParametersException("Nothing was found for this parameters"));
             case lessThan:
-                return socksRepository.getSocksByColorAndCottonPartIsLessThan(color, cottonPart).orElseThrow(() -> new IncorrectParametersException("Nothing was found for this"));
+                return socksRepository.getSocksByColorAndCottonPartIsLessThan(color, cottonPart).orElseThrow(() ->
+                        new IncorrectParametersException("Nothing was found for this parameters"));
             case equals:
-                return socksRepository.findSocksByColorAndCottonPartEquals(color, cottonPart).orElseThrow(() -> new IncorrectParametersException("Nothing was found for this "));
+                return socksRepository.findSocksByColorAndCottonPartEquals(color, cottonPart).orElseThrow(() ->
+                        new IncorrectParametersException("Nothing was found for this parameters"));
             default:
                 throw new InvalidResultException("Incorrect parameters in URL");
         }
