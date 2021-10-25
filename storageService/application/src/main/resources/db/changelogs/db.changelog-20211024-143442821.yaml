@@ -27,4 +27,3 @@ databaseChangeLog:
             name: quantity
             type: INTEGER
         tableName: sock
-
