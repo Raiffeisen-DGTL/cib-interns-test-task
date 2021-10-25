@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.4.xsd">
+    <changeSet id="2021-09-12--03-init-colors" author="svetashov" runOnChange="true">
+        <preConditions onFail="MARK_RAN">
+            <tableIsEmpty tableName="color"/>
+        </preConditions>
+
+        <insert tableName="color">
+            <column name="name" value="black"/>
+        </insert>
+        <insert tableName="color">
+            <column name="name" value="red"/>
+        </insert>
+        <insert tableName="color">
+            <column name="name" value="yellow"/>
+        </insert>
+
+        <rollback>
+            <delete tableName="color"/>
+        </rollback>
+    </changeSet>
+</databaseChangeLog>

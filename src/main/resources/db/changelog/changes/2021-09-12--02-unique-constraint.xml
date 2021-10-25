@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.4.xsd">
+    <changeSet id="2021-09-12--02-unique-constraint" author="svetashov" runOnChange="true">
+        <preConditions onFail="MARK_RAN">
+            <and>
+                <columnExists tableName="sock" columnName="color_id"/>
+                <columnExists tableName="sock" columnName="cotton_part"/>
+                <sqlCheck expectedResult="0">
+                    SELECT COUNT(*)
+                    FROM pg_constraint c
+                    WHERE c.conname LIKE 'sock_color_id_cotton_part_unique%';
+                </sqlCheck>
+            </and>
+        </preConditions>
+
+        <addUniqueConstraint tableName="sock" columnNames="color_id, cotton_part"
+                             constraintName="sock_color_id_cotton_part_unique"/>
+
+        <rollback>
+            <dropUniqueConstraint tableName="sock" constraintName="sock_color_id_cotton_part_unique"/>
+        </rollback>
+    </changeSet>
+</databaseChangeLog>

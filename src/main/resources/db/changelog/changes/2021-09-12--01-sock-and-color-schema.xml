@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.4.xsd">
+    <changeSet id="2021-09-12--01-sock-and-color-schema" author="svetashov" runOnChange="true">
+        <preConditions onFail="MARK_RAN">
+            <and>
+                <not>
+                    <tableExists tableName="color"/>
+                </not>
+                <not>
+                    <tableExists tableName="sock"/>
+                </not>
+            </and>
+        </preConditions>
+        <createTable tableName="color">
+            <column name="id" type="bigserial" autoIncrement="true">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="name" type="nvarchar2(50)">
+                <constraints nullable="false" unique="true"/>
+            </column>
+        </createTable>
+
+        <createTable tableName="sock">
+            <column name="id" type="bigserial" autoIncrement="true">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="color_id" type="bigserial">
+                <constraints nullable="false"/>
+            </column>
+            <column name="cotton_part" type="int">
+                <constraints nullable="false"/>
+            </column>
+            <column name="quantity" type="int">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <addForeignKeyConstraint baseTableName="sock"
+                                 baseColumnNames="color_id"
+                                 constraintName="sock_color_color_id_fk"
+                                 referencedTableName="color"
+                                 referencedColumnNames="id"/>
+
+        <rollback>
+            <dropTable tableName="color"/>
+            <dropTable tableName="sock"/>
+        </rollback>
+    </changeSet>
+</databaseChangeLog>
