@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                   http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd
+                   http://www.liquibase.org/xml/ns/dbchangelog
+                   http://www.liquibase.org/xml/ns/dbchangelog-ext">
+
+    <changeSet id="creating colors table" author="storekeeper">
+        <createTable tableName="colors">
+            <column name="color_id" type="INT" autoIncrement="true">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="colors_pk" />
+            </column>
+            <column name="color" type="VARCHAR(15)" />
+        </createTable>
+    </changeSet>
+
+    <changeSet id="creating socks table" author="storekeeper">
+        <createTable tableName="socks">
+            <column name="socks_id" type="INT" autoIncrement="true">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="socks_pk" />
+            </column>
+            <column name="color_id" type="INT">
+                <constraints nullable="false" foreignKeyName="fk_colors_id" references="colors(color_id)"/>
+            </column>
+            <column name="cotton_part" type="INT" />
+            <column name="quantity" type="INT" />
+        </createTable>
+    </changeSet>
+</databaseChangeLog>

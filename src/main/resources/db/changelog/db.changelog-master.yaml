@@ -1,0 +1,7 @@
+databaseChangeLog:
+  - include:
+      file: db/changelog/create-colors-socks-socks_quantity.xml
+  - include:
+      file: db/changelog/insert-colors-data.xml
+  - include:
+      file: db/changelog/insert-socks-data.xml
