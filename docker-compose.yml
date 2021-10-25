@@ -1,0 +1,23 @@
+version: '3.1'
+
+services:
+  shopdb:
+    container_name: shopdb
+    image: postgres
+    ports:
+      - 5433:5432
+    environment:
+      - POSTGRES_DB=socksShop
+      - POSTGRES_USER=storekeeper
+      - POSTGRES_PASSWORD=storekeeper
+
+  app:
+    container_name: app
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: app:latest
+    ports:
+      - 8081:8080
+    depends_on:
+      - shopdb

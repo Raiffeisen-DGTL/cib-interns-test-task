@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                   http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd
+                   http://www.liquibase.org/xml/ns/dbchangelog
+                   http://www.liquibase.org/xml/ns/dbchangelog-ext">
+
+    <changeSet id="filling the socks table" author="storekeeper">
+        <insert tableName="socks">
+            <column name="color_id" valueComputed="(SELECT color_id FROM colors where color = 'black')"/>
+            <column name="cotton_part" value="15"/>
+            <column name="quantity" value="125"/>
+        </insert>
+        <insert tableName="socks">
+            <column name="color_id" valueComputed="(SELECT color_id FROM colors where color = 'red')"/>
+            <column name="cotton_part" value="1"/>
+            <column name="quantity" value="52"/>
+        </insert>
+        <insert tableName="socks">
+            <column name="color_id" valueComputed="(SELECT color_id FROM colors where color = 'yellow')"/>
+            <column name="cotton_part" value="58"/>
+            <column name="quantity" value="9"/>
+        </insert>
+        <insert tableName="socks">
+            <column name="color_id" valueComputed="(SELECT color_id FROM colors where color = 'blue')"/>
+            <column name="cotton_part" value="98"/>
+            <column name="quantity" value="46"/>
+        </insert>
+        <insert tableName="socks">
+            <column name="color_id" valueComputed="(SELECT color_id FROM colors where color = 'green')"/>
+            <column name="cotton_part" value="100"/>
+            <column name="quantity" value="84"/>
+        </insert>
+        <insert tableName="socks">
+            <column name="color_id" valueComputed="(SELECT color_id FROM colors where color = 'green')"/>
+            <column name="cotton_part" value="85"/>
+            <column name="quantity" value="526"/>
+        </insert>
+        <insert tableName="socks">
+            <column name="color_id" valueComputed="(SELECT color_id FROM colors where color = 'white')"/>
+            <column name="cotton_part" value="90"/>
+            <column name="quantity" value="14"/>
+        </insert>
+        <insert tableName="socks">
+            <column name="color_id" valueComputed="(SELECT color_id FROM colors where color = 'gray')"/>
+            <column name="cotton_part" value="70"/>
+            <column name="quantity" value="237"/>
+        </insert>
+
+        <rollback>
+            <delete tableName="socks">
+                <where>color_id in (SELECT color_id FROM colors
+                    where color in ('black','green','blue','red','gray','white','yellow'))</where>
+            </delete>
+        </rollback>
+    </changeSet>
+
+</databaseChangeLog>
