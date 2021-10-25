@@ -8,6 +8,7 @@ import ru.morboui.raiff.entity.Socks;
 import ru.morboui.raiff.enums.Operations;
 import ru.morboui.raiff.service.SocksService;
 
+@RequestMapping("api/socks")
 @RestController
 public class SocksController {
 
@@ -18,7 +19,7 @@ public class SocksController {
         this.socksService = socksService;
     }
 
-    @GetMapping(path = "api/socks")
+    @GetMapping
     public ResponseEntity<String> getByColorAndCottonPart(
             @RequestParam(value = "color") final String color,
             @RequestParam(value = "operation") final Operations operation,
@@ -30,7 +31,7 @@ public class SocksController {
 
     }
 
-    @PostMapping(path = "api/socks/income")
+    @PostMapping(value = "income")
     public ResponseEntity<String> addNewSocks(@RequestBody Socks socks) {
         socksService.addNewSocks(socks);
         return new ResponseEntity<>("Added socks: " + socks.getQuantity() +
@@ -38,7 +39,7 @@ public class SocksController {
                 " and CottonPart: " + socks.getCottonPart(), HttpStatus.OK);
     }
 
-    @PostMapping(path = "api/socks/outcome")
+    @PostMapping(value = "outcome")
     public ResponseEntity<String> reduceSocks(@RequestBody Socks socks) {
         socksService.reduceSocks(socks);
         return new ResponseEntity<>("Reduced socks: " + socks.getQuantity() +
