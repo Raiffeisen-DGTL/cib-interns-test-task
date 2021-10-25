@@ -1,0 +1,7 @@
+servlets\OutcomeServlet.class
+socks\SocksService.class
+servlets\IncomeServlet.class
+servlets\ShowServlet.class
+servlets\SocksServlet.class
+main\Main.class
+socks\Socks.class
