@@ -1,0 +1,9 @@
+spring:
+  datasource:
+    username: maria
+    password: 123
+    url: jdbc:postgresql://localhost:5432/sockService
+    driver-class-name: org.postgresql.Driver
+
+  flyway:
+    baseline-on-migrate: true
