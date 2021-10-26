@@ -2,7 +2,7 @@ package cib.interns.test.task.core.service
 
 interface SocksService {
 
-    fun getSocks(): List<Socks>
+    fun getSocks(request: SocksFind): Int
 
     fun addSocks(request: Socks): Socks
 
