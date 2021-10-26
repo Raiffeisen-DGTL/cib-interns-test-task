@@ -28,7 +28,7 @@ public class Socks {
     private Long id;
 
     @Column(name = "cotton_part")
-    private int cottonPart;
+    private Integer cottonPart;
 
     @Column(name = "quantity")
     private Long quantity;

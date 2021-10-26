@@ -31,19 +31,19 @@ public class Color {
     private String name;
 
     @OneToMany(mappedBy = "color")
-    private Set<Socks> books;
+    private Set<Socks> socks;
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Color color = (Color) o;
-        return id.equals(color.getId());
+        return name.equals(color.name);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id);
+        return Objects.hash(name);
     }
 
     @Override
