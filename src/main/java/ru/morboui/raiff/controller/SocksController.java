@@ -1,5 +1,6 @@
 package ru.morboui.raiff.controller;
 
+import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -10,6 +11,7 @@ import ru.morboui.raiff.service.SocksService;
 
 @RequestMapping("api/socks")
 @RestController
+@Api(tags = "Operations with socks")
 public class SocksController {
 
     private final SocksService socksService;

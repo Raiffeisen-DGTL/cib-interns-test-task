@@ -1,15 +1,13 @@
 package ru.morboui.raiff.service;
 
 import lombok.NonNull;
-import ru.morboui.raiff.exceptions.IncorrectParametersException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.morboui.raiff.entity.Socks;
 import ru.morboui.raiff.enums.Operations;
+import ru.morboui.raiff.exceptions.IncorrectParametersException;
 import ru.morboui.raiff.exceptions.InvalidResultException;
 import ru.morboui.raiff.repository.SocksRepository;
-
-import java.util.Optional;
 
 
 @Service
