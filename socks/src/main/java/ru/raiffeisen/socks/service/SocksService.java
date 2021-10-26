@@ -7,6 +7,8 @@ import ru.raiffeisen.socks.repository.ColorRepository;
 import ru.raiffeisen.socks.repository.SocksRepository;
 
 import javax.transaction.Transactional;
+import java.util.Collections;
+import java.util.List;
 
 @Service
 public class SocksService {
@@ -41,9 +43,21 @@ public class SocksService {
         }
     }
 
-    public long socks() {
-
-        return 0L;
+    public long socks(String color, String op, int cottonPart) {
+        Operation operation = Operation.decode(op);
+        List<Socks> socks = Collections.emptyList();
+        switch (operation) {
+            case MORE_THAN:
+                socks = socksRepository.findByColorNameAndCottonPartGreaterThan(color, cottonPart);
+                break;
+            case LESS_THAN:
+                socks = socksRepository.findByColorNameAndCottonPartLessThan(color, cottonPart);
+                break;
+            case EQUAL:
+                socks = socksRepository.findByColorNameAndCottonPartEquals(color, cottonPart);
+                break;
+        }
+        return socks.stream().map(Socks::getQuantity).reduce(0L, Long::sum);
     }
 
 }

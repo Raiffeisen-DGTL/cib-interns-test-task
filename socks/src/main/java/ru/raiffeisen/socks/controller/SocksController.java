@@ -9,7 +9,6 @@ import ru.raiffeisen.socks.dto.SocksDto;
 import ru.raiffeisen.socks.dto.SocksRequestDto;
 import ru.raiffeisen.socks.entity.Color;
 import ru.raiffeisen.socks.entity.Socks;
-import ru.raiffeisen.socks.enums.Operation;
 import ru.raiffeisen.socks.service.SocksService;
 
 import javax.validation.Valid;
@@ -36,9 +35,8 @@ public class SocksController {
     }
 
     @GetMapping
-    public Long socks(@Valid @RequestBody SocksRequestDto socksRequestDto){
-        System.out.println(socksRequestDto.getOperation());
-        return 0L;
+    public Long socks(@Valid SocksRequestDto socksRequestDto){
+        return socksService.socks(socksRequestDto.getColor(), socksRequestDto.getOperation(), socksRequestDto.getCottonPart());
     }
 
 }
