@@ -20,4 +20,9 @@ subprojects {
         implementation("org.jetbrains.kotlin:kotlin-stdlib:1.5.31")
         implementation("org.jetbrains.kotlin:kotlin-reflect:1.1.51")
     }
+
+    repositories {
+        mavenLocal()
+        mavenCentral()
+    }
 }
