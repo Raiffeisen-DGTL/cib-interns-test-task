@@ -1,4 +1,4 @@
-package cib.interns.test.task
+package cib.interns.test.task.core
 
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.autoconfigure.domain.EntityScan

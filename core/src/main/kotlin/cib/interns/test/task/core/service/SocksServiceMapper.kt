@@ -1,4 +1,4 @@
-package cib.interns.test.task.service
+package cib.interns.test.task.core.service
 
 import org.mapstruct.Mapper
 import cib.interns.test.task.database.entity.Socks as SocksEntity

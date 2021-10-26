@@ -1,9 +1,9 @@
-package cib.interns.test.task.controller
+package cib.interns.test.task.core.controller
 
 import cib.interns.test.task.api.SocksApi
 import cib.interns.test.task.api.SocksIncomeRequest
 import cib.interns.test.task.api.SocksResponse
-import cib.interns.test.task.service.SocksService
+import cib.interns.test.task.core.service.SocksService
 import org.springframework.web.bind.annotation.RestController
 
 @RestController

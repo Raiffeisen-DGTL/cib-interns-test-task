@@ -1,4 +1,4 @@
-package cib.interns.test.task.service
+package cib.interns.test.task.core.service
 
 data class Socks(
     val color: String,

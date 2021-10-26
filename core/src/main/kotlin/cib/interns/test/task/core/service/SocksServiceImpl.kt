@@ -1,4 +1,4 @@
-package cib.interns.test.task.service
+package cib.interns.test.task.core.service
 
 import cib.interns.test.task.database.repository.SocksRepository
 import cib.interns.test.task.database.entity.Socks as SocksEntity
@@ -28,7 +28,7 @@ class SocksServiceImpl(
             it.quantity = it.quantity?.plus(request.quantity)
             socksRepository.save(it)
         } ?: socksRepository.save(serviceMapper.transform(request))
-        
+
         return serviceMapper.transform(foundSocks)
     }
 

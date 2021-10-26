@@ -1,4 +1,4 @@
-package cib.interns.test.task.service
+package cib.interns.test.task.core.service
 
 interface SocksService {
 

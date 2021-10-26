@@ -1,4 +1,4 @@
-package cib.interns.test.task.controller
+package cib.interns.test.task.core.controller
 
 import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.ControllerAdvice

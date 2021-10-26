@@ -1,8 +1,8 @@
-package cib.interns.test.task.service
+package cib.interns.test.task.core.service
 
 import cib.interns.test.task.api.SocksIncomeRequest
 import cib.interns.test.task.api.SocksResponse
-import cib.interns.test.task.service.Socks
+import cib.interns.test.task.core.service.Socks
 import org.mapstruct.Mapper
 
 @Mapper(componentModel = "spring")

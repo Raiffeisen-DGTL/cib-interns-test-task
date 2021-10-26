@@ -1,4 +1,4 @@
-package cib.interns.test.task.service
+package cib.interns.test.task.core.service
 
 import javax.validation.constraints.Max
 import javax.validation.constraints.Min
