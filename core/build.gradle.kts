@@ -26,7 +26,15 @@ dependencies {
     kapt("org.mapstruct:mapstruct-processor:1.4.0.Final")
     implementation("org.mapstruct:mapstruct-processor:1.4.0.Final")
     implementation("org.mapstruct:mapstruct:1.4.0.Final")
+
+    testImplementation("org.testcontainers:postgresql:1.15.1")
+    testImplementation("org.testcontainers:junit-jupiter:1.15.1")
+    testImplementation("org.springframework.boot:spring-boot-starter-test")
 }
 repositories {
     mavenCentral()
+}
+
+tasks.withType<Test> {
+    useJUnitPlatform()
 }
