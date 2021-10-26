@@ -12,8 +12,6 @@ services:
       - POSTGRES_USER=postgres
       - POSTGRES_DB=postgres
       - POSTGRES_PASSWORD=root
-    volumes:
-      - "db-data:/var/lib/postgresql/data"
 
 
 
@@ -30,5 +28,3 @@ services:
     depends_on:
             - postgres
 
-volumes:
-  db-data:
