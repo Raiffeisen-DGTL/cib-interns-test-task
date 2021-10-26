@@ -18,11 +18,7 @@ class SocksServiceImpl(
     }
 
     override fun addSocks(request: Socks): Socks {
-        val validationDto = validationMapper.transform(request)
-        val a = validator.validate(validationDto)
-        if (a.size != 0) {
-            throw ConstraintViolationException(a)
-        }
+        validate(request)
 
         val foundSocks = socksRepository.findSocksByColorAndCottonPart(request.color, request.cottonPart)?.let {
             it.quantity = it.quantity?.plus(request.quantity)
@@ -33,6 +29,22 @@ class SocksServiceImpl(
     }
 
     override fun removeSocks(request: Socks): Socks {
-        TODO("Not yet implemented")
+        validate(request)
+
+        val foundSocks = socksRepository.findSocksByColorAndCottonPart(request.color, request.cottonPart)!!.let {
+            it.quantity = it.quantity?.minus(request.quantity)
+            socksRepository.save(it)
+        }
+
+        return serviceMapper.transform(foundSocks)
     }
+
+    private fun validate(request: Socks){
+        val validationDto = validationMapper.transformOut(request)
+        val a = validator.validate(validationDto)
+        if (a.size != 0) {
+            throw ConstraintViolationException(a)
+        }
+    }
+
 }

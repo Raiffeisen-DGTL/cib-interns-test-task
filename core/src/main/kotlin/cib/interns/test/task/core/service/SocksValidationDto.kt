@@ -13,3 +13,17 @@ data class SocksValidationDto(
     @field:Min(1)
     val quantity: Long,
 )
+
+@ColorAvailable
+@QuantityAvailable
+data class SocksOutValidationDto(
+
+    val color: String,
+
+    @field:Min(0)
+    @field:Max(100)
+    val cottonPart: Int,
+
+    @field:Min(1)
+    val quantity: Long,
+)
