@@ -1,9 +1,10 @@
 package ru.raiffeisen.socks.service;
 
 import org.springframework.stereotype.Service;
-import ru.raiffeisen.socks.data.entity.Socks;
-import ru.raiffeisen.socks.data.repository.ColorRepository;
-import ru.raiffeisen.socks.data.repository.SocksRepository;
+import ru.raiffeisen.socks.entity.Socks;
+import ru.raiffeisen.socks.enums.Operation;
+import ru.raiffeisen.socks.repository.ColorRepository;
+import ru.raiffeisen.socks.repository.SocksRepository;
 
 import javax.transaction.Transactional;
 
@@ -23,14 +24,17 @@ public class SocksService {
         socksRepository.findByCottonPartAndColorName(socks.getCottonPart(), socks.getColor().getName()).ifPresentOrElse(socksFromDB -> {
             socksFromDB.setQuantity(socksFromDB.getQuantity() + socks.getQuantity());
             socksRepository.save(socksFromDB);
-        }, () -> socksRepository.save(socks));
+        }, () -> {
+            colorRepository.findByName(socks.getColor().getName()).orElseThrow(RuntimeException::new); //Ошибка при отсутствии цевета
+            socksRepository.save(socks);
+        });
     }
 
     public void outcome(Socks socks) {
         Socks socksFromDB = socksRepository.findByCottonPartAndColorName(socks.getCottonPart(), socks.getColor().getName())
                 .orElseThrow(RuntimeException::new); //Ошибка носки не найдены
         if (socks.getQuantity() > socksFromDB.getQuantity()) {
-            //Ошибка недостаточно носков
+            throw new RuntimeException(); //Ошибка недостаточно носков
         } else {
             socksFromDB.setQuantity(socksFromDB.getQuantity() - socks.getQuantity());
             socksRepository.save(socksFromDB);

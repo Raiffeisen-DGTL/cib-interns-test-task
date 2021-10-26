@@ -1,4 +1,4 @@
-package ru.raiffeisen.socks.data.entity;
+package ru.raiffeisen.socks.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -10,47 +10,62 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 import java.util.Objects;
-import java.util.Set;
 
 @Entity
-@Table(name = "Colors")
+@Table
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Color {
+public class Socks {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Long id;
 
-    @Column(name = "name")
-    private String name;
+    @Min(0)
+    @Max(100)
+    @NotNull
+    @Column(name = "cotton_part")
+    private Integer cottonPart;
 
-    @OneToMany(mappedBy = "color")
-    private Set<Socks> socks;
+    @Min(0)
+    @NotNull
+    @Column(name = "quantity")
+    private Long quantity;
+
+    @NotNull
+    @ManyToOne
+    @JoinColumn(name = "color_id")
+    private Color color;
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Color color = (Color) o;
-        return name.equals(color.name);
+        Socks socks = (Socks) o;
+        return id.equals(socks.getId());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name);
+        return Objects.hash(id);
     }
 
     @Override
     public String toString() {
-        return "Color{" +
+        return "Socks{" +
                 "id=" + id +
-                ", name='" + name + '\'' +
+                ", cottonPart=" + cottonPart +
+                ", quantity=" + quantity +
+                ", color=" + color +
                 '}';
     }
 }

@@ -1,4 +1,4 @@
-package ru.raiffeisen.socks.data.entity;
+package ru.raiffeisen.socks.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -10,53 +10,47 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
-@Table
+@Table(name = "Colors")
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Socks {
+public class Color {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Long id;
 
-    @Column(name = "cotton_part")
-    private Integer cottonPart;
+    @Column(name = "name")
+    private String name;
 
-    @Column(name = "quantity")
-    private Long quantity;
-
-    @ManyToOne
-    @JoinColumn(name = "color_id")
-    private Color color;
+    @OneToMany(mappedBy = "color")
+    private Set<Socks> socks;
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Socks socks = (Socks) o;
-        return id.equals(socks.getId());
+        Color color = (Color) o;
+        return name.equals(color.name);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id);
+        return Objects.hash(name);
     }
 
     @Override
     public String toString() {
-        return "Socks{" +
+        return "Color{" +
                 "id=" + id +
-                ", cottonPart=" + cottonPart +
-                ", quantity=" + quantity +
-                ", color=" + color +
+                ", name='" + name + '\'' +
                 '}';
     }
 }

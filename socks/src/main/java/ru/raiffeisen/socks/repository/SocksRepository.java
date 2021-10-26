@@ -1,9 +1,8 @@
-package ru.raiffeisen.socks.data.repository;
+package ru.raiffeisen.socks.repository;
 
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
-import ru.raiffeisen.socks.data.entity.Color;
-import ru.raiffeisen.socks.data.entity.Socks;
+import ru.raiffeisen.socks.entity.Socks;
 
 import java.util.Optional;
 
