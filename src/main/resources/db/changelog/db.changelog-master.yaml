@@ -1,0 +1,50 @@
+databaseChangeLog:
+  - logicalFilePath: db/changelog/db.changelog-master.yaml
+  - changeSet:
+      id: 1
+      author: alex
+      changes:
+        - createTable:
+            tableName: socks
+            columns:
+              - column:
+                  name: id
+                  type: integer
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: color
+                  type: varchar(50)
+              - column:
+                  name: cotton_part
+                  type: integer
+
+  - changeSet:
+      id: 2
+      author: alex
+      comment: "Create"
+      changes:
+        - insert:
+            tableName: socks
+            columns:
+              - column:
+                  name: color
+                  value: "red"
+              - column:
+                  name: cotton_part
+                  value: 95
+        - insert:
+            tableName: socks
+            columns:
+              - column:
+                  name: color
+                  value: "black"
+              - column:
+                  name: cotton_part
+                  value: 5
+      rollback:
+        - delete:
+            tableName: socks
+            where: username in ('red', 'black')
