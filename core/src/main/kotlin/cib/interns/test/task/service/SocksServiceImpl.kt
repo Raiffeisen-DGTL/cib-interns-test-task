@@ -1,6 +1,7 @@
 package cib.interns.test.task.service
 
 import cib.interns.test.task.database.repository.SocksRepository
+import cib.interns.test.task.database.entity.Socks as SocksEntity
 import org.springframework.stereotype.Service
 import javax.validation.ConstraintViolationException
 import javax.validation.Validator
@@ -9,6 +10,7 @@ import javax.validation.Validator
 class SocksServiceImpl(
     private val socksRepository: SocksRepository,
     private val validationMapper: SocksValidationMapper,
+    private val serviceMapper: SocksServiceMapper,
     private val validator: Validator,
 ) : SocksService {
     override fun getSocks(): List<Socks> {
@@ -21,8 +23,13 @@ class SocksServiceImpl(
         if (a.size != 0) {
             throw ConstraintViolationException(a)
         }
-        println()
-        TODO("Not yet implemented")
+
+        val foundSocks = socksRepository.findSocksByColorAndCottonPart(request.color, request.cottonPart)?.let {
+            it.quantity = it.quantity?.plus(request.quantity)
+            socksRepository.save(it)
+        } ?: socksRepository.save(serviceMapper.transform(request))
+        
+        return serviceMapper.transform(foundSocks)
     }
 
     override fun removeSocks(request: Socks): Socks {

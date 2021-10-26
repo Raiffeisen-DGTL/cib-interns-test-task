@@ -2,6 +2,7 @@ package cib.interns.test.task.database.entity
 
 import javax.persistence.*
 
+
 @Entity
 class Socks {
     @Id
@@ -10,7 +11,7 @@ class Socks {
 
     var color: String? = null
 
-    var cottonPart: Byte? = null
+    var cottonPart: Int? = null
 
     var quantity: Long? = null
 }
