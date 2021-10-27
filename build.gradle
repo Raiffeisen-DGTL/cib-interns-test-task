@@ -1,0 +1,58 @@
+plugins {
+  id 'org.springframework.boot' version '2.5.5'
+  id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+  id 'java'
+  id 'application'
+}
+
+
+
+group = 'ru.morboui'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '11'
+
+configurations {
+  compileOnly {
+    extendsFrom annotationProcessor
+  }
+}
+
+
+repositories {
+  mavenCentral()
+}
+mainClassName = 'ru.morboui.raiff.RaiffApplication'
+
+dependencies {
+  //Spring
+  implementation 'org.springframework.boot:spring-boot-starter-data-jpa:2.5.5'
+  implementation 'org.springframework.boot:spring-boot-starter-web:2.5.5'
+  developmentOnly 'org.springframework.boot:spring-boot-devtools:2.5.5'
+
+  //Lombok
+  compileOnly 'org.projectlombok:lombok:1.18.22'
+  annotationProcessor 'org.projectlombok:lombok:1.18.22'
+
+  //Database
+  implementation 'org.springframework.boot:spring-boot-starter-data-jpa:2.5.5'
+  implementation group: 'org.postgresql', name: 'postgresql', version: '42.2.23'
+
+  //Flyway
+  implementation group: 'org.flywaydb', name: 'flyway-core', version: '8.0.2'
+
+
+  //Swagger
+  implementation group: 'io.springfox', name: 'springfox-boot-starter', version: '3.0.0'
+  implementation group: 'io.springfox', name: 'springfox-swagger-ui', version: '3.0.0'
+
+
+  //Test
+  testImplementation 'org.springframework.boot:spring-boot-starter-test:2.5.5'
+
+}
+
+test {
+  useJUnitPlatform()
+}
+
+
