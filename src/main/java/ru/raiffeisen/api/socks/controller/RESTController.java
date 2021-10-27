@@ -6,7 +6,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.raiffeisen.api.socks.Body;
-import ru.raiffeisen.api.socks.OperationEnum;
+import ru.raiffeisen.api.socks.enums.Operations;
 import ru.raiffeisen.api.socks.entity.Socks;
 import ru.raiffeisen.api.socks.exception_handling.NoCorrectParameterException;
 import ru.raiffeisen.api.socks.exception_handling.RequestData;
@@ -53,8 +53,8 @@ public class RESTController {
     public RequestData showAllSocksByOperation(@RequestParam("color") String color,
                                                @RequestParam("operation") String operation,
                                                @RequestParam("cottonPart") int cottonPart) {
-        OperationEnum operationEnum = OperationEnum.GET.operationEnum(operation);
-        boolean isCorrectParam = cottonPart > 0 && cottonPart <= 100 && operationEnum != OperationEnum.NO_CORRECT;
+        Operations operationEnum = Operations.byCode(operation);
+        boolean isCorrectParam = cottonPart > 0 && cottonPart <= 100 && operationEnum != Operations.UNKNOWN;
         if (isCorrectParam) {
             List<Socks> socksList = socksService.getAllDefinedOperation(color, operationEnum, cottonPart);
             RequestData data = new RequestData();

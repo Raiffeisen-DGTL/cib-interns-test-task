@@ -3,7 +3,7 @@ package ru.raiffeisen.api.socks.service;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.raiffeisen.api.socks.Body;
-import ru.raiffeisen.api.socks.OperationEnum;
+import ru.raiffeisen.api.socks.enums.Operations;
 import ru.raiffeisen.api.socks.entity.Socks;
 import ru.raiffeisen.api.socks.exception_handling.NoCorrectParameterException;
 import ru.raiffeisen.api.socks.repository.SocksRepository;
@@ -16,7 +16,7 @@ public class SocksServiceImpl implements SocksService {
     private final SocksRepository repository;
 
     @Override
-    public List<Socks> getAllDefinedOperation(String color, OperationEnum operationEnum,
+    public List<Socks> getAllDefinedOperation(String color, Operations operationEnum,
                                               int cottonPart) throws NoCorrectParameterException {
         switch (operationEnum) {
             case MORE_THAN:
