@@ -46,6 +46,12 @@ public class Socks {
     @JoinColumn(name = "color_id")
     private Color color;
 
+    public Socks(Integer cottonPart, Long quantity, Color color) {
+        this.cottonPart = cottonPart;
+        this.quantity = quantity;
+        this.color = color;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

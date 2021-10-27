@@ -7,12 +7,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import ru.raiffeisen.socks.dto.SocksDto;
 import ru.raiffeisen.socks.dto.SocksRequestDto;
-import ru.raiffeisen.socks.entity.Color;
-import ru.raiffeisen.socks.entity.Socks;
 import ru.raiffeisen.socks.service.SocksService;
 
 import javax.validation.Valid;
-import java.util.Collections;
 
 @RestController
 @RequestMapping("/api/socks")
@@ -25,17 +22,17 @@ public class SocksController {
     }
 
     @PostMapping("/income")
-    public void income(@Valid @RequestBody SocksDto socksDto){
-        socksService.income(new Socks(1L, socksDto.getCottonPart(), socksDto.getQuantity(), new Color(1L, socksDto.getColor(), Collections.emptySet())));
+    public void income(@Valid @RequestBody SocksDto socksDto) {
+        socksService.income(socksDto.getColor(), socksDto.getCottonPart(), socksDto.getQuantity());
     }
 
     @PostMapping("/outcome")
-    public void outcome(@Valid @RequestBody SocksDto socksDto){
-        socksService.outcome(new Socks(1L, socksDto.getCottonPart(), socksDto.getQuantity(), new Color(1L, socksDto.getColor(), Collections.emptySet())));
+    public void outcome(@Valid @RequestBody SocksDto socksDto) {
+        socksService.outcome(socksDto.getColor(), socksDto.getCottonPart(), socksDto.getQuantity());
     }
 
     @GetMapping
-    public Long socks(@Valid SocksRequestDto socksRequestDto){
+    public Long socks(@Valid SocksRequestDto socksRequestDto) {
         return socksService.socks(socksRequestDto.getColor(), socksRequestDto.getOperation(), socksRequestDto.getCottonPart());
     }
 

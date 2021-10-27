@@ -1,8 +1,12 @@
 package ru.raiffeisen.socks.service;
 
 import org.springframework.stereotype.Service;
+import ru.raiffeisen.socks.entity.Color;
 import ru.raiffeisen.socks.entity.Socks;
 import ru.raiffeisen.socks.enums.Operation;
+import ru.raiffeisen.socks.exception.ColorNotFoundException;
+import ru.raiffeisen.socks.exception.NotEnoughSocksException;
+import ru.raiffeisen.socks.exception.SocksNotFoundException;
 import ru.raiffeisen.socks.repository.ColorRepository;
 import ru.raiffeisen.socks.repository.SocksRepository;
 
@@ -22,23 +26,24 @@ public class SocksService {
     }
 
     @Transactional
-    public void income(Socks socks) {
-        socksRepository.findByCottonPartAndColorName(socks.getCottonPart(), socks.getColor().getName()).ifPresentOrElse(socksFromDB -> {
-            socksFromDB.setQuantity(socksFromDB.getQuantity() + socks.getQuantity());
+    public void income(String color, int cottonPart, long quantity) {
+        socksRepository.findByCottonPartAndColorName(cottonPart, color).ifPresentOrElse(socksFromDB -> {
+            socksFromDB.setQuantity(socksFromDB.getQuantity() + quantity);
             socksRepository.save(socksFromDB);
         }, () -> {
-            colorRepository.findByName(socks.getColor().getName()).orElseThrow(RuntimeException::new); //Ошибка при отсутствии цевета
-            socksRepository.save(socks);
+            Color colorFromDB = colorRepository.findByName(color).orElseThrow(() -> new ColorNotFoundException(color));
+            socksRepository.save(new Socks(cottonPart, quantity, colorFromDB));
         });
     }
 
-    public void outcome(Socks socks) {
-        Socks socksFromDB = socksRepository.findByCottonPartAndColorName(socks.getCottonPart(), socks.getColor().getName())
-                .orElseThrow(RuntimeException::new); //Ошибка носки не найдены
-        if (socks.getQuantity() > socksFromDB.getQuantity()) {
-            throw new RuntimeException(); //Ошибка недостаточно носков
+    @Transactional
+    public void outcome(String color, int cottonPart, long quantity) {
+        Socks socksFromDB = socksRepository.findByCottonPartAndColorName(cottonPart, color)
+                .orElseThrow(() -> new SocksNotFoundException(color, cottonPart));
+        if (quantity > socksFromDB.getQuantity()) {
+            throw new NotEnoughSocksException(quantity, socksFromDB.getQuantity());
         } else {
-            socksFromDB.setQuantity(socksFromDB.getQuantity() - socks.getQuantity());
+            socksFromDB.setQuantity(socksFromDB.getQuantity() - quantity);
             socksRepository.save(socksFromDB);
         }
     }
