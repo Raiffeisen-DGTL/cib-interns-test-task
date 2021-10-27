@@ -2,6 +2,7 @@ package ru.raiffeisen.api.socks.service;
 
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+import ru.raiffeisen.api.socks.Body;
 import ru.raiffeisen.api.socks.OperationEnum;
 import ru.raiffeisen.api.socks.entity.Socks;
 import ru.raiffeisen.api.socks.exception_handling.NoCorrectParameterException;
@@ -30,7 +31,10 @@ public class SocksServiceImpl implements SocksService {
     }
 
     @Override
-    public Socks socksIncome(String color, int cottonPart, int quantity) {
+    public Socks socksIncome(Body body) {
+        String color = body.getColor();
+        int cottonPart = body.getCottonPart();
+        int quantity = body.getQuantity();
         Socks socks = repository.findByColorAndCottonPart(color, cottonPart);
         if (socks != null) {
             int newQuantity = socks.getQuantity() + quantity;
@@ -39,18 +43,21 @@ public class SocksServiceImpl implements SocksService {
         else {
             socks = create(color, cottonPart, quantity);
         }
-        save(socks);
+        repository.save(socks);
         return socks;
     }
 
     @Override
-    public Socks socksOutcome(String color, int cottonPart, int quantity) throws NoCorrectParameterException {
+    public Socks socksOutcome(Body body) throws NoCorrectParameterException {
+        String color = body.getColor();
+        int cottonPart = body.getCottonPart();
+        int quantity = body.getQuantity();
         Socks socks = repository.findByColorAndCottonPart(color, cottonPart);
         if (socks != null) {
             if (socks.getQuantity() > quantity) {
                 int newQuantity = socks.getQuantity() - quantity;
                 socks.setQuantity(newQuantity);
-                save(socks);
+                repository.save(socks);
                 return socks;
             }
             else {
@@ -60,11 +67,6 @@ public class SocksServiceImpl implements SocksService {
         else {
             throw new NoCorrectParameterException("Носков с указанным цветом и содержанием хлопка нет на складе");
         }
-    }
-
-    @Override
-    public void save(Socks socks) {
-        repository.save(socks);
     }
 
     @Override
