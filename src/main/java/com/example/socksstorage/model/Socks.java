@@ -1,8 +1,15 @@
 package com.example.socksstorage.model;
 
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import org.springframework.context.annotation.Configuration;
+
 import javax.persistence.*;
 
+@Configuration
 @Entity
+@Data
+@NoArgsConstructor
 @Table(name = "socks")
 public class Socks {
 
@@ -22,28 +29,4 @@ public class Socks {
 
     @Column(name = "cotton_part")
     private int cottonPart;
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getColor() {
-        return color;
-    }
-
-    public void setColor(String color) {
-        this.color = color;
-    }
-
-    public int getCottonPart() {
-        return cottonPart;
-    }
-
-    public void setCottonPart(int cottonPart) {
-        this.cottonPart = cottonPart;
-    }
 }
