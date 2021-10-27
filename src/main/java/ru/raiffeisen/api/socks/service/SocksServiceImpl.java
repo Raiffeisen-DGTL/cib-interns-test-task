@@ -48,7 +48,7 @@ public class SocksServiceImpl implements SocksService {
     }
 
     @Override
-    public Socks socksOutcome(Body body) throws NoCorrectParameterException {
+    public synchronized Socks socksOutcome(Body body) throws NoCorrectParameterException {
         String color = body.getColor();
         int cottonPart = body.getCottonPart();
         int quantity = body.getQuantity();
