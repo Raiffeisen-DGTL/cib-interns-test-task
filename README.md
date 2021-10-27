@@ -1,4 +1,4 @@
-# Тестовое задание для Java стажеров Raiffeisen [DGTL]
+# Тестовое задание для Java стажеров Raiffeisen 
 
 ### Run:
 ```
