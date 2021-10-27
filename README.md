@@ -1,5 +1,35 @@
 # Тестовое задание для Java стажеров
 
+Приложение написанно на Java 11 используя фреймворк Spring Boot
+
+Для версионирования схемы базы данных использовалась Flyway
+
+Приложение и базу данных можно запустить используя docker-compose up
+
+Приложение развернуто на Heroku: https://raif-test-task.herokuapp.com
+
+Тестовые запросы:
+
+https://raif-test-task.herokuapp.com/api/socks?color=red&operation=equal&cottonPart=89
+
+https://raif-test-task.herokuapp.com/api/socks?color=black&operation=moreThan&cottonPart=10
+
+https://raif-test-task.herokuapp.com/api/socks?color=gray&operation=lessThan&cottonPart=80
+
+Добавленные заранее цвета: red, orange, yellow, green, blue, black, white, pink, brown, gray, purple
+
+Выполнил Казанин Андрей.
+
+Контакты:
+
+Телефон: +7 903 652 62 17
+
+Telegram: @cyberbullling
+
+email: AK20001701@yandex.ru
+
+
+##
 Привет!
 
 Мы ищем стажера, который в перспективе станет Junior Java-разработчиком в нашей команде.
