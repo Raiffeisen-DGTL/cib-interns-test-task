@@ -1,0 +1,175 @@
+{
+	"info": {
+		"_postman_id": "68c0cf10-d9af-4c0d-9091-585e053060b7",
+		"name": "SocksApi",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Income",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"color\": \"green\",\r\n    \"cottonPart\": 95,\r\n    \"amount\": 100\r\n}"
+				},
+				"url": {
+					"raw": "localhost:8080/api/socks/income",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"socks",
+						"income"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Outcome",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"color\": \"green\",\r\n    \"cottonPart\": 95,\r\n    \"amount\": 10\r\n}\r\n"
+				},
+				"url": {
+					"raw": "localhost:8080/api/socks/outcome",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"socks",
+						"outcome"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "moreThan=90",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "",
+						"value": "",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"url": {
+					"raw": "localhost:8080/api/socks?color=green&operation=moreThan&cottonPart=90",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"socks"
+					],
+					"query": [
+						{
+							"key": "color",
+							"value": "green"
+						},
+						{
+							"key": "operation",
+							"value": "moreThan"
+						},
+						{
+							"key": "cottonPart",
+							"value": "90"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "lessThan=10",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/api/socks?color=black&operation=lessThan&cottonPart=10",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"socks"
+					],
+					"query": [
+						{
+							"key": "color",
+							"value": "black"
+						},
+						{
+							"key": "operation",
+							"value": "lessThan"
+						},
+						{
+							"key": "cottonPart",
+							"value": "10"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "equal",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/api/socks?color=black&operation=equal&cottonPart=8",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"socks"
+					],
+					"query": [
+						{
+							"key": "color",
+							"value": "black"
+						},
+						{
+							"key": "operation",
+							"value": "equal"
+						},
+						{
+							"key": "cottonPart",
+							"value": "8"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
