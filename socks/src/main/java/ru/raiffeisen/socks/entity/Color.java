@@ -32,6 +32,10 @@ public class Color {
     @Column(name = "name")
     private String name;
 
+    public Color(String name) {
+        this.name = name;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
