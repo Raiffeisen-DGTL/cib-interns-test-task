@@ -21,63 +21,42 @@ public class SockServiceImpl implements SockService {
     @Override
     @Transactional
     public void addSocks(Sock sock) {
-        String color = sock.getColor();
-        Integer cottonPart = sock.getCottonPart();
-        Integer quantity = sock.getQuantity();
 
-        if(cottonPart <= 0 || cottonPart > 100) {
-            throw new IncorrectCottonPartException();
-        }
-        if(quantity <= 0) {
-            throw new IncorrectQuantityException();
-        }
-        if(color == null) {
-            throw new IncorrectColorException();
+        if(sock.getCottonPart() <= 0 || sock.getCottonPart() > 100 || sock.getQuantity() <= 0 || sock.getColor().isEmpty()) {
+            throw new IncorrectDataException();
         }
 
-        Sock newSock = sockRepo.findSockByColorAndCottonPart(color, cottonPart);
+        Sock newSock = sockRepo.findSockByColorAndCottonPart(sock.getColor(), sock.getCottonPart());
 
         if (newSock == null) {
             sockRepo.save(sock);
         } else {
-            sockRepo.incomeSocks(color, quantity, cottonPart);
+            sockRepo.incomeSocks(sock.getColor(), sock.getQuantity(), sock.getCottonPart());
         }
     }
 
     @Override
     @Transactional
     public void deleteSocks(Sock sock) {
-        String color = sock.getColor();
-        Integer cottonPart = sock.getCottonPart();
-        Integer quantity = sock.getQuantity();
 
-        if(cottonPart <= 0 || cottonPart > 100) {
-            throw new IncorrectCottonPartException();
-        }
-        if(quantity <= 0) {
-            throw new IncorrectQuantityException();
-        }
-        if(color == null) {
-            throw new IncorrectColorException();
+        if(sock.getCottonPart() <= 0 || sock.getCottonPart() > 100 || sock.getQuantity() <= 0 || sock.getColor().isEmpty()) {
+            throw new IncorrectDataException();
         }
 
-        Sock newSock = sockRepo.findSockByColorAndCottonPart(color, cottonPart);
+        Sock newSock = sockRepo.findSockByColorAndCottonPart(sock.getColor(), sock.getCottonPart());
 
         if (newSock.getQuantity() < sock.getQuantity()) {
             throw new NotEnoughSocksException(newSock.getQuantity());
         } else {
-            sockRepo.outcomeSocks(color, quantity, cottonPart);
+            sockRepo.outcomeSocks(sock.getColor(), sock.getQuantity(), sock.getCottonPart());
         }
 
     }
 
     @Override
     public Integer amountSocks(String color, String operation, Integer cottonPart) {
-        if(cottonPart <= 0 || cottonPart > 100) {
-            throw new IncorrectCottonPartException();
-        }
-        if(color == null) {
-            throw new IncorrectColorException();
+        if(cottonPart <= 0 || cottonPart > 100 || color.isEmpty()) {
+            throw new IncorrectDataException();
         }
 
         List<Sock> sockList = sortSocks(color, operation, cottonPart);

@@ -19,19 +19,9 @@ public class MyControllerAdvice {
         return new ResponseEntity<>(incorrectParametersException.getErrorMessage(), HttpStatus.BAD_REQUEST);
     }
 
-    @ExceptionHandler(IncorrectCottonPartException.class)
-    public ResponseEntity<String> incorrectCottonPartException(IncorrectCottonPartException incorrectCottonPartException) {
-        return new ResponseEntity<>(incorrectCottonPartException.getErrorMessage(), HttpStatus.BAD_REQUEST);
-    }
-
-    @ExceptionHandler(IncorrectQuantityException.class)
-    public ResponseEntity<String> incorrectQuantityException(IncorrectQuantityException incorrectQuantityException) {
-        return new ResponseEntity<>(incorrectQuantityException.getErrorMessage(), HttpStatus.BAD_REQUEST);
-    }
-
-    @ExceptionHandler(IncorrectColorException.class)
-    public ResponseEntity<String> incorrectColorException(IncorrectColorException incorrectColorException) {
-        return new ResponseEntity<>(incorrectColorException.getErrorMessage(), HttpStatus.BAD_REQUEST);
+    @ExceptionHandler(IncorrectDataException.class)
+    public ResponseEntity<String> incorrectDataException(IncorrectDataException incorrectDataException) {
+        return new ResponseEntity<>(incorrectDataException.getErrorMessage(), HttpStatus.BAD_REQUEST);
     }
 
 }

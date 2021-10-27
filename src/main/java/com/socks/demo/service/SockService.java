@@ -1,6 +1,5 @@
 package com.socks.demo.service;
 
-import com.socks.demo.exception.IncorrectParametersException;
 import com.socks.demo.model.Sock;
 
 public interface SockService {

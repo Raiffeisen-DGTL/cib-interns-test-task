@@ -1,6 +1,5 @@
 package com.socks.demo.controller;
 
-import com.socks.demo.exception.IncorrectParametersException;
 import com.socks.demo.model.Sock;
 import com.socks.demo.service.SockService;
 import lombok.RequiredArgsConstructor;
