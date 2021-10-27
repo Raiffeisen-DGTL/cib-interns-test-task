@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import ru.raiffeisen.socks.dto.SocksDto;
+import ru.raiffeisen.socks.dto.SocksChangeDto;
 import ru.raiffeisen.socks.dto.SocksRequestDto;
 import ru.raiffeisen.socks.service.SocksService;
 
@@ -22,13 +22,13 @@ public class SocksController {
     }
 
     @PostMapping("/income")
-    public void income(@Valid @RequestBody SocksDto socksDto) {
-        socksService.income(socksDto.getColor(), socksDto.getCottonPart(), socksDto.getQuantity());
+    public void income(@Valid @RequestBody SocksChangeDto socksChangeDto) {
+        socksService.income(socksChangeDto.getColor(), socksChangeDto.getCottonPart(), socksChangeDto.getQuantity());
     }
 
     @PostMapping("/outcome")
-    public void outcome(@Valid @RequestBody SocksDto socksDto) {
-        socksService.outcome(socksDto.getColor(), socksDto.getCottonPart(), socksDto.getQuantity());
+    public void outcome(@Valid @RequestBody SocksChangeDto socksChangeDto) {
+        socksService.outcome(socksChangeDto.getColor(), socksChangeDto.getCottonPart(), socksChangeDto.getQuantity());
     }
 
     @GetMapping

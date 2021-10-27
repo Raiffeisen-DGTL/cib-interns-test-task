@@ -17,5 +17,4 @@ public interface SocksRepository extends CrudRepository<Socks, Long> {
     List<Socks> findByColorNameAndCottonPartLessThan(String color, int cottonPart);
 
     List<Socks> findByColorNameAndCottonPartEquals(String color, int cottonPart);
-
 }

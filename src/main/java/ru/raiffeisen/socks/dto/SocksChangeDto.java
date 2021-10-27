@@ -13,7 +13,7 @@ import javax.validation.constraints.NotNull;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class SocksDto {
+public class SocksChangeDto {
 
     @Min(value = 0, message = "Cotton percent must be a positive number")
     @Max(value = 100, message = "Cotton percent must be less then 100")
