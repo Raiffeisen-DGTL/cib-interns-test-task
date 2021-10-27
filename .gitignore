@@ -1,7 +1,5 @@
 HELP.md
 target/
-out/
-socks/
 !**/src/main/**/out/
 !.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
