@@ -5,6 +5,9 @@ import com.example.socksstorage.repository.SocksRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -72,7 +75,11 @@ public class StorageServiceImpl implements StorageService {
     }
 
     @Override
-    public boolean delete(String color, Socks.Operation operation, int cottonPart, int quantity) {
+    @Modifying
+//    @Query("delete from socks where socks.color = :color and cottonPart = :part ")
+    public boolean delete(@Param("color") String color, Socks.Operation operation,
+                          @Param("part") int cottonPart,
+                          @Param("quant") int quantity) {
         List<Socks> socks = readAll(color, operation, cottonPart);
         int counter = quantity;
         if (quantity > socks.size()) {

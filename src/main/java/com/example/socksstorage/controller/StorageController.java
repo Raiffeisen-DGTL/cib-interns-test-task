@@ -30,16 +30,15 @@ public class StorageController {
     public void delete(@RequestParam String color,
                         @RequestParam int cottonPart,
                         @RequestParam int quantity) {
-        boolean deleted = storageService.delete(color, Socks.Operation.equal, cottonPart, quantity);
-        if (!deleted) {
+        if (!storageService.delete(color, Socks.Operation.equal, cottonPart, quantity)) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Not enough socks");
         }
     }
 
     @GetMapping
     public ResponseEntity<?> read(@RequestParam(defaultValue = "no") String color,
-                                    @RequestParam Socks.Operation operation,
-                                    @RequestParam int cottonPart) {
+                                    @RequestParam(required = false) Socks.Operation operation,
+                                    @RequestParam(required = false) int cottonPart) {
         List<Socks> socks = storageService.readAll(color, operation, cottonPart);
         return !socks.isEmpty()
                 ? new ResponseEntity<>(socks.size(), HttpStatus.OK)

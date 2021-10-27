@@ -1,0 +1,20 @@
+services:
+  db:
+    container_name: storage_db
+    image: postgres:13-alpine3.14
+    environment:
+      POSTGRES_DB: storage
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: 123
+    volumes:
+      - ./.database/storage_db:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+  server:
+    container_name: storage
+    image: storage
+    depends_on:
+      - db
+    restart: on-failure
+    ports:
+      - "8080:8080"
