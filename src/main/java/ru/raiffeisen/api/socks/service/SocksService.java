@@ -1,5 +1,6 @@
 package ru.raiffeisen.api.socks.service;
 
+import ru.raiffeisen.api.socks.Body;
 import ru.raiffeisen.api.socks.OperationEnum;
 import ru.raiffeisen.api.socks.entity.Socks;
 
@@ -9,11 +10,9 @@ public interface SocksService {
 
     List<Socks> getAllDefinedOperation(String color, OperationEnum operationEnum, int cottonPart);
 
-    Socks socksIncome(String color, int cottonPart, int quantity);
+    Socks socksIncome(Body body);
 
-    Socks socksOutcome(String color, int cottonPart, int quantity);
-
-    void save(Socks socks);
+    Socks socksOutcome(Body body);
 
     Socks create(String color, int cottonPart, int quantity);
 }
