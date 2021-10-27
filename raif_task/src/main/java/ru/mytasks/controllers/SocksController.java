@@ -8,12 +8,17 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import ru.mytasks.models.Sock;
 import ru.mytasks.services.SockService;
 
-@Controller
+@RestController
+//@Controller
 @RequestMapping("/api/socks")
+//@RequestMapping("/")
+//@ResponseBody
 public class SocksController {
 	private SockService sockService;
 	
@@ -37,5 +42,10 @@ public class SocksController {
 			               ,@PathVariable("operation") String operation
 			               ,@PathVariable("cottonPart") int CottonPart) {
 		return ResponseEntity.ok().body(sockService.getQuantitySocks(color, operation, CottonPart));
+	}
+	
+	@GetMapping("/test_post")
+	public String test_post () {
+		return "test_post";
 	}
 }
