@@ -3,7 +3,6 @@ package ru.raiffeisen.socks.dto;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import ru.raiffeisen.socks.enums.Operation;
 
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;

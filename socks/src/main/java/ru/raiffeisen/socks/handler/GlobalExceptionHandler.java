@@ -28,7 +28,7 @@ public class GlobalExceptionHandler {
         return handle(ex, HttpStatus.BAD_REQUEST);
     }
 
-    protected ResponseEntity<Object> handle(RuntimeException ex, HttpStatus httpStatus){
+    protected ResponseEntity<Object> handle(RuntimeException ex, HttpStatus httpStatus) {
         Map<String, Object> body = new LinkedHashMap<>();
         body.put("message", ex.getMessage());
         return new ResponseEntity<>(body, httpStatus);

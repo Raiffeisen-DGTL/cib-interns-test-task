@@ -2,7 +2,6 @@ package ru.raiffeisen.socks.service;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -20,9 +19,9 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.doReturn;
 
 
 @SpringBootTest
@@ -37,17 +36,17 @@ class SocksServiceTest {
     @MockBean
     private ColorRepository colorRepositoryMock;
 
-    final int COTTON_PART = 25;
-    final long QUANTITY = 100;
-    final long INCOME_QUANTITY = 10;
-    final long OUTCOME_QUANTITY_LESS_THEN_QUANTITY = 80;
-    final long OUTCOME_QUANTITY_GREATER_THEN_QUANTITY = 150;
-    final String COLOR = "red";
+    private final int COTTON_PART = 25;
+    private final long QUANTITY = 100;
+    private final long INCOME_QUANTITY = 10;
+    private final long OUTCOME_QUANTITY_LESS_THEN_QUANTITY = 80;
+    private final long OUTCOME_QUANTITY_GREATER_THEN_QUANTITY = 150;
+    private final String COLOR = "red";
 
-    final String OPERATION_LESS_THAN = "lessThan";
-    final String OPERATION_MORE_THAN = "moreThan";
-    final String OPERATION_EQUAL = "equal";
-    final String OPERATION_UNKNOWN = "qwerty";
+    private final String OPERATION_LESS_THAN = "lessThan";
+    private final String OPERATION_MORE_THAN = "moreThan";
+    private final String OPERATION_EQUAL = "equal";
+    private final String OPERATION_UNKNOWN = "qwerty";
 
     @Test
     void income_whenSocksPresented() {
@@ -69,12 +68,14 @@ class SocksServiceTest {
 
     @Test
     void income_whenNotSocksPresented_thenColorNotFound() {
-        Assertions.assertThrows(ColorNotFoundException.class, () -> socksService.income(COLOR, COTTON_PART, INCOME_QUANTITY));
+        Assertions.assertThrows(ColorNotFoundException.class,
+                () -> socksService.income(COLOR, COTTON_PART, INCOME_QUANTITY));
     }
 
     @Test
     void outcome_whenSocksNotFound() {
-        Assertions.assertThrows(SocksNotFoundException.class, () -> socksService.outcome(COLOR, COTTON_PART, INCOME_QUANTITY));
+        Assertions.assertThrows(SocksNotFoundException.class,
+                () -> socksService.outcome(COLOR, COTTON_PART, INCOME_QUANTITY));
     }
 
     @Test
@@ -99,30 +100,35 @@ class SocksServiceTest {
     void outcome_whenSocksFound_neededQuantityGreaterThenStored() {
         Optional<Socks> socks = Optional.of(new Socks(1L, COTTON_PART, QUANTITY, new Color(1L, COLOR)));
         doReturn(socks).when(socksRepositoryMock).findByCottonPartAndColorName(COTTON_PART, COLOR);
-        Assertions.assertThrows(NotEnoughSocksException.class, () -> socksService.outcome(COLOR, COTTON_PART, OUTCOME_QUANTITY_GREATER_THEN_QUANTITY));
+        Assertions.assertThrows(NotEnoughSocksException.class,
+                () -> socksService.outcome(COLOR, COTTON_PART, OUTCOME_QUANTITY_GREATER_THEN_QUANTITY));
     }
 
     @Test
     void socksLessThen() {
         socksService.socks(COLOR, OPERATION_LESS_THAN, COTTON_PART);
-        verify(socksRepositoryMock, times(1)).findByColorNameAndCottonPartLessThan(COLOR, COTTON_PART);
+        verify(socksRepositoryMock, times(1))
+                .findByColorNameAndCottonPartLessThan(COLOR, COTTON_PART);
     }
 
     @Test
     void socksEqual() {
         socksService.socks(COLOR, OPERATION_EQUAL, COTTON_PART);
-        verify(socksRepositoryMock, times(1)).findByColorNameAndCottonPartEquals(COLOR, COTTON_PART);
+        verify(socksRepositoryMock, times(1))
+                .findByColorNameAndCottonPartEquals(COLOR, COTTON_PART);
     }
 
     @Test
     void socksMoreThen() {
         socksService.socks(COLOR, OPERATION_MORE_THAN, COTTON_PART);
-        verify(socksRepositoryMock, times(1)).findByColorNameAndCottonPartGreaterThan(COLOR, COTTON_PART);
+        verify(socksRepositoryMock, times(1))
+                .findByColorNameAndCottonPartGreaterThan(COLOR, COTTON_PART);
     }
 
     @Test
     void socksUnknownOperation() {
-        Assertions.assertThrows(OperationUnknown.class, () -> socksService.socks(COLOR, OPERATION_UNKNOWN, COTTON_PART));
+        Assertions.assertThrows(OperationUnknown.class,
+                () -> socksService.socks(COLOR, OPERATION_UNKNOWN, COTTON_PART));
     }
 
     @Test
@@ -132,7 +138,9 @@ class SocksServiceTest {
         socksList.add(new Socks(2L, COTTON_PART, INCOME_QUANTITY, new Color(1L, COLOR)));
         socksList.add(new Socks(3L, COTTON_PART, OUTCOME_QUANTITY_LESS_THEN_QUANTITY, new Color(1L, COLOR)));
         doReturn(socksList).when(socksRepositoryMock).findByColorNameAndCottonPartEquals(COLOR, COTTON_PART);
-        assertEquals(QUANTITY + INCOME_QUANTITY + OUTCOME_QUANTITY_LESS_THEN_QUANTITY, socksService.socks(COLOR, OPERATION_EQUAL, COTTON_PART));
-        verify(socksRepositoryMock, times(1)).findByColorNameAndCottonPartEquals(COLOR, COTTON_PART);
+        assertEquals(QUANTITY + INCOME_QUANTITY + OUTCOME_QUANTITY_LESS_THEN_QUANTITY,
+                socksService.socks(COLOR, OPERATION_EQUAL, COTTON_PART));
+        verify(socksRepositoryMock, times(1))
+                .findByColorNameAndCottonPartEquals(COLOR, COTTON_PART);
     }
 }

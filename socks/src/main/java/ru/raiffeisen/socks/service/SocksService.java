@@ -12,7 +12,6 @@ import ru.raiffeisen.socks.repository.ColorRepository;
 import ru.raiffeisen.socks.repository.SocksRepository;
 
 import javax.transaction.Transactional;
-import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -28,13 +27,17 @@ public class SocksService {
 
     @Transactional
     public void income(String color, int cottonPart, long quantity) {
-        socksRepository.findByCottonPartAndColorName(cottonPart, color).ifPresentOrElse(socksFromDB -> {
-            socksFromDB.setQuantity(socksFromDB.getQuantity() + quantity);
-            socksRepository.save(socksFromDB);
-        }, () -> {
-            Color colorFromDB = colorRepository.findByName(color).orElseThrow(() -> new ColorNotFoundException(color));
-            socksRepository.save(new Socks(cottonPart, quantity, colorFromDB));
-        });
+        socksRepository.findByCottonPartAndColorName(cottonPart, color)
+                .ifPresentOrElse(
+                        socksFromDB -> {
+                            socksFromDB.setQuantity(socksFromDB.getQuantity() + quantity);
+                            socksRepository.save(socksFromDB);
+                        },
+                        () -> {
+                            Color colorFromDB = colorRepository.findByName(color)
+                                    .orElseThrow(() -> new ColorNotFoundException(color));
+                            socksRepository.save(new Socks(cottonPart, quantity, colorFromDB));
+                        });
     }
 
     @Transactional
@@ -51,7 +54,7 @@ public class SocksService {
 
     public long socks(String color, String op, int cottonPart) {
         Operation operation = Operation.decode(op);
-        List<Socks> socks = Collections.emptyList();
+        List<Socks> socks;
         switch (operation) {
             case MORE_THAN:
                 socks = socksRepository.findByColorNameAndCottonPartGreaterThan(color, cottonPart);

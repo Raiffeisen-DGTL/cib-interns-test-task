@@ -10,7 +10,7 @@ import java.util.Optional;
 @Repository
 public interface SocksRepository extends CrudRepository<Socks, Long> {
 
-    Optional<Socks> findByCottonPartAndColorName(int cottonPart , String color);
+    Optional<Socks> findByCottonPartAndColorName(int cottonPart, String color);
 
     List<Socks> findByColorNameAndCottonPartGreaterThan(String color, int cottonPart);
 

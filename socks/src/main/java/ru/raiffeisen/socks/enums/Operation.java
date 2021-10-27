@@ -16,10 +16,6 @@ public enum Operation {
         this.code = code;
     }
 
-    public String getCode() {
-        return code;
-    }
-
     public static Operation decode(String code) {
         return Stream.of(Operation.values()).filter(targetEnum -> targetEnum.code.equals(code)).findFirst().orElse(EMPTY);
     }
