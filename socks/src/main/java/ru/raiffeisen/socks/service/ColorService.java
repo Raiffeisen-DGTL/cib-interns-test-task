@@ -2,6 +2,7 @@ package ru.raiffeisen.socks.service;
 
 import org.springframework.stereotype.Service;
 import ru.raiffeisen.socks.entity.Color;
+import ru.raiffeisen.socks.exception.EmptyColorNameException;
 import ru.raiffeisen.socks.repository.ColorRepository;
 
 import javax.transaction.Transactional;
@@ -17,6 +18,9 @@ public class ColorService {
 
     @Transactional
     public void addColor(String color) {
+        if (color.isEmpty()) {
+            throw new EmptyColorNameException();
+        }
         if (colorRepository.findByName(color).isEmpty()) {
             colorRepository.save(new Color(color));
         }

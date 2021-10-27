@@ -6,7 +6,7 @@ import ru.raiffeisen.socks.entity.Socks;
 import ru.raiffeisen.socks.enums.Operation;
 import ru.raiffeisen.socks.exception.ColorNotFoundException;
 import ru.raiffeisen.socks.exception.NotEnoughSocksException;
-import ru.raiffeisen.socks.exception.OperationUnknown;
+import ru.raiffeisen.socks.exception.OperationUnknownException;
 import ru.raiffeisen.socks.exception.SocksNotFoundException;
 import ru.raiffeisen.socks.repository.ColorRepository;
 import ru.raiffeisen.socks.repository.SocksRepository;
@@ -66,7 +66,7 @@ public class SocksService {
                 socks = socksRepository.findByColorNameAndCottonPartEquals(color, cottonPart);
                 break;
             default:
-                throw new OperationUnknown(op);
+                throw new OperationUnknownException(op);
         }
         return socks.stream().map(Socks::getQuantity).reduce(0L, Long::sum);
     }

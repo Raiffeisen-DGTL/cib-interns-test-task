@@ -9,7 +9,7 @@ import ru.raiffeisen.socks.entity.Color;
 import ru.raiffeisen.socks.entity.Socks;
 import ru.raiffeisen.socks.exception.ColorNotFoundException;
 import ru.raiffeisen.socks.exception.NotEnoughSocksException;
-import ru.raiffeisen.socks.exception.OperationUnknown;
+import ru.raiffeisen.socks.exception.OperationUnknownException;
 import ru.raiffeisen.socks.exception.SocksNotFoundException;
 import ru.raiffeisen.socks.repository.ColorRepository;
 import ru.raiffeisen.socks.repository.SocksRepository;
@@ -127,7 +127,7 @@ class SocksServiceTest {
 
     @Test
     void socksUnknownOperation() {
-        Assertions.assertThrows(OperationUnknown.class,
+        Assertions.assertThrows(OperationUnknownException.class,
                 () -> socksService.socks(COLOR, OPERATION_UNKNOWN, COTTON_PART));
     }
 

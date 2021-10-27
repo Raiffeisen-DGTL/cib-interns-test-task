@@ -5,8 +5,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import ru.raiffeisen.socks.exception.ColorNotFoundException;
+import ru.raiffeisen.socks.exception.EmptyColorNameException;
 import ru.raiffeisen.socks.exception.NotEnoughSocksException;
-import ru.raiffeisen.socks.exception.OperationUnknown;
+import ru.raiffeisen.socks.exception.OperationUnknownException;
 import ru.raiffeisen.socks.exception.SocksNotFoundException;
 
 import java.util.LinkedHashMap;
@@ -23,7 +24,10 @@ public class GlobalExceptionHandler {
         return handle(ex, HttpStatus.NOT_FOUND);
     }
 
-    @ExceptionHandler(OperationUnknown.class)
+    @ExceptionHandler(value = {
+            OperationUnknownException.class,
+            EmptyColorNameException.class
+    })
     protected ResponseEntity<Object> handleBadRequest(RuntimeException ex) {
         return handle(ex, HttpStatus.BAD_REQUEST);
     }
