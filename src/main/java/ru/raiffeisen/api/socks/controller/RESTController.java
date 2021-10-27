@@ -22,14 +22,10 @@ public class RESTController {
 
     @PostMapping("/socks/income")
     public RequestData socksIncome(@RequestBody Body body) {
-        String color = body.getColor();
-        int cottonPart = body.getCottonPart();
-        int quantity = body.getQuantity();
-        boolean isCorrectParam = color != null && cottonPart > 0 && cottonPart <= 100 && quantity > 0;
-        if (isCorrectParam) {
-            Socks socks = socksService.socksIncome(color, cottonPart, quantity);
+        if (isCorrectParam(body)) {
+            Socks socks = socksService.socksIncome(body);
             RequestData data = new RequestData();
-            if (socks.getQuantity() == quantity) {
+            if (socks.getQuantity() == body.getQuantity()) {
                 data.setInfo("На склад добавлены новая позиция носков в количестве " + socks.getQuantity() + " шт.");
             }
             else {
@@ -44,12 +40,8 @@ public class RESTController {
 
     @PostMapping("/socks/outcome")
     public RequestData socksOutcome(@RequestBody Body body) {
-        String color = body.getColor();
-        int cottonPart = body.getCottonPart();
-        int quantity = body.getQuantity();
-        boolean isCorrectParam = color != null && cottonPart > 0 && cottonPart <= 100 && quantity > 0;
-        if (isCorrectParam) {
-            Socks socks = socksService.socksOutcome(body.getColor(), cottonPart, quantity);
+        if (isCorrectParam(body)) {
+            Socks socks = socksService.socksOutcome(body);
             return new RequestData("На складе осталось " + socks.getQuantity() + " носков");
         }
         else {
@@ -89,5 +81,10 @@ public class RESTController {
     public ResponseEntity<RequestData> handleInvalidFormatException(InvalidFormatException exception) {
         RequestData date = new RequestData(exception.getMessage());
         return new ResponseEntity<>(date, HttpStatus.BAD_REQUEST);
+    }
+
+    private boolean isCorrectParam(Body body) {
+        return body.getColor() != null && body.getCottonPart() > 0 && body.getCottonPart() <= 100 &&
+                body.getQuantity() > 0;
     }
 }
