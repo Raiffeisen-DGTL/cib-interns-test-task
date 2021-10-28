@@ -1,0 +1,33 @@
+plugins {
+	id 'org.springframework.boot' version '2.5.6'
+	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+	id 'java'
+}
+
+group = 'com.raiffeisen-socks'
+version = '0.0.1-RELEASE'
+sourceCompatibility = "14"
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	implementation 'mysql:mysql-connector-java:8.0.25'
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa:2.5.5'
+	implementation 'org.springframework.boot:spring-boot-starter-web:2.5.5'
+    implementation 'junit:junit:4.13.2'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test:2.5.5'
+	implementation 'org.hibernate:hibernate-core:5.5.8.Final'
+	implementation group: 'org.hibernate', name: 'hibernate-validator', version: '6.1.0.Final'
+	compileOnly 'org.projectlombok:lombok:1.18.22'
+	annotationProcessor 'org.projectlombok:lombok:1.18.22'
+
+	testCompileOnly 'org.projectlombok:lombok:1.18.22'
+	testAnnotationProcessor 'org.projectlombok:lombok:1.18.22'
+}
+
+test {
+	useJUnitPlatform()
+}
+targetCompatibility = JavaVersion.VERSION_14
