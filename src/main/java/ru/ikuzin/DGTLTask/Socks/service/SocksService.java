@@ -14,6 +14,7 @@ import java.util.List;
 
 
 @Service
+@Transactional
 @RequiredArgsConstructor
 public class SocksService {
     private final SocksRepository SocksRepo;
@@ -58,7 +59,7 @@ public class SocksService {
         }
     }
 
-    private List<SocksStock> socksByArgs(SocksColor color, SocksCottonPart cottonPart, String operation) {
+    public List<SocksStock> socksByArgs(SocksColor color, SocksCottonPart cottonPart, String operation) {
         return switch (operation) {
             case "lessThan" -> SocksRepo.findAllByColorAndPartLessThan(color, cottonPart);
             case "moreThan" -> SocksRepo.findAllByColorAndPartGreaterThan(color, cottonPart);
