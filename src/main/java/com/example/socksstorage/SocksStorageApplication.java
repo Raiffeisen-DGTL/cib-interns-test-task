@@ -9,5 +9,4 @@ public class SocksStorageApplication {
     public static void main(String[] args) {
         SpringApplication.run(SocksStorageApplication.class, args);
     }
-
 }

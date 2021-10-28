@@ -29,40 +29,28 @@ public class StorageServiceImpl implements StorageService {
     private final SocksRepository socksRepository;
 
     @Override
-    public void create(String color, int cottonPart, int quantity) {
-        if (cottonPart < 0 ^ cottonPart > 100) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid value of cotton part: " + cottonPart);
-        }
+    public boolean create(String color, int cottonPart, int quantity) {
+        List<Socks> socksList = new ArrayList<>(quantity);
         for (int i = 0; i < quantity; i++) {
             Socks sock = new Socks();
             sock.setColor(color);
             sock.setCottonPart(cottonPart);
-            socksRepository.save(sock);
+            socksList.add(sock);
         }
+        socksRepository.saveAll(socksList);
+        return true;
     }
 
     @Override
-    public List<Socks> readAll(String color, Socks.Operation operation, int cottonPart) {
-        List<Socks> socks = socksRepository.findAll();
-        if (!"no".equals(color)) {
-            socks = socks.stream()
-                    .filter(sock -> sock.getColor().equals(color))
-                    .collect(Collectors.toList());
+    public int readAll(String color, Socks.Operation operation, int cottonPart) {
+        switch (operation) {
+            case moreThan :
+                return socksRepository.countAllByColorAndCottonPartGreaterThan(color, cottonPart);
+            case lessThan:
+                return socksRepository.countAllByColorAndCottonPartLessThan(color, cottonPart);
+            default:
+                return socksRepository.countAllByColorAndCottonPart(color, cottonPart);
         }
-        if (operation == Socks.Operation.moreThan) {
-            socks = socks.stream()
-                    .filter(sock -> sock.getCottonPart() > cottonPart)
-                    .collect(Collectors.toList());
-        } else if (operation == Socks.Operation.lessThan) {
-            socks = socks.stream()
-                    .filter(sock -> sock.getCottonPart() < cottonPart)
-                    .collect(Collectors.toList());
-        } else if (operation == Socks.Operation.equal) {
-            socks = socks.stream()
-                    .filter(sock -> sock.getCottonPart() == cottonPart)
-                    .collect(Collectors.toList());
-        }
-        return socks;
     }
 
     @Override
@@ -75,28 +63,16 @@ public class StorageServiceImpl implements StorageService {
     }
 
     @Override
-    @Modifying
-//    @Query("delete from socks where socks.color = :color and cottonPart = :part ")
-    public boolean delete(@Param("color") String color, Socks.Operation operation,
-                          @Param("part") int cottonPart,
-                          @Param("quant") int quantity) {
-        List<Socks> socks = readAll(color, operation, cottonPart);
-        int counter = quantity;
-        if (quantity > socks.size()) {
+    public boolean delete(String color, int cottonPart, int quantity) {
+        List<Socks> socksList = socksRepository.findAllByColorAndCottonPart(color, cottonPart);
+        if (socksList.size() < quantity) {
             return false;
         }
-        for (Socks sock : socks) {
-            if (sock.getColor().equals(color) && sock.getCottonPart() == cottonPart) {
-                boolean deleted = deleteById(sock.getId());
-                if (!deleted) {
-                    return false;
-                }
-                if (counter == 1) {
-                    break;
-                }
-                counter--;
-            }
+        List<Socks> socksListToRemove = new ArrayList<>();
+        for (int i = 0; i < quantity; i++) {
+            socksListToRemove.add(socksList.get(i));
         }
+        socksRepository.deleteAll(socksListToRemove);
         return true;
     }
 }

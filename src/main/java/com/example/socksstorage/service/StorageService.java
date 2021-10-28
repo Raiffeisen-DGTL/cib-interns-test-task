@@ -11,7 +11,7 @@ public interface StorageService {
      * @param cottonPart - содержание хлопка
      * @param quantity - количество
      * */
-    void create(String color, int cottonPart, int quantity);
+    boolean create(String color, int cottonPart, int quantity);
 
     /**
      * Возвращает список носков
@@ -19,7 +19,7 @@ public interface StorageService {
      * @param cottonPart - содержание хлопка
      * @param operation - сравнение
      * @return socks list*/
-    List<Socks> readAll(String color,
+    int readAll(String color,
                         Socks.Operation operation,
                         int cottonPart);
 
@@ -34,9 +34,8 @@ public interface StorageService {
      * Удалает носки по заданным параметрам
      *
      * @param color - цвет носков
-     * @param operation - сравнение количества хлопка (больше, меньше или равно)
      * @param cottonPart - количество хлопка в носке*/
-    boolean delete(String color, Socks.Operation operation, int cottonPart, int quantity);
+    boolean delete(String color, int cottonPart, int quantity);
 }
 
 

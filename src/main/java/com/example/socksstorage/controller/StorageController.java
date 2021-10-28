@@ -22,7 +22,9 @@ public class StorageController {
     public void create(@RequestParam String color,
                         @RequestParam int cottonPart,
                         @RequestParam int quantity) {
-        storageService.create(color, cottonPart, quantity);
+        if (!storageService.create(color, cottonPart, quantity)) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Could not add socks");
+        }
     }
 
     @PostMapping(value = "/outcome")
@@ -30,18 +32,20 @@ public class StorageController {
     public void delete(@RequestParam String color,
                         @RequestParam int cottonPart,
                         @RequestParam int quantity) {
-        if (!storageService.delete(color, Socks.Operation.equal, cottonPart, quantity)) {
+        if (!storageService.delete(color, cottonPart, quantity)) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Not enough socks");
         }
     }
 
     @GetMapping
-    public ResponseEntity<?> read(@RequestParam(defaultValue = "no") String color,
-                                    @RequestParam(required = false) Socks.Operation operation,
-                                    @RequestParam(required = false) int cottonPart) {
-        List<Socks> socks = storageService.readAll(color, operation, cottonPart);
-        return !socks.isEmpty()
-                ? new ResponseEntity<>(socks.size(), HttpStatus.OK)
-                : new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+    @ResponseStatus(HttpStatus.OK)
+    public int read(@RequestParam String color,
+                    @RequestParam Socks.Operation operation,
+                    @RequestParam int cottonPart) {
+        int socksCount = storageService.readAll(color, operation, cottonPart);
+        if (socksCount == 0) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Not enough socks");
         }
+        return socksCount;
+    }
 }
