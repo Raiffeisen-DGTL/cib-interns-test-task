@@ -4,11 +4,15 @@ services:
   db:
     build: ./db
     container_name: db
+    environment:
+      POSTGRES_PASSWORD: 1234
     healthcheck:
-      test: "pg_isready -U postgres -q"
+      test: CMD pg_isready -q || echo 1
       interval: 1s
       timeout: 1s
-      retries: 15
+      retries: 30
+    ports:
+      - 5432:5432
 
   java:
     build: ./java
@@ -16,5 +20,13 @@ services:
     depends_on:
       db:
         condition: service_healthy
+    volumes:
+      - type: volume
+        source: m2_home
+        target: /root/.m2
     ports:
       - 8080:8080
+
+volumes:
+  m2_home:
+    name: m2_home
