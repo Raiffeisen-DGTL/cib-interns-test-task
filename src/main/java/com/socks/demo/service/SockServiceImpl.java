@@ -51,7 +51,7 @@ public class SockServiceImpl implements SockService {
     @Override
     public Integer amountSocks(String color, String operation, Integer cottonPart) {
         if(cottonPart <= 0 || cottonPart > 100 || color.isEmpty()) {
-            throw new IncorrectDataException();
+            throw new IncorrectParametersException();
         }
 
         return sortSocks(color, operation, cottonPart);
