@@ -1,0 +1,20 @@
+version: '2.4'
+
+services:
+  db:
+    build: ./db
+    container_name: db
+    healthcheck:
+      test: "pg_isready -U postgres -q"
+      interval: 1s
+      timeout: 1s
+      retries: 15
+
+  java:
+    build: ./java
+    container_name: serv
+    depends_on:
+      db:
+        condition: service_healthy
+    ports:
+      - 8080:8080
