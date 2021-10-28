@@ -7,16 +7,11 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.List;
-
-
 @Service
 @RequiredArgsConstructor
 public class SockServiceImpl implements SockService {
 
     private final SockRepo sockRepo;
-
 
     @Override
     @Transactional
@@ -59,22 +54,10 @@ public class SockServiceImpl implements SockService {
             throw new IncorrectDataException();
         }
 
-        List<Sock> sockList = sortSocks(color, operation, cottonPart);
-        List<Integer> socksAmount = new ArrayList<>();
-        Integer sumSock = 0;
-
-        for (Sock sock : sockList) {
-            socksAmount.add(sock.getQuantity());
-        }
-
-        for (Integer integer : socksAmount) {
-            sumSock += integer;
-        }
-
-        return sumSock;
+        return sortSocks(color, operation, cottonPart);
     }
 
-    private List<Sock> sortSocks(String color, String operation, Integer cottonPart) {
+    private Integer sortSocks(String color, String operation, Integer cottonPart) {
         switch (operation) {
             case "moreThan":
                 return sockRepo.calcOperationMore(color, cottonPart);

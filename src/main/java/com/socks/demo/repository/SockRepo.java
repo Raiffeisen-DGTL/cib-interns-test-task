@@ -7,8 +7,6 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
-
 @Repository
 public interface SockRepo extends JpaRepository<Sock, Long> {
 
@@ -21,16 +19,16 @@ public interface SockRepo extends JpaRepository<Sock, Long> {
     void outcomeSocks(String color, Integer quantity, Integer cottonPart);
 
     @Modifying
-    @Query("from Sock s where s.color =?1 and s.cottonPart > ?2")
-    List<Sock> calcOperationMore(String color, Integer cottonPart);
+    @Query("SELECT SUM(s.quantity)from Sock s where s.color =?1 and s.cottonPart > ?2")
+    Integer calcOperationMore(String color, Integer cottonPart);
 
     @Modifying
-    @Query("from Sock s where s.color =?1 and s.cottonPart < ?2")
-    List<Sock> calcOperationLess(String color, Integer cottonPart);
+    @Query("SELECT SUM(s.quantity)from Sock s where s.color =?1 and s.cottonPart < ?2")
+    Integer calcOperationLess(String color, Integer cottonPart);
 
     @Modifying
-    @Query("from Sock s where s.color =?1 and s.cottonPart = ?2")
-    List<Sock> calcOperationEquals(String color, Integer cottonPart);
+    @Query("SELECT SUM(s.quantity)from Sock s where s.color =?1 and s.cottonPart = ?2")
+    Integer calcOperationEquals(String color, Integer cottonPart);
 
     Sock findSockByColorAndCottonPart(String color, Integer cottonPart);
 
