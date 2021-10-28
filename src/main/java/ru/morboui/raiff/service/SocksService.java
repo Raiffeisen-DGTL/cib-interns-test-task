@@ -9,6 +9,8 @@ import ru.morboui.raiff.exceptions.IncorrectParametersException;
 import ru.morboui.raiff.exceptions.InvalidResultException;
 import ru.morboui.raiff.repository.SocksRepository;
 
+import java.util.Optional;
+
 
 @Service
 public class SocksService {
@@ -23,10 +25,10 @@ public class SocksService {
     public void addNewSocks(@NonNull Socks socks) {
         if (!(socks.getQuantity() != 0 && socks.getCottonPart() > 0 && socks.getCottonPart() <= 100)) {
             throw new IncorrectParametersException("Quantity should be greater than 0 and CottonPart should be from 0 to 100");
-        } else if (socksRepository.findSocksByColorAndCottonPartEquals(socks.getColor(), socks.getCottonPart()).isEmpty())
+        } else if (socksRepository.getSocksByColorAndCottonPartEquals(socks.getColor(), socks.getCottonPart()).isEmpty())
             socksRepository.save(socks);
         else {
-            Socks socksInBD = socksRepository.findSocksByColorAndCottonPartEquals(socks.getColor(), socks.getCottonPart()).get();
+            Socks socksInBD = socksRepository.getSocksByColorAndCottonPartEquals(socks.getColor(), socks.getCottonPart()).get();
             socksInBD.setQuantity(socks.getQuantity() + socksInBD.getQuantity());
             socksRepository.save(socksInBD);
         }
@@ -35,10 +37,12 @@ public class SocksService {
 
 
     public void reduceSocks(@NonNull Socks socks) {
-        if (socksRepository.findSocksByColorAndCottonPartEquals(socks.getColor(), socks.getCottonPart()).isPresent()) {
-            Socks socksInBD = socksRepository.findSocksByColorAndCottonPartEquals(socks.getColor(), socks.getCottonPart()).get();
-            socksInBD.setQuantity(Math.max(socksInBD.getQuantity() - socks.getQuantity(), -1));
+        Optional<Socks> SocksByColorAndCottonPartEquals = socksRepository.
+                getSocksByColorAndCottonPartEquals(socks.getColor(), socks.getCottonPart());
 
+        if (SocksByColorAndCottonPartEquals.isPresent()) {
+            Socks socksInBD = SocksByColorAndCottonPartEquals.get();
+            socksInBD.setQuantity(Math.max(socksInBD.getQuantity() - socks.getQuantity(), -1));
             if (socksInBD.getQuantity() == -1) {
                 throw new IncorrectParametersException("Not enough socks for the outcome");
             }
@@ -55,7 +59,7 @@ public class SocksService {
                 return socksRepository.getSocksByColorAndCottonPartIsLessThan(color, cottonPart).orElseThrow(() ->
                         new IncorrectParametersException("Nothing was found for this parameters"));
             case equals:
-                return socksRepository.findSocksByColorAndCottonPartEquals(color, cottonPart).orElseThrow(() ->
+                return socksRepository.getSocksByColorAndCottonPartEquals(color, cottonPart).orElseThrow(() ->
                         new IncorrectParametersException("Nothing was found for this parameters"));
             default:
                 throw new InvalidResultException("Incorrect parameters in URL");
