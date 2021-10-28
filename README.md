@@ -4,6 +4,7 @@
 2. Контроль версий базы данных выполнен на liquibase. Реализовано в модуле migrations.
    ChangeLog файл расположен \migrations\src\main\resources\liquibase-outputChangeLog.xml
 3. Реализован Docker-compose. MySQL, migrations и service поднимаются в контейнере.
+4. Приложение задеплоено на Heroku. Ознакомиться можно по ссылке: https://radiant-everglades-76153.herokuapp.com
    
 
 # Тестовое задание для Java стажеров
