@@ -1,0 +1,38 @@
+version: "3.8"
+
+services:
+                
+    mysql:
+        image: mysql:8.0.26
+        volumes:
+            - db-data:/var/lib/mysql
+        restart: always
+        ports:
+            - 3307:3306
+        environment:            
+            MYSQL_ROOT_PASSWORD: root
+            MYSQL_DATABASE: socks_store
+
+    liquibase:
+        image: liquibase/liquibase:4.5.0
+        volumes:
+            - ./migrations/src/main/resources:/liquibase/changelog
+        command: "update --url=\"jdbc:mysql://mysql:3306/socks_store\" --changeLogFile=liquibase-outputChangeLog.xml --username=root --password=root"
+        environment:
+            INSTALL_MYSQL: true
+        depends_on:
+            - mysql
+                                    
+    service:
+        build: service/
+        ports:
+            - 8080:8080
+        environment:
+            database.bd: jdbc:mysql://mysql:3306/socks_store
+        depends_on:
+            - liquibase
+            
+volumes:
+    db-data: {}
+        
+
