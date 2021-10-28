@@ -1,0 +1,48 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1
+      author: rareart
+      changes:
+        - createTable:
+            - tableName: color
+              columns:
+                - column:
+                    name: id
+                    type: INT
+                    autoIncrement: true
+                    constraints:
+                      primaryKey: true
+                      nullable: false
+                - column:
+                    name: name
+                    type: varchar(255)
+                    constraints:
+                      unique: true
+                      nullable: false
+        - createTable:
+            tableName: socks
+            columns:
+              - column:
+                  name: id
+                  type: INT
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: cotton_part
+                  type: TINYINT
+                  constraints:
+                    nullable: false
+              - column:
+                  name: quantity
+                  type: INT UNSIGNED
+                  constraints:
+                    nullable: false
+              - column:
+                  name: color_id
+                  type: INT
+                  constraints:
+                    nullable: false
+                    foreignKeyName: fk_color
+                    references: color(id)
