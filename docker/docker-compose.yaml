@@ -13,6 +13,9 @@ services:
       retries: 30
     ports:
       - 5432:5432
+    networks:
+      my_net:
+        ipv4_address: 172.16.238.38
 
   java:
     build: ./java
@@ -26,7 +29,20 @@ services:
         target: /root/.m2
     ports:
       - 8080:8080
+    networks:
+      my_net:
+        ipv4_address: 172.16.238.75
 
 volumes:
   m2_home:
     name: m2_home
+
+networks:
+  my_net:
+    name: my_net
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.16.238.0/24
+          gateway: 172.16.238.1
