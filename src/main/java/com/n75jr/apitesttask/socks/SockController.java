@@ -77,7 +77,7 @@ public class SockController {
                 result = sockService.operLessThan(color, cotton_part);
                 break;
             default:
-                return new ResponseEntity<Long>(result, HttpStatus.BAD_REQUEST);
+                return new ResponseEntity<Long>(HttpStatus.BAD_REQUEST);
         }
          return new ResponseEntity<Long>(result, HttpStatus.OK);
     }
