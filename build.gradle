@@ -14,8 +14,9 @@ repositories {
 }
 
 dependencies {
-    implementation 'org.springframework.boot:spring-boot-starter-websocket:2.5.5'
 
+    implementation 'org.springframework.boot:spring-boot-starter-websocket:2.5.5'
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
     // db & schema
     runtimeOnly 'org.postgresql:postgresql:42.2.24.jre7'
     implementation 'org.springframework.boot:spring-boot-starter-data-jdbc:2.5.5'
@@ -30,6 +31,8 @@ dependencies {
     implementation 'org.springdoc:springdoc-openapi-data-rest:1.5.11'
 
     // testing
+    implementation 'com.google.code.gson:gson:2.8.8'
+    testImplementation 'org.mockito:mockito-core:4.0.0'
     testImplementation 'org.springframework.boot:spring-boot-starter-test:2.5.5'
     testImplementation 'org.junit.vintage:junit-vintage-engine:5.8.1'
     implementation 'junit:junit:4.13.2'

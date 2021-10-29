@@ -8,5 +8,4 @@ public class BadRequestException  extends RuntimeException {
     public BadRequestException(String message) {
         super("wrong type paratemers: " + message);
     }
-
 }

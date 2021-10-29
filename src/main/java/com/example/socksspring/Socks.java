@@ -3,11 +3,19 @@ package com.example.socksspring;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+
 public class Socks {
     private final Long id;
     private final String color;
-    private final int cottonPart;
-    private final int quantity;
+
+    @Min(0)
+    @Max(100)
+    private final Integer cottonPart;
+
+    @Min(0)
+    private final Integer quantity;
 
     public String getColor() {
         return color;
@@ -35,8 +43,8 @@ public class Socks {
     public Socks(
             @JsonProperty("id") Long id,
             @JsonProperty("color") String color,
-            @JsonProperty("cottonPart") int cottonPart,
-            @JsonProperty("quantity") int quantity) {
+            @JsonProperty("cottonPart")  Integer cottonPart,
+            @JsonProperty("quantity") Integer quantity) {
 
         this.id = id;
         this.color = color;

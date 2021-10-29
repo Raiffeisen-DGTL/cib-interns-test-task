@@ -1,77 +1,94 @@
 package com.example.socksspring.controller;
 
+import com.example.socksspring.Compare;
 import com.example.socksspring.Socks;
+import com.example.socksspring.repositories.SocksRepository;
+import com.example.socksspring.service.SocksService;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.gson.Gson;
 import io.swagger.v3.oas.annotations.Operation;
 import org.hamcrest.MatcherAssert;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
+import java.util.Arrays;
+
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static org.springframework.test.web.servlet.setup.MockMvcBuilders.*;
+import static org.mockito.BDDMockito.*;
 import static org.hamcrest.CoreMatchers.is;
 
-@SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
+@ExtendWith(SpringExtension.class)
+@WebMvcTest(controllers = SocksController.class)
+@AutoConfigureMockMvc
 public class SocksControllerTest {
 
-    @LocalServerPort
-    private int port;
-
     @Autowired
-    private SocksController controller;
+    private MockMvc mvc;
 
-    @Autowired
-    private TestRestTemplate restTemplate;
+    @MockBean
+    private SocksRepository socksRepository;
+
+    @MockBean
+    private SocksService service;
+
+    @Captor
+    private ArgumentCaptor<Socks> socksCaptor;
 
     @Operation(summary = "При правильно выполненном запросе возвращается строка с номеров носков, " +
             "в тесте проверяется соответствие результата строке'")
     @Test
-    public void addSocksValid()  {
-        restTemplate.postForEntity("http://localhost:" + port + "/api/socks/income", new Socks(null, "red", 15, 5), String.class);
-        ResponseEntity<String> response = restTemplate.getForEntity(
-                "http://localhost:" + port + "/api/socks?color=red&operation=lessThan&cottonPart=100", String.class
-        );
+    public void addSocksValid() throws Exception {
+        given(service.getAmountOfSocks("red", Compare.LessThan, 100)).willReturn(5);
 
-        Assertions.assertTrue(response.hasBody());
+        mvc.perform(get("/api/socks?color=red&operation=lessThan&cottonPart=100"))
+                .andExpect(status().isOk())
+                .andExpect(content().string("5"));
     }
 
-    @Operation(summary = "При ошибке в формате параметров возвращается код 400 в виде json, который" +
-            "в тесте конвертируется в hashmap и проверяется ошбика 'Bad Request'")
+    @Operation(summary = "При ошибке в формате параметров возвращается код 400 в виде json, в котором" +
+            " проверяется ошибка 'Bad Request'")
     @Test
-    public void addSocksInvalid(){
-        restTemplate.postForEntity("http://localhost:" + port + "/api/socks/income", new Socks(null, "red", 15, 5), String.class);
-        ResponseEntity<Object> response = restTemplate.getForEntity(
-                "http://localhost:" + port + "/api/socks?color=red&operation=lessThdsdsan&cottonPart=100", Object.class
-        );
+    public void addSocksInvalid() throws Exception {
+        mvc.perform(get("/api/socks?color=red&operation=bad_enum&cottonPart=100"))
+                .andExpect(status().isBadRequest());
 
-        MatcherAssert.assertThat(response.getStatusCode(), is(HttpStatus.BAD_REQUEST));
+        mvc.perform(get("/api/socks?color=red&operation=lessThan&cottonPart=1001"))
+                .andExpect(status().isBadRequest());
+
+        mvc.perform(get("/api/socks?color=red&operation=lessThan&cottonPart=-1001"))
+                .andExpect(status().isBadRequest());
     }
 
-    @Operation(summary = "Выполняется запрос на носки с содержанием хлопка больше 101%," +
-            " которых по правилам в базе не может быть'")
-    @Test
-    public void addSocks404()  {
-        ResponseEntity<Object> response = restTemplate.getForEntity(
-                "http://localhost:" + port + "/api/socks?color=red&operation=moreThan&cottonPart=101", Object.class
-        );
-        MatcherAssert.assertThat(response.getStatusCode(), is(HttpStatus.NOT_FOUND));
-    }
 
     @Operation(summary = "Проверка на отпуск носков")
     @Test
-    public void removeSocks(){
-        restTemplate.postForEntity("http://localhost:" + port + "/api/socks/income", new Socks(null, "red", 15, 5), String.class);
-        ResponseEntity<String> response = restTemplate.postForEntity(
-                "http://localhost:" + port + "/api/socks/outcome", new Socks(null, "red", 15, 5),
-                String.class
-        );
-        System.out.println(response.getStatusCode());
-        MatcherAssert.assertThat(response.getStatusCode(), is(HttpStatus.OK));
+    public void removeSocksValid() throws Exception {
+        Mockito.when(socksRepository.getSocksEquals("red", 50))
+                .thenReturn(Arrays.asList(new Socks(null, "red", 50, 5)));
+
+        service.removeSocks(new Socks(null, "red", 50, 4));
+
+        Mockito.verify(socksRepository, times(1)).updateRemoveSocks(socksCaptor.capture());
     }
 
 }

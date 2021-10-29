@@ -43,9 +43,10 @@ public class SocksService {
     }
 
     @Transactional
-    public void addSocks(Socks socks) {
+    public Boolean addSocks(Socks socks) {
         List<Socks> socksList = socksRepository.upsertAddSocks(socks);
         logger.debug("adding socks in socks service: " + socksList.get(0));
+        return true;
     }
 
     @Transactional

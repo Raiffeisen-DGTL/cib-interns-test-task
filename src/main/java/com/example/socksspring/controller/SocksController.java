@@ -14,20 +14,33 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.ConstraintViolationException;
+import javax.validation.Valid;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import java.util.List;
 
-
+@Validated
 @RestController
 public class SocksController {
 
-    private final SocksService service;
+    private SocksService service;
     private final Logger logger;
 
     public SocksController(SocksService service) {
         this.service = service;
         this.logger = LoggerFactory.getLogger(SocksController.class);
+    }
+
+    @ExceptionHandler(ConstraintViolationException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ResponseEntity<String> handleConstraintViolationException(ConstraintViolationException e) {
+        return new ResponseEntity<>("not valid due to validation error: " + e.getMessage(), HttpStatus.BAD_REQUEST);
     }
 
     @Operation(summary = "Add socks to database or add quantity " +
@@ -42,13 +55,11 @@ public class SocksController {
     })
     @PostMapping(value = "api/socks/income")
     @ResponseBody
-    void addSocks(@RequestBody Socks socks) {
-        if (socks.getCottonPart() < 0 || socks.getCottonPart() > 100 || socks.getQuantity() <= 0) {
-            throw new BadRequestException("cotton part or quantity out of bounds");
-        }
-
+    ResponseEntity addSocks(@RequestBody @Valid Socks socks, BindingResult bindingResult) {
         service.addSocks(socks);
-        logger.info("added socks with these parameters : " + socks);
+        logger.info("added socks with these parameters : " + socks + " errors: " + bindingResult.toString());
+
+        return ResponseEntity.ok().build();
     }
 
     @Operation(summary = "Remove quantity from existing entry of socks by color + cotton part " +
@@ -56,11 +67,7 @@ public class SocksController {
     @ResponseStatus(HttpStatus.OK)
     @PostMapping(value = "api/socks/outcome")
     @ResponseBody
-    String removeSocks(@RequestBody Socks socks) {
-        if (socks.getCottonPart() < 0 || socks.getCottonPart() > 100 || socks.getQuantity() <= 0) {
-            throw new BadRequestException("cotton part or quantity out of bounds");
-        }
-
+    String removeSocks(@RequestBody @Valid Socks socks) {
         List<Socks> removedSocks = service.removeSocks(socks);
         if (removedSocks.size() == 0) {
             logger.warn("none socks were found with these parameters: " + socks);
@@ -92,10 +99,7 @@ public class SocksController {
                      @Parameter(description = "cotton part contained in socks compare operation")
                      @RequestParam(value = "operation") final String operation,
                      @Parameter(description = "cotton part amount to be compared to")
-                     @RequestParam(value = "cottonPart") final Integer cottonPart) {
-        if (cottonPart < 0 || cottonPart > 100) {
-            throw new BadRequestException("cotton part out of bounds");
-        }
+                     @Min(0) @Max(100) @RequestParam(value = "cottonPart") final Integer cottonPart) {
         Compare opEnum = Compare.get(operation);
         if (opEnum == null)
             throw new BadRequestException("bad operation");
