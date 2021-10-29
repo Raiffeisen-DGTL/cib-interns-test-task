@@ -1,4 +1,4 @@
-# 📘✏️ Тестовое задание для Java стажеров (в данный момент исправляю баги)
+# 📘✏️ Тестовое задание для Java стажеров
 _____
 ##  Начало
 
@@ -15,8 +15,8 @@ _____
     sudo apt install docker-compose
     
 ### Запуск
-    curl -L https://github.com/niki75jr/cib-interns-test-task/archive/refs/tags/v.1.0.0-rc0.tar.gz | tar -xz
-    cd cib-interns-test-task-v.1.0.0-rc0/docker 
+    curl -L https://github.com/niki75jr/cib-interns-test-task/archive/refs/tags/v.1.0.0-rc1.tar.gz | tar -xz
+    cd cib-interns-test-task-v.1.0.0-rc1/docker 
     docker-compose up --build
 
 ### Описание
