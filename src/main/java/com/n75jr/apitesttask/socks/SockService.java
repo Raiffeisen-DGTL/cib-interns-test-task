@@ -7,11 +7,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import java.util.List;
 
 public interface SockService {
-    long getSize();
     int income(Sock sock);
     int outcome(Sock sock);
     int operMoreThan(String color, int cotton_part);
     int operLessThan(String color, int cotton_part);
     int operEqual(String color, int cotton_part);
-    List<Sock> testAll();
+    List<Sock> getAll();
 }

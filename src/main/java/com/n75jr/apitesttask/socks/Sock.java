@@ -19,6 +19,8 @@ public class Sock {
     @Column(name = "timestamp")
     private LocalDate date;
 
+    public Sock() {}
+
     public Sock(String color, int cottonPart) {
         this.color = color;
         this.cottonPart = cottonPart;

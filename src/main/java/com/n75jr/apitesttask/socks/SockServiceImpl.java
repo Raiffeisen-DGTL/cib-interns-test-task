@@ -16,11 +16,6 @@ public class SockServiceImpl implements SockService {
     }
 
     @Override
-    public long getSize() {
-        return sockRepository.count();
-    }
-
-    @Override
     public int income(Sock sock) {
         return sockRepository.income(sock.getColor(), sock.getCottonPart());
     }
@@ -46,7 +41,7 @@ public class SockServiceImpl implements SockService {
     }
 
     @Override
-    public List<Sock> testAll() {
+    public List<Sock> getAll() {
         return sockRepository.findAll();
     }
 }

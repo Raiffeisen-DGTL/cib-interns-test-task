@@ -82,9 +82,9 @@ public class SockController {
          return new ResponseEntity<Long>(result, HttpStatus.OK);
     }
 
-    @GetMapping("/all")
-    List<Sock> testAll() {
-        return sockService.testAll();
+    @GetMapping("/api/socks/all")
+    ResponseEntity<List<Sock>> getAll() {
+        return new ResponseEntity<>(sockService.getAll(), HttpStatus.OK);
     }
 
 }
