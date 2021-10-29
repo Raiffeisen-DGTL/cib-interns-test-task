@@ -101,17 +101,13 @@ public class SocksController {
         if (opEnum == null)
             throw new BadRequestException("bad operation");
 
-        List<Socks> queriedSocks = service.getSocks(color, opEnum, cottonPart);
-        if (queriedSocks.size() == 0) {
+        Integer result = service.getAmountOfSocks(color, opEnum, cottonPart);
+        if (result == 0) {
             logger.info("no socks were found with these parameters : color - " + color + ", operation - " + operation + ", cotton part " + cottonPart);
             throw new ResourceNotFoundException("No socks were found with given parameters");
         } else {
-            int sum = 0;
-            for (Socks socks : queriedSocks) {
-                sum += socks.getQuantity();
-            }
             logger.info("gotten socks with these parameters : color - " + color + ", operation - " + operation + ", cotton part " + cottonPart);
-            return sum;
+            return result;
         }
     }
 

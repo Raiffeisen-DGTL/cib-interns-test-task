@@ -9,6 +9,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -22,16 +23,23 @@ public class SocksService {
     }
 
     @Transactional
-    public List<Socks> getSocks(String color, Compare op, int cottonPart) {
+    public Integer getAmountOfSocks(String color, Compare op, int cottonPart) {
+        Integer result = 0;
+
+        List<Socks> queriedSocks = new ArrayList<>();
         switch (op) {
             case Equals:
-                return socksRepository.getSocksEquals(color, cottonPart);
+                queriedSocks.addAll(socksRepository.getSocksEquals(color, cottonPart));
             case LessThan:
-                return socksRepository.getSocksLessThan(color, cottonPart);
+                queriedSocks.addAll(socksRepository.getSocksLessThan(color, cottonPart));
             case MoreThan:
-                return socksRepository.getSocksGreaterThan(color, cottonPart);
+                queriedSocks.addAll(socksRepository.getSocksGreaterThan(color, cottonPart));
         }
-        return null;
+
+        for (Socks socks : queriedSocks) {
+            result += socks.getQuantity();
+        }
+        return result;
     }
 
     @Transactional
