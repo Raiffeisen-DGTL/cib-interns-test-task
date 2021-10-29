@@ -10,10 +10,8 @@ public interface SockService {
     long getSize();
     int income(Sock sock);
     int outcome(Sock sock);
-    void outcomeWithoutId(String color, int cotton_part);
     int operMoreThan(String color, int cotton_part);
     int operLessThan(String color, int cotton_part);
     int operEqual(String color, int cotton_part);
-    // test
     List<Sock> testAll();
 }

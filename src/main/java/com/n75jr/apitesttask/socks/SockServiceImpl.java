@@ -31,12 +31,6 @@ public class SockServiceImpl implements SockService {
     }
 
     @Override
-    public void outcomeWithoutId(String color, int cotton_part) {
-        System.out.println(sockRepository.outcomeWithoutId(color, cotton_part));
-        sockRepository.deleteAllById(sockRepository.outcomeWithoutId(color, cotton_part));
-    }
-
-    @Override
     public int operMoreThan(String color, int cotton_part) {
         return sockRepository.operMoreThan(color, cotton_part);
     }

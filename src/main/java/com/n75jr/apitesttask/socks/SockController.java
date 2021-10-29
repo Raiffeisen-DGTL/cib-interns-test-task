@@ -58,25 +58,28 @@ public class SockController {
     }
 
     @GetMapping("/api/socks")
-    long operation(@RequestParam(name = "color") String color,
+    ResponseEntity<Long> operation(@RequestParam(name = "color") String color,
                   @RequestParam(name = "cottonPart") int cotton_part,
                   @RequestParam(name = "operation") String operation) {
-        String operName = operation.toLowerCase();
-        long res = 0;
-        switch (operName) {
+        if (cotton_part < 0 || cotton_part > 100)
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+
+        String operationName = operation.toLowerCase();
+        long result = 0;
+        switch (operationName) {
             case "morethan":
-                res = sockService.operMoreThan(color, cotton_part);
+                result = sockService.operMoreThan(color, cotton_part);
                 break;
             case "equal":
-                res = sockService.operEqual(color, cotton_part);
+                result = sockService.operEqual(color, cotton_part);
                 break;
-            case "moreThan":
-                res = sockService.operMoreThan(color, cotton_part);
+            case "lessthan":
+                result = sockService.operLessThan(color, cotton_part);
                 break;
             default:
-                throw new IllegalStateException("Not correct operation");
+                return new ResponseEntity<Long>(result, HttpStatus.BAD_REQUEST);
         }
-        return res;
+         return new ResponseEntity<Long>(result, HttpStatus.OK);
     }
 
     @GetMapping("/all")
