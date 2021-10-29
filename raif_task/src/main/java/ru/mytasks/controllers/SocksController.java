@@ -14,11 +14,11 @@ import org.springframework.web.bind.annotation.RestController;
 import ru.mytasks.models.Sock;
 import ru.mytasks.services.SockService;
 
-@RestController
-//@Controller
-@RequestMapping("/api/socks")
-//@RequestMapping("/")
-//@ResponseBody
+//@RestController
+@Controller
+//@RequestMapping("/api/socks")
+@RequestMapping("/")
+@ResponseBody
 public class SocksController {
 	private SockService sockService;
 	
