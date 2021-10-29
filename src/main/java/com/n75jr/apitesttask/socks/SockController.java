@@ -1,9 +1,14 @@
 package com.n75jr.apitesttask.socks;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
+import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 public class SockController {
@@ -15,10 +20,22 @@ public class SockController {
     }
 
     @PostMapping("/api/socks/income")
-    public boolean add(@RequestBody Sock sock) {
-        long val = sockService.getSize();
-        sockService.income(sock);
-        return val != sockService.getSize();
+    public ResponseEntity<Sock> income(@RequestBody String sock) throws IOException {
+        Map<String, Object> params = new ObjectMapper().readValue(sock, new TypeReference<Map<String, Object>>() {});
+
+        String color = (String)params.get("color");
+        Integer countPart = (Integer)params.get("cottonPart");
+        if (color == null || countPart == null)
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+
+        if (countPart < 0 || countPart > 100)
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+
+        ResponseEntity<Sock> response = null;
+        response = sockService.income(new Sock(color, countPart)) == 1
+                ? new ResponseEntity<Sock>(HttpStatus.OK)
+                : new ResponseEntity<Sock>(HttpStatus.INTERNAL_SERVER_ERROR);
+        return response;
     }
 
     @PostMapping("/api/socks/outcome")

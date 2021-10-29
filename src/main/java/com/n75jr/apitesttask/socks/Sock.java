@@ -8,10 +8,6 @@ import java.time.LocalDate;
 @Table(name = "socks")
 public class Sock {
     @Id
-//    @Transient
-    @Column(name = "id")
-    //@SequenceGenerator(name = "socksIdSeq", sequenceName = "socks_id_seq", allocationSize = 1)
-    //@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "socksIdSeq")
     private long id;
 
     @Column(name = "color")
@@ -22,6 +18,11 @@ public class Sock {
 
     @Column(name = "timestamp")
     private LocalDate date;
+
+    public Sock(String color, int cottonPart) {
+        this.color = color;
+        this.cottonPart = cottonPart;
+    }
 
     public long getId() {
         return id;
@@ -39,9 +40,9 @@ public class Sock {
         return date;
     }
 
-    public void setId(long id) {
-        this.id = id;
-    }
+//    public void setId(long id) {
+//        this.id = id;
+//    }
 
     public void setColor(String color) {
         this.color = color;

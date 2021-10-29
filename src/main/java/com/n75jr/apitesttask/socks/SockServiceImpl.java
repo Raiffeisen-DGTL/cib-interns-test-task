@@ -21,9 +21,8 @@ public class SockServiceImpl implements SockService {
     }
 
     @Override
-    public void income(Sock sock) {
-        System.out.println("id: " + sock.getId());
-        sockRepository.save(sock);
+    public int income(Sock sock) {
+        return sockRepository.income(sock.getColor(), sock.getCottonPart());
     }
 
     @Override
