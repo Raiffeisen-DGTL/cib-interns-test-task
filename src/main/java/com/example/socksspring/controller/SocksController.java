@@ -42,14 +42,13 @@ public class SocksController {
     })
     @PostMapping(value = "api/socks/income")
     @ResponseBody
-    public String addSocks(@RequestBody Socks socks) {
+    void addSocks(@RequestBody Socks socks) {
         if (socks.getCottonPart() < 0 || socks.getCottonPart() > 100 || socks.getQuantity() <= 0) {
             throw new BadRequestException("cotton part or quantity out of bounds");
         }
 
         service.addSocks(socks);
         logger.info("added socks with these parameters : " + socks);
-        return "success adding socks";
     }
 
     @Operation(summary = "Remove quantity from existing entry of socks by color + cotton part " +
@@ -57,7 +56,7 @@ public class SocksController {
     @ResponseStatus(HttpStatus.OK)
     @PostMapping(value = "api/socks/outcome")
     @ResponseBody
-    public String removeSocks(@RequestBody Socks socks) {
+    String removeSocks(@RequestBody Socks socks) {
         if (socks.getCottonPart() < 0 || socks.getCottonPart() > 100 || socks.getQuantity() <= 0) {
             throw new BadRequestException("cotton part or quantity out of bounds");
         }
