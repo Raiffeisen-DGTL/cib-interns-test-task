@@ -24,11 +24,11 @@ public class SocksService {
     @Transactional
     public List<Socks> getSocks(String color, Compare op, int cottonPart) {
         switch (op) {
-            case equals:
+            case Equals:
                 return socksRepository.getSocksEquals(color, cottonPart);
-            case lessThan:
+            case LessThan:
                 return socksRepository.getSocksLessThan(color, cottonPart);
-            case moreThan:
+            case MoreThan:
                 return socksRepository.getSocksGreaterThan(color, cottonPart);
         }
         return null;

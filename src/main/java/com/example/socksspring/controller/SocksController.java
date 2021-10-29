@@ -14,7 +14,6 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -44,7 +43,7 @@ public class SocksController {
     @PostMapping(value = "api/socks/income")
     @ResponseBody
     public String addSocks(@RequestBody Socks socks) {
-        if(socks.getCottonPart() < 0 || socks.getCottonPart() > 100 || socks.getQuantity() <= 0) {
+        if (socks.getCottonPart() < 0 || socks.getCottonPart() > 100 || socks.getQuantity() <= 0) {
             throw new BadRequestException("cotton part or quantity out of bounds");
         }
 
@@ -59,7 +58,7 @@ public class SocksController {
     @PostMapping(value = "api/socks/outcome")
     @ResponseBody
     public String removeSocks(@RequestBody Socks socks) {
-        if(socks.getCottonPart() < 0 || socks.getCottonPart() > 100 || socks.getQuantity() <= 0) {
+        if (socks.getCottonPart() < 0 || socks.getCottonPart() > 100 || socks.getQuantity() <= 0) {
             throw new BadRequestException("cotton part or quantity out of bounds");
         }
 
@@ -90,16 +89,19 @@ public class SocksController {
     })
     @GetMapping("api/socks")
     Integer getSocks(@Parameter(description = "color of socks to be found")
-                            @RequestParam(value = "color") final String color,
-                            @Parameter(description = "cotton part contained in socks compare operation")
-                            @RequestParam(value = "operation") final Compare operation,
-                            @Parameter(description = "cotton part amount to be compared to")
-                            @RequestParam(value = "cottonPart") final Integer cottonPart) {
-        if(cottonPart < 0 || cottonPart > 100 ) {
+                     @RequestParam(value = "color") final String color,
+                     @Parameter(description = "cotton part contained in socks compare operation")
+                     @RequestParam(value = "operation") final String operation,
+                     @Parameter(description = "cotton part amount to be compared to")
+                     @RequestParam(value = "cottonPart") final Integer cottonPart) {
+        if (cottonPart < 0 || cottonPart > 100) {
             throw new BadRequestException("cotton part out of bounds");
         }
+        Compare opEnum = Compare.get(operation);
+        if (opEnum == null)
+            throw new BadRequestException("bad operation");
 
-        List<Socks> queriedSocks = service.getSocks(color, operation, cottonPart);
+        List<Socks> queriedSocks = service.getSocks(color, opEnum, cottonPart);
         if (queriedSocks.size() == 0) {
             logger.info("no socks were found with these parameters : color - " + color + ", operation - " + operation + ", cotton part " + cottonPart);
             throw new ResourceNotFoundException("No socks were found with given parameters");
