@@ -26,9 +26,8 @@ public class SockServiceImpl implements SockService {
     }
 
     @Override
-    public void outcome(Sock sock) {
-        System.out.println("id: " + sock.getId());
-        sockRepository.delete(sock);
+    public int outcome(Sock sock) {
+        return sockRepository.outcome(sock.getColor(), sock.getCottonPart());
     }
 
     @Override

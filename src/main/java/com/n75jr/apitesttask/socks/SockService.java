@@ -9,7 +9,7 @@ import java.util.List;
 public interface SockService {
     long getSize();
     int income(Sock sock);
-    void outcome(Sock sock);
+    int outcome(Sock sock);
     void outcomeWithoutId(String color, int cotton_part);
     int operMoreThan(String color, int cotton_part);
     int operLessThan(String color, int cotton_part);

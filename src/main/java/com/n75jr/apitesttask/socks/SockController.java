@@ -39,14 +39,22 @@ public class SockController {
     }
 
     @PostMapping("/api/socks/outcome")
-    public boolean remove(@RequestBody Sock sock) {
-        long val = sockService.getSize();
-        System.out.println(sock);
-        if (sock.getId() == 0) {
-            sockService.outcomeWithoutId(sock.getColor(), sock.getCottonPart());
-        } else
-            sockService.outcome(sock);
-        return val != sockService.getSize();
+    public ResponseEntity<Sock> outcome(@RequestBody String sock) throws IOException {
+        Map<String, Object> params = new ObjectMapper().readValue(sock, new TypeReference<Map<String, Object>>() {});
+
+        String color = (String)params.get("color");
+        Integer countPart = (Integer)params.get("cottonPart");
+        if (color == null || countPart == null)
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+
+        if (countPart < 0 || countPart > 100)
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+
+        ResponseEntity<Sock> response = null;
+        response = sockService.outcome(new Sock(color, countPart)) != 0
+                ? new ResponseEntity<Sock>(HttpStatus.OK)
+                : new ResponseEntity<Sock>(HttpStatus.BAD_REQUEST);
+        return response;
     }
 
     @GetMapping("/api/socks")

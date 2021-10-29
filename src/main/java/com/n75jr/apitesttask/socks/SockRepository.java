@@ -14,6 +14,11 @@ public interface SockRepository extends JpaRepository<Sock, Long> {
     @Query(value = "INSERT INTO socks (color, cotton_part) VALUES (:color, :cotton_part)  ", nativeQuery = true)
     int income(@Param("color") String col, @Param("cotton_part") int cottonPart);
 
+    @Modifying
+    @Transactional
+    @Query(value = "DELETE FROM socks WHERE color = :color AND cotton_part = :cotton_part", nativeQuery = true)
+    int outcome(@Param("color") String col, @Param("cotton_part") int cottonPart);
+
     @Query(value = "SELECT id FROM socks WHERE color = :color AND cotton_part = :cotton_part", nativeQuery = true)
     List<Long> outcomeWithoutId(@Param("color") String color, @Param("cotton_part") int cotton_part);
 
