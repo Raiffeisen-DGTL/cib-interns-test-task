@@ -6,12 +6,14 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import javax.transaction.Transactional;
-import java.util.List;
 
 public interface SockRepository extends JpaRepository<Sock, Long> {
     @Modifying
     @Transactional
-    @Query(value = "UPDATE socks SET quantity = quantity + :quantity WHERE color = :color AND cotton_part = :cotton_part", nativeQuery = true)
+    @Query(value = "INSERT INTO socks AS s (color, cotton_part, quantity) " +
+            "VALUES (:color, :cotton_part, :quantity) " +
+            "ON CONFLICT ON CONSTRAINT socks_pkey " +
+            "DO UPDATE SET quantity = s.quantity + :quantity", nativeQuery = true)
     int income(@Param("color") String col, @Param("cotton_part") int cottonPart, @Param("quantity") int quantity);
 
     @Modifying
