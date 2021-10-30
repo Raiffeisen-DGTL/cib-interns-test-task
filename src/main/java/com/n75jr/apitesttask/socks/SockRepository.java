@@ -11,8 +11,8 @@ import java.util.List;
 public interface SockRepository extends JpaRepository<Sock, Long> {
     @Modifying
     @Transactional
-    @Query(value = "INSERT INTO socks (color, cotton_part) VALUES (:color, :cotton_part)  ", nativeQuery = true)
-    int income(@Param("color") String col, @Param("cotton_part") int cottonPart);
+    @Query(value = "INSERT INTO socks (color, quantity, cotton_part) VALUES (:color, :quantity, :cotton_part)  ", nativeQuery = true)
+    int income(@Param("color") String col, @Param("quantity") int quantity, @Param("cotton_part") int cottonPart);
 
     @Modifying
     @Transactional

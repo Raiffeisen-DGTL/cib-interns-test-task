@@ -8,26 +8,22 @@ import java.time.LocalDate;
 @Table(name = "socks")
 public class Sock {
     @Id
-    private long id;
-
     @Column(name = "color")
     private String color;
 
+    @Id
     @Column(name = "cotton_part")
     private int cottonPart;
 
-    @Column(name = "timestamp")
-    private LocalDate date;
+    @Column(name = "quantity")
+    private int quantity;
 
     public Sock() {}
 
-    public Sock(String color, int cottonPart) {
+    public Sock(String color, int quantity, int cottonPart) {
         this.color = color;
+        this.quantity = quantity;
         this.cottonPart = cottonPart;
-    }
-
-    public long getId() {
-        return id;
     }
 
     public String getColor() {
@@ -38,13 +34,9 @@ public class Sock {
         return cottonPart;
     }
 
-    public LocalDate getDate() {
-        return date;
+    public int getQuantity() {
+        return quantity;
     }
-
-//    public void setId(long id) {
-//        this.id = id;
-//    }
 
     public void setColor(String color) {
         this.color = color;
@@ -54,17 +46,16 @@ public class Sock {
         this.cottonPart = cottonPart;
     }
 
-    public void setDate(LocalDate date) {
-        this.date = date;
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
     }
 
     @Override
     public String toString() {
         return "Sock{" +
-                "id=" + id +
-                ", color='" + color + '\'' +
+                "color='" + color + '\'' +
                 ", cottonPart=" + cottonPart +
-                ", date=" + date +
+                ", quantity=" + quantity +
                 '}';
     }
 }
