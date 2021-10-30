@@ -1,0 +1,23 @@
+server:
+  servlet:
+    context-path: /api
+
+spring:
+  datasource:
+    driverClassName: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3310/socks
+    username: root
+    password: 1234
+  jpa:
+    hibernate:
+      ddl-auto: update
+    database-platform: org.hibernate.dialect.MySQL8Dialect
+  main:
+    banner-mode: "off"
+  jackson:
+    deserialization:
+      fail-on-unknown-properties: true
+
+springdoc:
+  swagger-ui:
+    path: /swagger-ui-custom.html
