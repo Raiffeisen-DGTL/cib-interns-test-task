@@ -20,10 +20,10 @@ public class Sock {
 
     public Sock() {}
 
-    public Sock(String color, int quantity, int cottonPart) {
+    public Sock(String color, int cottonPart, int quantity) {
         this.color = color;
-        this.quantity = quantity;
         this.cottonPart = cottonPart;
+        this.quantity = quantity;
     }
 
     public String getColor() {

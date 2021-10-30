@@ -22,7 +22,7 @@ public class SockServiceImpl implements SockService {
 
     @Override
     public int outcome(Sock sock) {
-        return sockRepository.outcome(sock.getColor(), sock.getCottonPart());
+        return sockRepository.outcome(sock.getColor(), sock.getCottonPart(), sock.getQuantity());
     }
 
     @Override

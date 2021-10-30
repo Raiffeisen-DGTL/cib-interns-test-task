@@ -24,20 +24,23 @@ public class SockController {
         Map<String, Object> params = new ObjectMapper().readValue(sock, new TypeReference<Map<String, Object>>() {});
 
         String color = (String)params.get("color");
-        Integer quantity = (Integer)params.get("quantity");
         Integer countPart = (Integer)params.get("cottonPart");
+        Integer quantity = (Integer)params.get("quantity");
 
-        if (color == null || quantity == null || countPart == null)
+        if (color == null || countPart == null || quantity == null) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
 
-        if (quantity < 1)
+        if (countPart < 0 || countPart > 100) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
 
-        if (countPart < 0 || countPart > 100)
+        if (quantity < 1) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
 
         ResponseEntity<Sock> response = null;
-        response = sockService.income(new Sock(color, quantity, countPart)) == 1
+        response = sockService.income(new Sock(color, countPart, quantity)) == 1
                 ? new ResponseEntity<Sock>(HttpStatus.OK)
                 : new ResponseEntity<Sock>(HttpStatus.INTERNAL_SERVER_ERROR);
         return response;
@@ -49,14 +52,20 @@ public class SockController {
 
         String color = (String)params.get("color");
         Integer countPart = (Integer)params.get("cottonPart");
+        Integer quantity = (Integer)params.get("quantity");
+
         if (color == null || countPart == null)
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 
         if (countPart < 0 || countPart > 100)
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 
+        if (quantity < 1) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
         ResponseEntity<Sock> response = null;
-        response = sockService.outcome(new Sock(color, countPart)) != 0
+        response = sockService.outcome(new Sock(color, countPart, quantity)) != 0
                 ? new ResponseEntity<Sock>(HttpStatus.OK)
                 : new ResponseEntity<Sock>(HttpStatus.BAD_REQUEST);
         return response;

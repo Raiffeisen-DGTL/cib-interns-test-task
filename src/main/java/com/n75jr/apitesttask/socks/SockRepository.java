@@ -11,13 +11,13 @@ import java.util.List;
 public interface SockRepository extends JpaRepository<Sock, Long> {
     @Modifying
     @Transactional
-    @Query(value = "INSERT INTO socks (color, quantity, cotton_part) VALUES (:color, :quantity, :cotton_part)  ", nativeQuery = true)
-    int income(@Param("color") String col, @Param("quantity") int quantity, @Param("cotton_part") int cottonPart);
+    @Query(value = "INSERT INTO socks (color, cotton_part, quantity) VALUES (:color, :cotton_part, :quantity)  ", nativeQuery = true)
+    int income(@Param("color") String col, @Param("cotton_part") int cottonPart, @Param("quantity") int quantity);
 
     @Modifying
     @Transactional
-    @Query(value = "DELETE FROM socks WHERE color = :color AND cotton_part = :cotton_part", nativeQuery = true)
-    int outcome(@Param("color") String col, @Param("cotton_part") int cottonPart);
+    @Query(value = "DELETE FROM socks WHERE color = :color AND cotton_part = :cotton_part AND quantity = :quantity", nativeQuery = true)
+    int outcome(@Param("color") String col, @Param("cotton_part") int cottonPart, @Param("quantity") int quantity);
 
     @Query(value = "SELECT count(*) FROM socks WHERE color = :color AND cotton_part > :cotton_part", nativeQuery = true)
     int operMoreThan(@Param("color") String color, @Param("cotton_part") int cotton_part);
