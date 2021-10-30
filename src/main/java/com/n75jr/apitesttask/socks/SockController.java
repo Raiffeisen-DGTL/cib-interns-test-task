@@ -24,15 +24,20 @@ public class SockController {
         Map<String, Object> params = new ObjectMapper().readValue(sock, new TypeReference<Map<String, Object>>() {});
 
         String color = (String)params.get("color");
+        Integer quantity = (Integer)params.get("quantity");
         Integer countPart = (Integer)params.get("cottonPart");
-        if (color == null || countPart == null)
+
+        if (color == null || quantity == null || countPart == null)
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+
+        if (quantity < 1)
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 
         if (countPart < 0 || countPart > 100)
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 
         ResponseEntity<Sock> response = null;
-        response = sockService.income(new Sock(color, countPart)) == 1
+        response = sockService.income(new Sock(color, quantity, countPart)) == 1
                 ? new ResponseEntity<Sock>(HttpStatus.OK)
                 : new ResponseEntity<Sock>(HttpStatus.INTERNAL_SERVER_ERROR);
         return response;
