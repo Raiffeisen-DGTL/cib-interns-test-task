@@ -3,7 +3,7 @@
 <h3 align="justify">This is a Sock-API application, that allows to manage socks income and outcome, get information about available socks on storehouse filtering socks by color and cotton part.</h3>
 
 <hr>
-<h3 align="justify">API is available for calling at http://77.223.99.163:8080 <br> 
+<h3>API is available for calling at http://77.223.99.163:8080 <br> 
 (for example: http://77.223.99.163:8080/api/socks?color=blue&operation=moreThan&cottonPart=10)</h3>
 <hr>
 
