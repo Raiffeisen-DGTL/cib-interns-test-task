@@ -10,7 +10,7 @@
     </parent>
     <groupId>com.n75jr</groupId>
     <artifactId>api-test-task</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>2.0.0-rc0</version>
     <name>api-test-task</name>
     <description>Git: Raiffeisen-DGTL / cib-interns-test-task</description>
     <properties>
