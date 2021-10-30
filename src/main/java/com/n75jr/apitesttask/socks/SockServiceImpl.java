@@ -26,17 +26,17 @@ public class SockServiceImpl implements SockService {
     }
 
     @Override
-    public int operMoreThan(String color, int cotton_part) {
+    public Long operMoreThan(String color, int cotton_part) throws NullPointerException {
         return sockRepository.operMoreThan(color, cotton_part);
     }
 
     @Override
-    public int operLessThan(String color, int cotton_part) {
+    public Long operLessThan(String color, int cotton_part) throws NullPointerException {
         return sockRepository.operLessThan(color, cotton_part);
     }
 
     @Override
-    public int operEqual(String color, int cotton_part) {
+    public Long operEqual(String color, int cotton_part) throws NullPointerException {
         return sockRepository.operEqual(color, cotton_part);
     }
 

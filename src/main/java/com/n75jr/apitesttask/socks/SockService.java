@@ -9,8 +9,8 @@ import java.util.List;
 public interface SockService {
     int income(Sock sock);
     int outcome(Sock sock);
-    int operMoreThan(String color, int cotton_part);
-    int operLessThan(String color, int cotton_part);
-    int operEqual(String color, int cotton_part);
+    Long operMoreThan(String color, int cotton_part) throws NullPointerException;
+    Long operLessThan(String color, int cotton_part) throws NullPointerException;
+    Long operEqual(String color, int cotton_part) throws NullPointerException;
     List<Sock> getAll();
 }

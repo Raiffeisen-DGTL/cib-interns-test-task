@@ -24,12 +24,12 @@ public interface SockRepository extends JpaRepository<Sock, Long> {
             "DO UPDATE SET quantity = s.quantity - :quantity", nativeQuery = true)
     int outcome(@Param("color") String col, @Param("cotton_part") int cottonPart, @Param("quantity") int quantity);
 
-    @Query(value = "SELECT quantity FROM socks WHERE color = :color AND cotton_part > :cotton_part", nativeQuery = true)
-    int operMoreThan(@Param("color") String color, @Param("cotton_part") int cotton_part);
+    @Query(value = "SELECT sum(quantity) FROM socks WHERE color = :color AND cotton_part > :cotton_part", nativeQuery = true)
+    Long operMoreThan(@Param("color") String color, @Param("cotton_part") int cotton_part) throws NullPointerException;
 
-    @Query(value = "SELECT quantity FROM socks WHERE color = :color AND cotton_part < :cotton_part", nativeQuery = true)
-    int operLessThan(@Param("color") String color, @Param("cotton_part") int cotton_part);
+    @Query(value = "SELECT sum(quantity) FROM socks WHERE color = :color AND cotton_part < :cotton_part", nativeQuery = true)
+    Long operLessThan(@Param("color") String color, @Param("cotton_part") int cotton_part) throws NullPointerException;
 
-    @Query(value = "SELECT quantity FROM socks WHERE color = :color AND cotton_part = :cotton_part", nativeQuery = true)
-    int operEqual(@Param("color") String color, @Param("cotton_part") int cotton_part);
+    @Query(value = "SELECT sum(quantity) FROM socks WHERE color = :color AND cotton_part = :cotton_part", nativeQuery = true)
+    Long operEqual(@Param("color") String color, @Param("cotton_part") int cotton_part) throws NullPointerException;
 }
