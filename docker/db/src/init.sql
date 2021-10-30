@@ -2,29 +2,36 @@
 DROP TABLE IF EXISTS socks;
 CREATE TABLE IF NOT EXISTS socks
 (
-    id          serial4 PRIMARY KEY ,
     color       varchar(19),
     cotton_part int2 CHECK ( cotton_part >= 0 AND cotton_part <= 100 ),
-    timestamp   timestamptz DEFAULT now()
+    quantity    int8 CHECK ( quantity > 0 ) DEFAULT (random() * 1000)::int4 + 1,
+    PRIMARY KEY (color, cotton_part)
 );
 
 
 -- GENERATE AND INSERT DATA
-INSERT INTO socks (color, cotton_part)
-SELECT *
-FROM (WITH RECURSIVE q (i, a, b) AS (
-    VALUES (0, (random() * 4)::INT2, (random() * 100)::INT2)
-    UNION ALL
-    SELECT q.i + 1, (random() * 4)::INT2, (random() * 100)::INT2
-    FROM q
-    WHERE q.i < 5 * 100
-)
-      SELECT CASE
-                 WHEN q.a = 0 THEN 'white'
-                 WHEN q.a = 1 THEN 'blue'
-                 WHEN q.a = 2 THEN 'green'
-                 WHEN q.a = 3 THEN 'pink'
-                 WHEN q.a = 4 THEN 'brown'
-                 END AS color,
-             q.b     AS cotton
-      FROM q) AS query;
+INSERT INTO socks AS s (color, cotton_part)
+SELECT qq.color, qq.cotton
+FROM (
+         WITH RECURSIVE q (i, col, cotton) AS (
+             VALUES (0, (random() * 6)::int4, (random() * 100)::int4)
+             UNION ALL
+             SELECT q.i + 1                AS iter,
+                    (random() * 6)::int4   AS col,
+                    (random() * 100)::int4 AS cotton
+             FROM q
+             WHERE q.i < 6 * 1000
+         )
+         SELECT DISTINCT CASE
+                             WHEN q.col = 0 THEN 'white'
+                             WHEN q.col = 1 THEN 'blue'
+                             WHEN q.col = 2 THEN 'green'
+                             WHEN q.col = 3 THEN 'pink'
+                             WHEN q.col = 4 THEN 'brown'
+                             WHEN q.col = 5 THEN 'cyan'
+                             WHEN q.col = 6 THEN 'yellow'
+                             END AS color,
+                         q.cotton
+         FROM q
+     ) AS qq
+ON CONFLICT ON CONSTRAINT socks_pkey DO UPDATE SET quantity = (random() * 100)::int4;
