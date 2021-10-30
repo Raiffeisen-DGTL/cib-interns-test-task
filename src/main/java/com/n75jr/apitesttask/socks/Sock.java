@@ -11,7 +11,6 @@ public class Sock {
     @Column(name = "color")
     private String color;
 
-    @Id
     @Column(name = "cotton_part")
     private int cottonPart;
 
