@@ -80,15 +80,4 @@ public class SocksControllerTest {
     }
 
 
-    @Operation(summary = "Проверка на отпуск носков")
-    @Test
-    public void removeSocksValid() throws Exception {
-        Mockito.when(socksRepository.getSocksEquals("red", 50))
-                .thenReturn(Arrays.asList(new Socks(null, "red", 50, 5)));
-
-        service.removeSocks(new Socks(null, "red", 50, 4));
-
-        Mockito.verify(socksRepository, times(1)).updateRemoveSocks(socksCaptor.capture());
-    }
-
 }
