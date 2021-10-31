@@ -1,0 +1,13 @@
+setup:
+  addons:
+    - plan: heroku-postgresql
+      as: DATABASE
+build:
+  docker:
+    web: Dockerfile
+    worker: Dockerfile
+release:
+  command:
+    - ./docker.sh
+run:
+  web: java -Dserver.port=$PORT --server.port=$PORT $JAVA_OPTS -jar build/libs/SocksSpring-0.0.1-SNAPSHOT.jar
