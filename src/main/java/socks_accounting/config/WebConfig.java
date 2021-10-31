@@ -5,6 +5,10 @@ import org.springframework.format.FormatterRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import socks_accounting.payload.StringToOperation;
 
+/**
+ * Spring configuration, where we register custom converter
+ * for Operation enum
+ */
 @Configuration
 public class WebConfig implements WebMvcConfigurer {
     @Override

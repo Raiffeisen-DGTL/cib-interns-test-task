@@ -3,6 +3,10 @@ package socks_accounting.model;
 import javax.persistence.*;
 import javax.validation.constraints.*;
 
+/**
+ * Entity class representing sock table from db.
+ * (@color, @cottonPart) is the composite primary key.
+ */
 @Entity
 @Table(name = "sock")
 @IdClass(SockId.class)

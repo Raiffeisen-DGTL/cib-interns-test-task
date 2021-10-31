@@ -15,6 +15,9 @@ import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 
+/**
+ * Controller class for handling HTTP requests
+ */
 @Validated
 @RestController
 public class Controller {
@@ -52,6 +55,7 @@ public class Controller {
             @RequestParam @Min(0) @Max(100) int cottonPart
     ) {
         if (operation == Operation.NO) {
+            // operation is incorrect
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
 

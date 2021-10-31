@@ -6,6 +6,9 @@ import org.springframework.stereotype.Repository;
 import socks_accounting.model.Sock;
 import socks_accounting.model.SockId;
 
+/**
+ * Data access layer for Sock entity
+ */
 @Repository
 public interface SockRepository extends JpaRepository<Sock, SockId> {
     @Query(

@@ -3,6 +3,9 @@ package socks_accounting.model;
 import java.io.Serializable;
 import java.util.Objects;
 
+/**
+ * Composite primary key class for Sock entity.
+ */
 public class SockId implements Serializable {
     private String color;
 
