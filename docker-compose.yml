@@ -1,0 +1,25 @@
+version: '3.1'
+
+services:
+  postgres:
+    image: postgres
+    ports:
+      - "5433:5432"
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_DB=socks_store
+      - POSTGRES_PASSWORD=password
+    restart: always
+    volumes:
+      - "db-data:/var/lib/postgresql/data"
+
+  app:
+    build: .
+    ports:
+      - "8090:8080"
+    depends_on:
+      - postgres
+    restart: always
+
+volumes:
+  db-data:
