@@ -1,3 +1,24 @@
+# Запуск приложения из под корня приложения
+1. ```
+   ./gradlew bootJar
+   ```
+
+2. Для Windows
+    ```
+   copy .\build\libs\rafftes-0.0.1-SHAPSHOT .\app.jar
+   ```
+   Для Linux
+    ```
+   cp .\build\libs\rafftes-0.0.1-SHAPSHOT .\app.jar
+   ```
+3. ```
+   docker-compose build
+   ``` 
+4. ```
+   docker-compose up
+   ``` 
+
+
 # Тестовое задание для Java стажеров
 
 Привет!
