@@ -1,0 +1,18 @@
+version: '2'
+services:
+  app:
+    container_name: springboot-socks-container
+    image: socks-image
+    build: ./
+    ports:
+      - "8080:8080"
+    depends_on:
+      - ec2-63-33-239-176.eu-west-1.compute.amazonaws.com
+  postgresqldb:
+      image: postgres
+      ports:
+        - "5432:5432"
+      environment:
+        - POSTGRES_PASSWORD=aniwdrtcicrchv
+        - POSTGRES_USER=a2cf0892e910df776e97e640d657919a81e8b75ba134d98831e15cdec9a9f016
+        - POSTGRES_DB=d5movuu9v7r2rt
