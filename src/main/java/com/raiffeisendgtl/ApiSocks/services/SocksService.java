@@ -8,35 +8,37 @@ import com.raiffeisendgtl.ApiSocks.repositories.SocksRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.*;
+
 @Service
 public class SocksService {
     @Autowired
     private SocksRepository socksRepository;
 
     public void income(Socks socks) {
-        Socks currentSocks = find(socks);
+        Optional<Socks> currentSocks = find(socks);
 
-        if (currentSocks == null) {
-            currentSocks = socks;
+        if (!currentSocks.isPresent()) {
+            currentSocks = Optional.of(socks);
         }
         else {
-            currentSocks.addQuantity(socks.getQuantity());
+            currentSocks.get().addQuantity(socks.getQuantity());
         }
 
-        save(currentSocks);
+        save(currentSocks.get());
     }
 
     public void outcome(Socks socks) {
-        Socks currentSocks = find(socks);
+        Optional<Socks> currentSocks = find(socks);
 
-        if (currentSocks == null) {
+        try {
+            currentSocks.get().subtractQuantity(socks.getQuantity());
+        }
+        catch (NoSuchElementException e) {
             throw new SocksException(SocksErrorCode.INCORRECT_PARAMS);
         }
-        else  {
-            currentSocks.subtractQuantity(socks.getQuantity());
-        }
 
-        save(currentSocks);
+        save(currentSocks.get());
     }
 
     public Integer getCountSocks(String color, String operation, int cottonPart) {
@@ -44,14 +46,19 @@ public class SocksService {
 
         Integer count = 0;
 
-        if (currentOperation == Operation.lessThan) {
-            count = socksRepository.findCountSocksLessThan(color, cottonPart);
+        try {
+            if (currentOperation == Operation.lessThan) {
+                count = socksRepository.findCountSocksLessThan(color, cottonPart);
+            }
+            if (currentOperation == Operation.equal) {
+                count = socksRepository.findCountSocksEqual(color, cottonPart);
+            }
+            if (currentOperation == Operation.moreThan) {
+                count = socksRepository.findCountSocksMoreThan(color, cottonPart);
+            }
         }
-        if (currentOperation == Operation.equal) {
-            count = socksRepository.findCountSocksEqual(color, cottonPart);
-        }
-        if (currentOperation == Operation.moreThan) {
-            count = socksRepository.findCountSocksMoreThan(color, cottonPart);
+        catch (Throwable e) {
+            throw new SocksException(SocksErrorCode.SERVER_CRASH);
         }
 
         if (count == null) {
@@ -61,15 +68,13 @@ public class SocksService {
         return count;
     }
 
-    private Socks find(Socks socks) {
-        Socks result;
+    private Optional<Socks> find(Socks socks) {
         try {
-            result = socksRepository.findByColorAndCottonPart(socks.getColor(), socks.getCottonPart());
+            return socksRepository.findByColorAndCottonPart(socks.getColor(), socks.getCottonPart());
         }
         catch (Throwable e) {
             throw new SocksException(SocksErrorCode.SERVER_CRASH);
         }
-        return result;
     }
 
     private void save(Socks socks) {

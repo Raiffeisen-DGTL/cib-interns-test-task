@@ -2,22 +2,35 @@ package com.raiffeisendgtl.ApiSocks.entities;
 
 import com.raiffeisendgtl.ApiSocks.components.SocksErrorCode;
 import com.raiffeisendgtl.ApiSocks.components.SocksException;
+import lombok.*;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.validation.constraints.*;
 
 @Entity
+@EqualsAndHashCode
 public class Socks {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+    @Getter
+    @Setter
+    @NotEmpty
     private String color;
 
+    @Getter
+    @Setter
+    @Min(0)
+    @Max(100)
     private int cottonPart;
 
+    @Getter
+    @Setter
+    @Positive
     private int quantity;
 
     public Socks() {
@@ -25,41 +38,8 @@ public class Socks {
     }
 
     public Socks(String color, int cottonPart, int quantity) {
-        setColor(color);
-        setCottonPart(cottonPart);
-        setQuantity(quantity);
-    }
-
-    public String getColor() {
-        return color;
-    }
-
-    public void setColor(String color) {
-        if (color == null || color.isEmpty()) {
-            throw new SocksException(SocksErrorCode.INCORRECT_PARAMS);
-        }
         this.color = color;
-    }
-
-    public int getCottonPart() {
-        return cottonPart;
-    }
-
-    public void setCottonPart(int cottonPart) {
-        if (cottonPart < 0 || cottonPart > 100 ) {
-            throw new SocksException(SocksErrorCode.INCORRECT_PARAMS);
-        }
         this.cottonPart = cottonPart;
-    }
-
-    public int getQuantity() {
-        return quantity;
-    }
-
-    public void setQuantity(int quantity) {
-        if (quantity <= 0) {
-            throw new SocksException(SocksErrorCode.INCORRECT_PARAMS);
-        }
         this.quantity = quantity;
     }
 
@@ -72,28 +52,6 @@ public class Socks {
             throw new SocksException(SocksErrorCode.INCORRECT_PARAMS);
         }
         this.quantity -= quantity;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        Socks socks = (Socks) o;
-
-        if (cottonPart != socks.cottonPart) return false;
-        if (quantity != socks.quantity) return false;
-        if (id != null ? !id.equals(socks.id) : socks.id != null) return false;
-        return color != null ? color.equals(socks.color) : socks.color == null;
-    }
-
-    @Override
-    public int hashCode() {
-        int result = id != null ? id.hashCode() : 0;
-        result = 31 * result + (color != null ? color.hashCode() : 0);
-        result = 31 * result + cottonPart;
-        result = 31 * result + quantity;
-        return result;
     }
 
 }

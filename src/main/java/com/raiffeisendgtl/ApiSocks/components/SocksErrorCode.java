@@ -7,7 +7,7 @@ public enum SocksErrorCode {
     INCORRECT_PARAMS(HttpStatus.BAD_REQUEST),
     SERVER_CRASH(HttpStatus.INTERNAL_SERVER_ERROR);
 
-    private HttpStatus statusError;
+    private final HttpStatus statusError;
 
     SocksErrorCode(HttpStatus statusError) {
         this.statusError = statusError;

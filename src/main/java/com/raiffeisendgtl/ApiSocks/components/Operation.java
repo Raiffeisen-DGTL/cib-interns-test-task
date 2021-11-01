@@ -7,14 +7,12 @@ public enum Operation {
     equal;
 
     public static Operation convertFromString(String operationString) {
-        Operation operation;
         try {
-            operation = Operation.valueOf(operationString);
+            return Operation.valueOf(operationString);
         }
         catch (Throwable e) {
             throw new SocksException(SocksErrorCode.INCORRECT_PARAMS);
         }
-        return operation;
     }
 
 }
