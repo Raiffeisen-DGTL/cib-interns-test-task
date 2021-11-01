@@ -19,7 +19,6 @@ public class SocksInfo {
     private String color;
 
     @Min(0)
-    @Max(100)
     @NotNull
     @JsonProperty("count")
     private Integer count;
