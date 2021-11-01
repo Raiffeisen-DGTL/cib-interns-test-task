@@ -16,6 +16,17 @@
 	<properties>
 		<java.version>11</java.version>
 		<testcontainers.version>1.16.0</testcontainers.version>
+		<mapstruct.version>1.4.2.Final</mapstruct.version>
+		<embedded-database-spring-test.version>2.0.1</embedded-database-spring-test.version>
+		<gson.version>2.8.8</gson.version>
+		<validation-api.version>2.0.1.Final</validation-api.version>
+		<hibernate-validator.version>6.0.13.Final</hibernate-validator.version>
+		<embedded-postgres.version>1.3.1</embedded-postgres.version>
+		<flyway-spring-test.version>7.0.0</flyway-spring-test.version>
+		<springfox-boot-starter.version>3.0.0</springfox-boot-starter.version>
+		<springfox-swagger-ui.version>3.0.0</springfox-swagger-ui.version>
+		<springfox-swagger2.version>3.0.0</springfox-swagger2.version>
+		<jacoco-maven-plugin.version>0.8.7</jacoco-maven-plugin.version>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -33,7 +44,7 @@
 		<dependency>
 			<groupId>org.mapstruct</groupId>
 			<artifactId>mapstruct</artifactId>
-			<version>1.4.2.Final</version>
+			<version>${mapstruct.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.postgresql</groupId>
@@ -43,12 +54,12 @@
 		<dependency>
 			<groupId>javax.validation</groupId>
 			<artifactId>validation-api</artifactId>
-			<version>2.0.1.Final</version>
+			<version>${validation-api.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.hibernate.validator</groupId>
 			<artifactId>hibernate-validator</artifactId>
-			<version>6.0.13.Final</version>
+			<version>${hibernate-validator.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -58,40 +69,40 @@
 		<dependency>
 			<groupId>io.zonky.test</groupId>
 			<artifactId>embedded-postgres</artifactId>
-			<version>1.3.1</version>
+			<version>${embedded-postgres.version}</version>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.flywaydb.flyway-test-extensions</groupId>
 			<artifactId>flyway-spring-test</artifactId>
-			<version>7.0.0</version>
+			<version>${flyway-spring-test.version}</version>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>io.zonky.test</groupId>
 			<artifactId>embedded-database-spring-test</artifactId>
-			<version>2.1.0</version>
+			<version>${embedded-database-spring-test.version}</version>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>com.google.code.gson</groupId>
 			<artifactId>gson</artifactId>
-			<version>2.8.8</version>
+			<version>${gson.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>io.springfox</groupId>
 			<artifactId>springfox-boot-starter</artifactId>
-			<version>3.0.0</version>
+			<version>${springfox-boot-starter.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>io.springfox</groupId>
 			<artifactId>springfox-swagger-ui</artifactId>
-			<version>3.0.0</version>
+			<version>${springfox-swagger-ui.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>io.springfox</groupId>
 			<artifactId>springfox-swagger2</artifactId>
-			<version>3.0.0</version>
+			<version>${springfox-swagger2.version}</version>
 		</dependency>
 	</dependencies>
 
@@ -112,7 +123,7 @@
 						<path>
 							<groupId>org.mapstruct</groupId>
 							<artifactId>mapstruct-processor</artifactId>
-							<version>1.4.2.Final</version>
+							<version>${mapstruct.version}</version>
 						</path>
 					</annotationProcessorPaths>
 				</configuration>
@@ -120,7 +131,7 @@
 			<plugin>
 				<groupId>org.jacoco</groupId>
 				<artifactId>jacoco-maven-plugin</artifactId>
-				<version>0.8.7</version>
+				<version>${jacoco-maven-plugin.version}</version>
 				<executions>
 					<execution>
 						<goals>

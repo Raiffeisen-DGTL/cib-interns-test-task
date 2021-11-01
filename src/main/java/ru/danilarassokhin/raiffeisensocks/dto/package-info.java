@@ -1,4 +1,4 @@
 /**
- * Contains all DTOs
+ * Contains all DTOs.
  */
 package ru.danilarassokhin.raiffeisensocks.dto;

@@ -1,48 +1,47 @@
 package ru.danilarassokhin.raiffeisensocks.service;
 
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import ru.danilarassokhin.raiffeisensocks.EmbeddedTest;
-import ru.danilarassokhin.raiffeisensocks.dto.SocksIncomeDto;
-import ru.danilarassokhin.raiffeisensocks.dto.SocksOutcomeDto;
-import ru.danilarassokhin.raiffeisensocks.dto.SocksSearchDto;
-import ru.danilarassokhin.raiffeisensocks.exception.DataValidityException;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Mockito;
+import org.mockito.junit.jupiter.MockitoExtension;
+import ru.danilarassokhin.raiffeisensocks.repository.SocksRepository;
+import ru.danilarassokhin.raiffeisensocks.service.dto.*;
+import ru.danilarassokhin.raiffeisensocks.service.impl.SocksServiceImpl;
 
-@SpringBootTest
-public class SocksServiceTest extends EmbeddedTest {
+@ExtendWith(MockitoExtension.class)
+public class SocksServiceTest {
 
-    @Autowired
-    private SocksService socksService;
+  private static SocksServiceImpl socksService;
 
-    @Test
-    public void testInvalidIncome() {
-        SocksIncomeDto socksIncomeDto = new SocksIncomeDto();
-        socksIncomeDto.setCottonPart((byte) -1);
-        socksIncomeDto.setColor("redd");
-        socksIncomeDto.setQuantity(-1L);
+  @BeforeAll
+  public static void init() {
+    SocksRepository socksRepository = Mockito.mock(SocksRepository.class);
+    socksService = new SocksServiceImpl(socksRepository);
+  }
 
-        Assertions.assertThrows(DataValidityException.class, () -> socksService.income(socksIncomeDto));
-    }
+  @Test
+  public void testInvalidIncome() {
+    SocksServiceIncomeDto socksIncomeDto = new SocksServiceIncomeDto("redd", (byte) -1, -1L);
+    SocksServiceResponse socksServiceResponse = socksService.income(socksIncomeDto);
 
-    @Test
-    public void testInvalidOutcome() {
-        SocksOutcomeDto socksOutcomeDto = new SocksOutcomeDto();
-        socksOutcomeDto.setCottonPart((byte) -1);
-        socksOutcomeDto.setColor("redd");
-        socksOutcomeDto.setQuantity(-1L);
+    Assertions.assertEquals(ServiceResponseStatus.INVALID_DATA, socksServiceResponse.getStatus());
+  }
 
-        Assertions.assertThrows(DataValidityException.class, () -> socksService.outcome(socksOutcomeDto));
-    }
+  @Test
+  public void testInvalidOutcome() {
+    SocksServiceOutcomeDto socksOutcomeDto = new SocksServiceOutcomeDto("red", (byte) -1, -1L);
+    SocksServiceResponse socksServiceResponse = socksService.outcome(socksOutcomeDto);
 
-    @Test
-    public void testInvalidOperationInSocksCount() {
-        SocksSearchDto socksSearchDto = new SocksSearchDto();
-        socksSearchDto.setOperation("equals");
-        socksSearchDto.setColor("red");
-        socksSearchDto.setCottonPart((byte) 10);
+    Assertions.assertEquals(ServiceResponseStatus.INVALID_DATA, socksServiceResponse.getStatus());
+  }
 
-        Assertions.assertThrows(DataValidityException.class, () -> socksService.countSocks(socksSearchDto));
-    }
+  @Test
+  public void testInvalidOperationInSocksCount() {
+    SocksServiceSearchDto socksSearchDto = new SocksServiceSearchDto("red", "equals", (byte) 10);
+
+    SocksServiceResponse socksServiceResponse = socksService.countSocks(socksSearchDto);
+    Assertions.assertEquals(ServiceResponseStatus.INVALID_DATA, socksServiceResponse.getStatus());
+  }
 }

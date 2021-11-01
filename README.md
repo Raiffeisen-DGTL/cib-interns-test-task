@@ -8,7 +8,7 @@
 - Embedded postgresql для тестов в Docker контейнере
 - Mapstruct
 - Travis CI для тестов и загрузки javadoc в github pages
-- Javadoc доступен в [Github pages](https://crissnamon.github.io/raiffeisen-socks-test/)
+- Javadoc доступен в [Github pages](https://crissnamon.github.io/cib-interns-test-task/)
 - Apidoc доступен через [SwaggerUI](https://danilarassokhin-raiffeisen.herokuapp.com/swagger-ui/)
 - Приложение развернуто в [Heroku](https://danilarassokhin-raiffeisen.herokuapp.com/) (Развертывается автоматически после успешных тестов в Travis CI)
 

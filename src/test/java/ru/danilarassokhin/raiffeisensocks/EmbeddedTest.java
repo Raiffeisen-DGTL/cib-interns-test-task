@@ -8,5 +8,4 @@ import org.slf4j.LoggerFactory;
 @FlywayTest
 @AutoConfigureEmbeddedDatabase(beanName = "dataSource")
 public abstract class EmbeddedTest {
-    protected Logger logger = LoggerFactory.getLogger(EmbeddedTest.class);
 }

@@ -5,18 +5,18 @@ import io.swagger.annotations.ApiModelProperty;
 import ru.danilarassokhin.raiffeisensocks.dto.ResponseDto;
 
 /**
- * Error response
+ * Error response.
  */
 @ApiModel("Error response")
 public class ErrorResponse extends ResponseDto<String> {
 
-    @ApiModelProperty(example = "Error")
-    private String message;
+  @ApiModelProperty(example = "INVALID_DATA")
+  private String status;
 
-    @ApiModelProperty(example = "Internal error occurred")
-    private String data;
+  @ApiModelProperty(example = "Internal error occurred")
+  private String data;
 
-    public ErrorResponse(String message, String data) {
-        super(message, data);
-    }
+  public ErrorResponse(String status, String data) {
+    super(status, data);
+  }
 }

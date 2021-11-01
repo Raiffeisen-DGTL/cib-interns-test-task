@@ -1,4 +1,4 @@
 /**
- * Contains usefull utils
+ * Contains useful utils.
  */
 package ru.danilarassokhin.raiffeisensocks.util;

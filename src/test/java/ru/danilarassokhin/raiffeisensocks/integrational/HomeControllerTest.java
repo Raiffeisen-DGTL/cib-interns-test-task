@@ -17,17 +17,17 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc
 public class HomeControllerTest extends EmbeddedTest {
 
-    @Autowired
-    private MockMvc mockMvc;
+  @Autowired
+  private MockMvc mockMvc;
 
-    @Test
-    public void testHomePage() throws Exception {
-        mockMvc.perform(
-                get("/")
-        )
-                .andExpect(
-                        status().isOk()
-                );
-    }
+  @Test
+  public void testHomePage() throws Exception {
+    mockMvc.perform(
+        get("/")
+    )
+        .andExpect(
+            status().isOk()
+        );
+  }
 
 }

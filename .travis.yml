@@ -12,7 +12,7 @@ notifications:
     on_success: never
     on_failure: always
 after_success: |-
-  bash <(curl -s https://codecov.io/bash)
+  #bash <(curl -s https://codecov.io/bash)
   if [ -n "$GITHUB_API_KEY" ]; then
     cd "$TRAVIS_BUILD_DIR"
     mkdir apidocs

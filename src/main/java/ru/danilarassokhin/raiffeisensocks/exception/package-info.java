@@ -1,4 +1,4 @@
 /**
- * Contains custom exceptions
+ * Contains custom exceptions.
  */
 package ru.danilarassokhin.raiffeisensocks.exception;

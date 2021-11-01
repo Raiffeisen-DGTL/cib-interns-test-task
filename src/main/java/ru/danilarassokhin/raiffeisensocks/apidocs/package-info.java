@@ -1,4 +1,4 @@
 /**
- * Contains objects for api docs
+ * Contains objects for api docs.
  */
 package ru.danilarassokhin.raiffeisensocks.apidocs;

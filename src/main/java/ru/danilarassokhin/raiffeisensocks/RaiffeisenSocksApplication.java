@@ -6,8 +6,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class RaiffeisenSocksApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(RaiffeisenSocksApplication.class, args);
-	}
+  public static void main(String[] args) {
+    SpringApplication.run(RaiffeisenSocksApplication.class, args);
+  }
 
 }

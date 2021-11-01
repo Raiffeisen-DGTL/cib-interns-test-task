@@ -1,17 +1,11 @@
-package ru.danilarassokhin.raiffeisensocks.dto;
+package ru.danilarassokhin.raiffeisensocks.service.dto;
 
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiParam;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
+import io.swagger.annotations.ApiParam;
 
-/**
- * Socks income information.
- */
-@ApiModel("SocksIncomeDto")
-public class SocksIncomeDto {
+public class SocksServiceOutcomeDto {
 
   @ApiParam(name = "color", example = "yellow", required = true)
   @NotBlank(message = "Socks color can't be null")
@@ -20,27 +14,19 @@ public class SocksIncomeDto {
   @ApiParam(name = "cottonPart", example = "10", required = true, type = "byte")
   @Min(value = 0, message = "Cotton part must be greater or equal to zero")
   @Max(value = 100, message = "Cotton part must be less or equal to zero")
-  @NotNull(message = "Socks cotton part is not presented")
   private final Byte cottonPart;
 
   @ApiParam(name = "quantity", example = "11", required = true, type = "long")
   @Min(value = 1, message = "Socks quantity must be greater than zero")
-  @NotNull(message = "Socks quantity is not presented")
   private final Long quantity;
 
-  public SocksIncomeDto() {
-    this.color = "";
-    this.quantity = null;
-    this.cottonPart = null;
-  }
-
-  public SocksIncomeDto(@NotBlank(message = "Socks color can't be null")
-                            String color,
-                        @Min(value = 0, message = "Cotton part must be greater or equal to zero")
-                        @Max(value = 100, message = "Cotton part must be less or equal to zero")
-                            Byte cottonPart,
-                        @Min(value = 1, message = "Socks quantity must be greater than zero")
-                            Long quantity) {
+  public SocksServiceOutcomeDto(@NotBlank(message = "Socks color can't be null")
+                             String color,
+                         @Min(value = 0, message = "Cotton part must be greater or equal to zero")
+                         @Max(value = 100, message = "Cotton part must be less or equal to zero")
+                             Byte cottonPart,
+                         @Min(value = 1, message = "Socks quantity must be greater than zero")
+                             Long quantity) {
     this.color = color;
     this.cottonPart = cottonPart;
     this.quantity = quantity;
@@ -57,4 +43,5 @@ public class SocksIncomeDto {
   public Long getQuantity() {
     return quantity;
   }
+
 }

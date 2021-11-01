@@ -6,27 +6,20 @@ import org.springframework.boot.test.context.SpringBootTest;
 import ru.danilarassokhin.raiffeisensocks.EmbeddedTest;
 import ru.danilarassokhin.raiffeisensocks.dto.SocksIncomeDto;
 
-@SpringBootTest
-public class ValidationUtilTest extends EmbeddedTest {
+public class ValidationUtilTest {
 
-    @Test
-    public void testValidationUtilConstraintInvalidTest() {
-        SocksIncomeDto socksIncomeDto = new SocksIncomeDto();
-        socksIncomeDto.setQuantity(-1L);
-        socksIncomeDto.setColor("red");
-        socksIncomeDto.setCottonPart((byte) -1);
+  @Test
+  public void testValidationUtilConstraintInvalidTest() {
+    SocksIncomeDto socksIncomeDto = new SocksIncomeDto("red", (byte) -1, -1L);
 
-        Assertions.assertFalse(ValidationUtils.isValid(socksIncomeDto));
-    }
+    Assertions.assertFalse(ValidationUtils.isValid(socksIncomeDto));
+  }
 
-    @Test
-    public void testValidationUtlConstraintValid() {
-        SocksIncomeDto socksIncomeDto = new SocksIncomeDto();
-        socksIncomeDto.setQuantity(1L);
-        socksIncomeDto.setColor("red");
-        socksIncomeDto.setCottonPart((byte) 1);
+  @Test
+  public void testValidationUtlConstraintValid() {
+    SocksIncomeDto socksIncomeDto = new SocksIncomeDto("red", (byte) 1, 1L);
 
-        Assertions.assertTrue(ValidationUtils.isValid(socksIncomeDto));
-    }
+    Assertions.assertTrue(ValidationUtils.isValid(socksIncomeDto));
+  }
 
 }
