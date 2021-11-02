@@ -221,4 +221,45 @@ public class SockControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(content().string(Long.toString(0)));
     }
+
+    // /API/SOCKS?OPERATION=lessThan&...
+    @Test
+    public void getSocksOperationLessThan() throws Exception {
+        int findCottonPart = 35;
+        String findColor = "green";
+        List<Sock> socks = new ArrayList<>();
+        socks.addAll(Arrays.asList(
+                new Sock(findColor, 38, 10),
+                new Sock(findColor, 75, 350),
+                new Sock("brown", 50, 100),
+                new Sock("brown", 30, 100))
+        );
+
+        long sum = 0;
+        for (Sock sock : socks) {
+            if (sock.getColor().equalsIgnoreCase(findColor)
+                    && sock.getCottonPart() < findCottonPart) {
+                sum += sock.getQuantity();
+            }
+        }
+
+        Mockito.when(repository.findAll()).thenReturn(socks);
+
+        mvc.perform(
+                get("/api/socks")
+                        .param("color", "green")
+                        .param("cottonPart", Integer.toString(findCottonPart))
+                        .param("operation", "lessThan"))
+                .andExpect(status().isOk())
+                .andExpect(content().string(Long.toString(sum)));
+
+        // when sock absents
+        mvc.perform(
+                get("/api/socks")
+                        .param("color", "pink")
+                        .param("cottonPart", Integer.toString(99))
+                        .param("operation", "lessThan"))
+                .andExpect(status().isOk())
+                .andExpect(content().string(Long.toString(0)));
+    }
 }
