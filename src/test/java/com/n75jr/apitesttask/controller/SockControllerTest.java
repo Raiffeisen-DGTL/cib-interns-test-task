@@ -13,6 +13,7 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -132,5 +133,47 @@ public class SockControllerTest {
         )
                 .andExpect(status().isOk())
                 .andExpect(content().json(objectMapper.writeValueAsString(expectedSock)));
+    }
+
+    // GETs:
+    //
+    @Test
+    public void getSocksOperationsBadParams() throws Exception {
+//         cottonPart is bad because < 0
+        mvc.perform(get("/api/socks")
+                .param("color", "green")
+                .param("cottonPart", "-1")
+                .param("operation", "moreThan"))
+                .andExpect(status().isBadRequest())
+                .andExpect(content().string("-1"));
+
+//         operation is bad because it's unknown
+        mvc.perform(get("/api/socks")
+                .param("color", "green")
+                .param("cottonPart", "-1")
+                .param("operation", "iDontKnowYou"))
+                .andExpect(status().isBadRequest())
+                .andExpect(content().string("-1"));
+
+//         color is bad because it's empty
+        mvc.perform(get("/api/socks")
+                .param("cottonPart", "1")
+                .param("operation", "moreThan"))
+                .andExpect(status().isBadRequest())
+                .andExpect(content().string("-1"));
+
+//         cottonPart is bad because it's empty
+        mvc.perform(get("/api/socks")
+                .param("color", "green")
+                .param("operation", "moreThan"))
+                .andExpect(status().isBadRequest())
+                .andExpect(content().string("-1"));
+
+//         operation is bad because it's empty
+        mvc.perform(get("/api/socks")
+                .param("color", "green")
+                .param("cottonPart", "1"))
+                .andExpect(status().isBadRequest())
+                .andExpect(content().string("-1"));
     }
 }
