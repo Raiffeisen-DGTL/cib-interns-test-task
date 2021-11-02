@@ -13,6 +13,10 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -175,5 +179,46 @@ public class SockControllerTest {
                 .param("cottonPart", "1"))
                 .andExpect(status().isBadRequest())
                 .andExpect(content().string("-1"));
+    }
+
+    // /API/SOCKS?OPERATION=moreThan&...
+    @Test
+    public void getSocksOperationMoreThan() throws Exception {
+        int findCottonPart = 35;
+        String findColor = "green";
+        List<Sock> socks = new ArrayList<>();
+        socks.addAll(Arrays.asList(
+                new Sock(findColor, 38, 10),
+                new Sock(findColor, 75, 35),
+                new Sock("brown", 50, 100),
+                new Sock("brown", 30, 100))
+        );
+
+        long sum = 0;
+        for (Sock sock : socks) {
+            if (sock.getColor().equalsIgnoreCase(findColor)
+                    && sock.getCottonPart() > findCottonPart) {
+                sum += sock.getQuantity();
+            }
+        }
+
+        Mockito.when(repository.findAll()).thenReturn(socks);
+
+        mvc.perform(
+                get("/api/socks")
+                        .param("color", "green")
+                        .param("cottonPart", Integer.toString(findCottonPart))
+                        .param("operation", "moreThan"))
+                .andExpect(status().isOk())
+                .andExpect(content().string(Long.toString(sum)));
+
+        // when sock absents
+        mvc.perform(
+                get("/api/socks")
+                        .param("color", "pink")
+                        .param("cottonPart", Integer.toString(99))
+                        .param("operation", "moreThan"))
+                .andExpect(status().isOk())
+                .andExpect(content().string(Long.toString(0)));
     }
 }
