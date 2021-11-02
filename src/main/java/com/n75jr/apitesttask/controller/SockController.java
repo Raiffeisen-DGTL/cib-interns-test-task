@@ -7,10 +7,7 @@ import com.n75jr.apitesttask.model.SockID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Collection;
 import java.util.function.Predicate;
@@ -93,5 +90,33 @@ public class SockController {
         } else
             sockRepository.save(sock);
         return new ResponseEntity<>(sock, HttpStatus.OK);
+    }
+
+    // added "required = false" for return of ResponseEntity with "-1" and test
+    // added "defaultValue = "-1"" for test
+    @GetMapping("/socks")
+    public ResponseEntity<Long> socks(@RequestParam(value = "color", required = false) String color,
+                                      @RequestParam(value = "cottonPart", required = false, defaultValue = "-1") int cotton,
+                                      @RequestParam(value = "operation", required = false) String operation) {
+        if (!isValidString(color) || !isValidString(operation) || cotton < 0 || cotton > 100) {
+            return new ResponseEntity<>(-1L, HttpStatus.BAD_REQUEST);
+        }
+
+        long result = 0;
+        Predicate<Sock> predicate = null;
+        switch (operation.toLowerCase()) {
+            case "morethan":
+                predicate = sock -> (!(sock.getColor().equalsIgnoreCase(color) && sock.getCottonPart() > cotton));
+                break;
+            case "lessthan":
+                predicate = sock -> (!(sock.getColor().equalsIgnoreCase(color) && sock.getCottonPart() < cotton));
+                break;
+            case "equal":
+                return new ResponseEntity<>(operationEqual(color, cotton), HttpStatus.OK);
+            default:
+                return new ResponseEntity<>(-1L, HttpStatus.BAD_REQUEST);
+        }
+        result = operationX(predicate);
+        return new ResponseEntity<>(result, HttpStatus.OK);
     }
 }
