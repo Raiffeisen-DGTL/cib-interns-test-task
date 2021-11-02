@@ -42,6 +42,18 @@ public class SocksController {
 
     @GetMapping("/socks")
     public ResponseEntity<String> socksGetQuantity(@RequestParam String color, @RequestParam String operation, @RequestParam int cottonPart){
-        return socksService.countSocksWithParams(color, cottonPart, operation);
+
+        String response = socksService.countSocksWithParams(color, cottonPart, operation);
+
+        if (response == null) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+
+        try {
+            Integer.parseInt(response);
+            return new ResponseEntity<>(response, HttpStatus.OK);
+        } catch (NumberFormatException numberFormatException) {
+            return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+        }
     }
 }

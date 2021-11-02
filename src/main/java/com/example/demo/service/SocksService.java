@@ -59,38 +59,38 @@ public class SocksService {
         }
     }
 
-    public ResponseEntity<String> countSocksWithParams(String color, int cottonPart, String operation) {
+    public String countSocksWithParams(String color, int cottonPart, String operation) {
         int quantity = 0;
         switch (operation.toLowerCase().trim()) {
             case ("equal"):
                 if (socksRepository.existsByColorAndCottonPart(color, cottonPart)) {
                     List<Socks> socksListEqual = new ArrayList<>(socksRepository.findByColorAndCottonPart(color, cottonPart));
-                    return new ResponseEntity<>(Integer.toString(socksListEqual.get(0).getQuantity()), HttpStatus.OK);
+                    return String.valueOf(socksListEqual.get(0).getQuantity());
                 } else {
-                    return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+                    return null;
                 }
             case ("morethan"):
                 List<Socks> socksListMoreThan = new ArrayList<>(socksRepository.findAllByColorAndCottonPartGreaterThan(color, cottonPart));
                 if (socksListMoreThan.isEmpty()) {
-                    return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+                    return null;
                 } else {
                     for (Socks sock : socksListMoreThan) {
                         quantity += sock.getQuantity();
                     }
-                    return new ResponseEntity<>(Integer.toString(quantity), HttpStatus.OK);
+                    return String.valueOf(quantity);
                 }
             case("lessthan"):
                 List<Socks> socksListLessThan = new ArrayList<>(socksRepository.findAllByColorAndCottonPartLessThan(color, cottonPart));
                 if (socksListLessThan.isEmpty()) {
-                    return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+                    return null;
                 } else {
                     for (Socks sock : socksListLessThan) {
                         quantity += sock.getQuantity();
                     }
-                    return new ResponseEntity<>(Integer.toString(quantity), HttpStatus.OK);
+                    return String.valueOf(quantity);
                 }
             default:
-                return new ResponseEntity<>("wrong operation type. Use 'equal', 'lessThan' or 'moreThan'", HttpStatus.BAD_REQUEST);
+                return "wrong operation type. Use 'equal', 'lessThan' or 'moreThan'";
         }
     }
 }
