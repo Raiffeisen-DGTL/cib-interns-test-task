@@ -8,14 +8,18 @@
         <version>2.5.6</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
+
     <groupId>com.n75jr</groupId>
     <artifactId>api-test-task</artifactId>
-    <version>2.0.0-rc0</version>
+    <version>3.0.0-rc0</version>
     <name>api-test-task</name>
     <description>Git: Raiffeisen-DGTL / cib-interns-test-task</description>
+
     <properties>
         <java.version>1.8</java.version>
+        <postgresql.version>42.2.10</postgresql.version>
     </properties>
+
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -35,7 +39,14 @@
         <dependency>
             <groupId>org.postgresql</groupId>
             <artifactId>postgresql</artifactId>
-            <version>42.2.10</version>
+            <version>${postgresql.version}</version>
+        </dependency>
+
+
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <scope>test</scope>
         </dependency>
     </dependencies>
 
