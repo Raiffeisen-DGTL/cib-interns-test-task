@@ -45,4 +45,22 @@ public class SockController {
         sockRepository.save(sock);
         return new ResponseEntity<>(sock, HttpStatus.OK);
     }
+
+    @PostMapping("/socks/outcome")
+    public ResponseEntity<Sock> outcome(@RequestBody Sock sock) {
+        if (!isValidSock(sock)) {
+            return new ResponseEntity<>(sock, HttpStatus.BAD_REQUEST);
+        }
+        SockID id = new SockID(sock.getColor(), sock.getCottonPart());
+        if (!sockRepository.existsById(id)) {
+            return new ResponseEntity<>(sock, HttpStatus.NO_CONTENT);
+        }
+        Sock existSock = sockRepository.getById(id);
+        sock.setQuantity(existSock.getQuantity() - sock.getQuantity());
+        if (sock.getQuantity() <= 0) {
+            sockRepository.deleteById(id);
+        } else
+            sockRepository.save(sock);
+        return new ResponseEntity<>(sock, HttpStatus.OK);
+    }
 }
