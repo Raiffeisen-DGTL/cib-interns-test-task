@@ -29,9 +29,9 @@ _____
 ### Запуск
 
     mkdir -p ~/.serv
-    curl -L https://github.com/niki75jr/cib-interns-test-task/archive/refs/tags/v.3.0.0-rc0.tar.gz | tar -xz
-    mv ~/cib-interns-test-task-v.3.0.0-rc0 ~/.serv
-    docker-compose --file ~/.serv/cib-interns-test-task-v.3.0.0-rc0/docker/docker-compose.yaml up --build
+    curl -L https://github.com/niki75jr/cib-interns-test-task/archive/refs/tags/v.4.0.0-rc0.tar.gz | tar -xz
+    mv ~/cib-interns-test-task-v.4.0.0-rc0 ~/.serv
+    docker-compose --file ~/.serv/cib-interns-test-task-v.4.0.0-rc0/docker/docker-compose.yaml up --build
     
 
 ### Описание
@@ -56,7 +56,6 @@ URL: http://80.249.151.176:8080/ (если не доступен, то толь�
 
 #### Примеры запросов
 
-* GET http://80.249.151.176:8080/api/socks/all
 *  POST http://80.249.151.176:8080/api/socks/income 
 Content-Type: application/json  
 * POST http://80.249.151.176:8080/api/socks/outcome  
