@@ -28,6 +28,14 @@ public class SockController {
         }
         return result;
     }
+
+    private boolean isValidString(String str) {
+        boolean result = true;
+        if (str == null || str.trim().length() == 0) {
+            return false;
+        }
+        return result;
+    }
     //
 
     @PostMapping("/socks/income")
