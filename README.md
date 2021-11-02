@@ -29,9 +29,9 @@ _____
 ### Запуск
 
     mkdir -p ~/.serv
-    curl -L https://github.com/niki75jr/cib-interns-test-task/archive/refs/tags/v.4.0.0-rc0.tar.gz | tar -xz
-    mv ~/cib-interns-test-task-v.4.0.0-rc0 ~/.serv
-    docker-compose --file ~/.serv/cib-interns-test-task-v.4.0.0-rc0/docker/docker-compose.yaml up --build
+    curl -L https://github.com/niki75jr/cib-interns-test-task/archive/refs/tags/v.3.0.0-rc0.tar.gz | tar -xz
+    mv ~/cib-interns-test-task-v.3.0.0-rc0 ~/.serv
+    docker-compose --file ~/.serv/cib-interns-test-task-v.3.0.0-rc0/docker/docker-compose.yaml up --build
     
 
 ### Описание
