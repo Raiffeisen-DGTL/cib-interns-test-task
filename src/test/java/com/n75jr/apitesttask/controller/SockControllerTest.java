@@ -95,4 +95,42 @@ public class SockControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(content().json(objectMapper.writeValueAsString(expectedSock)));
     }
+
+    // /API/SOCKS/OUTCOME
+    @Test
+    public void postOutcomeWhenSockAbsents() throws Exception {
+        Sock sock = new Sock("green", 75, 10);
+        SockID id = new SockID(sock.getColor(), sock.getCottonPart());
+
+        Mockito.when(repository.existsById(id)).thenReturn(false);
+
+        mvc.perform(MockMvcRequestBuilders.
+                post("/api/socks/outcome")
+                .content(objectMapper.writeValueAsString(sock))
+                .contentType(MediaType.APPLICATION_JSON)
+        )
+                .andExpect(status().isNoContent())
+                .andExpect(content().json(objectMapper.writeValueAsString(sock)));
+    }
+
+    @Test
+    public void postOutcomeWhenSockExists() throws Exception {
+        int subQuantity = 100;
+        Sock sock = new Sock("green", 75, 10);
+        Sock subtractedSock = new Sock(sock.getColor(), sock.getCottonPart(), subQuantity);
+        Sock expectedSock = new Sock(sock.getColor(), sock.getCottonPart(), sock.getQuantity() - subQuantity);
+        SockID id = new SockID(sock.getColor(), sock.getCottonPart());
+
+        Mockito.when(repository.existsById(id)).thenReturn(true);
+        Mockito.when(repository.getById(id)).thenReturn(sock);
+        Mockito.when(repository.save(sock)).thenReturn(expectedSock);
+
+        mvc.perform(MockMvcRequestBuilders.
+                post("/api/socks/outcome")
+                .content(objectMapper.writeValueAsString(subtractedSock))
+                .contentType(MediaType.APPLICATION_JSON)
+        )
+                .andExpect(status().isOk())
+                .andExpect(content().json(objectMapper.writeValueAsString(expectedSock)));
+    }
 }
