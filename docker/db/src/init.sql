@@ -2,12 +2,11 @@
 DROP TABLE IF EXISTS socks;
 CREATE TABLE IF NOT EXISTS socks
 (
-    color       varchar(19),
+    color       varchar(25),
     cotton_part int2 CHECK ( cotton_part >= 0 AND cotton_part <= 100 ),
     quantity    int8 CHECK ( quantity > 0 ) DEFAULT (random() * 1000)::int4 + 1,
     PRIMARY KEY (color, cotton_part)
 );
-
 
 -- GENERATE AND INSERT DATA
 INSERT INTO socks AS s (color, cotton_part)
@@ -20,7 +19,7 @@ FROM (
                     (random() * 6)::int4   AS col,
                     (random() * 100)::int4 AS cotton
              FROM q
-             WHERE q.i < 6 * 1000
+             WHERE q.i < 6 * 10
          )
          SELECT DISTINCT CASE
                              WHEN q.col = 0 THEN 'white'
