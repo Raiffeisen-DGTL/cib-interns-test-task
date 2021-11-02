@@ -3,6 +3,7 @@ package com.n75jr.apitesttask.controller;
 import com.n75jr.apitesttask.dao.SockRepository;
 import com.n75jr.apitesttask.model.Sock;
 import com.n75jr.apitesttask.model.SockID;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -10,6 +11,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.Collection;
+import java.util.function.Predicate;
 
 @RestController
 @RequestMapping("/api")
@@ -33,6 +37,17 @@ public class SockController {
         boolean result = true;
         if (str == null || str.trim().length() == 0) {
             return false;
+        }
+        return result;
+    }
+
+    // operation-methods:
+    private long operationX(Predicate<Sock> predicate) {
+        long result = 0;
+        Collection<Sock> socks = sockRepository.findAll();
+        socks.removeIf(predicate);
+        for (Sock sock : socks) {
+            result += sock.getQuantity();
         }
         return result;
     }
