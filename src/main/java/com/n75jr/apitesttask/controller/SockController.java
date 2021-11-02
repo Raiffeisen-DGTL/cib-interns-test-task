@@ -51,6 +51,14 @@ public class SockController {
         }
         return result;
     }
+
+    private long operationEqual(String color, int cotton) {
+        SockID id = new SockID(color, cotton);
+        if (!sockRepository.existsById(id)) {
+            return 0L;
+        }
+        return sockRepository.getById(new SockID(color, cotton)).getQuantity();
+    }
     //
 
     @PostMapping("/socks/income")
