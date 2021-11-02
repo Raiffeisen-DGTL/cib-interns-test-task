@@ -1,6 +1,7 @@
 package com.example.demo.controller;
 
 import com.example.demo.entity.Socks;
+import com.example.demo.exception.SocksQuantityException;
 import com.example.demo.service.SocksService;
 import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,18 +32,17 @@ public class SocksController {
     }
 
     @PostMapping("/socks/outcome")
-    public ResponseEntity<String> socksOutcome(@Valid @RequestBody Socks socks) throws NotFoundException {
-        //check if entity with those params already in DB
-        if (!socksService.isAlreadyExist(socks)) {
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-        }
-        //check if there is enough socks in DB
-        if (socksService.isEnoughQuantity(socks)) {
+    public ResponseEntity<String> socksOutcome(@Valid @RequestBody Socks socks) {
+
+        try {
             socksService.updateQuantityOutcome(socks);
-            return new ResponseEntity<>(HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>("don't have such amount of socks", HttpStatus.BAD_REQUEST);
+        } catch (NotFoundException notFoundException) {
+            return new ResponseEntity<>(notFoundException.getMessage(), HttpStatus.NOT_FOUND);
+        } catch (SocksQuantityException socksQuantityException) {
+            return new ResponseEntity<>(socksQuantityException.getMessage(), HttpStatus.BAD_REQUEST);
         }
+
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @GetMapping("/socks")

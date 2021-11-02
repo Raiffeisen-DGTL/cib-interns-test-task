@@ -1,14 +1,17 @@
 package com.example.demo.service;
 
 import com.example.demo.entity.Socks;
+import com.example.demo.exception.SocksQuantityException;
 import com.example.demo.repository.SocksRepository;
 import javassist.NotFoundException;
+import org.apache.catalina.connector.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
+import javax.naming.LimitExceededException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,10 +36,15 @@ public class SocksService {
         addSocks(existingSocks);
     }
 
-    public void updateQuantityOutcome(Socks socks) throws NotFoundException {
+    public void updateQuantityOutcome(Socks socks) throws NotFoundException, SocksQuantityException {
         Socks existingSocks = retrieveSocksFromDB(socks);
-        existingSocks.setQuantity(existingSocks.getQuantity() - socks.getQuantity());
-        addSocks(existingSocks);
+
+        if (existingSocks.getQuantity() - socks.getQuantity() < 0) {
+            throw new SocksQuantityException ("amount of requested socks exceeds the allowed value");
+        } else {
+            existingSocks.setQuantity(existingSocks.getQuantity() - socks.getQuantity());
+            addSocks(existingSocks);
+        }
     }
 
     public Boolean isEnoughQuantity(Socks socks) throws NotFoundException {
@@ -45,11 +53,13 @@ public class SocksService {
     }
 
     public Socks retrieveSocksFromDB(Socks socks) throws NotFoundException {
-        if (isAlreadyExist(socks)) {
-            List<Socks> socksList = new ArrayList<>(socksRepository.findByColorAndCottonPart(socks.getColor(), socks.getCottonPart()));
-            return socksList.get(0);
+
+        List<Socks> socksList = new ArrayList<>(socksRepository.findByColorAndCottonPart(socks.getColor(), socks.getCottonPart()));
+
+        if (socksList.isEmpty()) {
+            throw new NotFoundException("Entity not found in DB");
         } else {
-            throw new NotFoundException("no such Entity in database");
+            return socksList.get(0);
         }
     }
 
