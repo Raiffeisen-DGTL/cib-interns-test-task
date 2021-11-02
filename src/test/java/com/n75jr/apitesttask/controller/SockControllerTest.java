@@ -262,4 +262,42 @@ public class SockControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(content().string(Long.toString(0)));
     }
+
+    // /API/SOCKS?OPERATION=equal&...
+    @Test
+    public void getSocksOperationEqual() throws Exception {
+        String findColor = "green";
+        int findCottonPart = 75;
+        Sock findSock = new Sock(findColor, findCottonPart, 500);
+        SockID id = new SockID(findColor, findCottonPart);
+        List<Sock> socks = new ArrayList<>();
+        socks.addAll(Arrays.asList(
+                findSock,
+                new Sock(findColor, 75, 350),
+                new Sock("brown", 50, 100),
+                new Sock("pink", 30, 100))
+        );
+
+        Mockito.when(repository.existsById(id)).thenReturn(true);
+        Mockito.when(repository.getById(id)).thenReturn(findSock);
+
+        mvc.perform(
+                get("/api/socks")
+                        .param("color", findSock.getColor())
+                        .param("cottonPart", Integer.toString(findSock.getCottonPart()))
+                        .param("operation", "equal"))
+                .andExpect(status().isOk())
+                .andExpect(content().string(Long.toString(findSock.getQuantity())));
+
+//         when sock absents
+        Mockito.when(repository.existsById(new SockID(findColor, findCottonPart))).thenReturn(false);
+
+        mvc.perform(
+                get("/api/socks")
+                        .param("color", findSock.getColor())
+                        .param("cottonPart", Integer.toString(findSock.getCottonPart()))
+                        .param("operation", "equal"))
+                .andExpect(status().isOk())
+                .andExpect(content().string(Long.toString(0)));
+    }
 }
