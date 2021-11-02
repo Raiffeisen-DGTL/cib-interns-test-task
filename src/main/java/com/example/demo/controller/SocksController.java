@@ -19,15 +19,10 @@ public class SocksController {
     SocksService socksService;
 
     @PostMapping("/socks/income")
-    public ResponseEntity<String> socksIncome(@Valid @RequestBody Socks socks) throws NotFoundException {
-        //check if entity with those params already in DB
-        if (socksService.isAlreadyExist(socks)) {
-            //update qnt
+    public ResponseEntity<String> socksIncome(@Valid @RequestBody Socks socks) {
+
             socksService.updateQuantityIncome(socks);
-        } else {
-            //add socks and set qnt
-            socksService.addSocks(socks);
-        }
+
         return new ResponseEntity<>(HttpStatus.OK);
     }
 

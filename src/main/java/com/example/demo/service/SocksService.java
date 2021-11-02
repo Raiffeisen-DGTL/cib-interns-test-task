@@ -26,14 +26,15 @@ public class SocksService {
         socksRepository.save(socks);
     }
 
-    public Boolean isAlreadyExist(Socks socks) {
-        return socksRepository.existsByColorAndCottonPart(socks.getColor(), socks.getCottonPart());
-    }
+    public void updateQuantityIncome(Socks socks) {
 
-    public void updateQuantityIncome(Socks socks) throws NotFoundException {
-        Socks existingSocks = retrieveSocksFromDB(socks);
-        existingSocks.setQuantity(existingSocks.getQuantity() + socks.getQuantity());
-        addSocks(existingSocks);
+        try {
+            Socks existingSocks = retrieveSocksFromDB(socks);
+            existingSocks.setQuantity(existingSocks.getQuantity() + socks.getQuantity());
+            addSocks(existingSocks);
+        } catch (NotFoundException notFoundException) {
+            addSocks(socks);
+        }
     }
 
     public void updateQuantityOutcome(Socks socks) throws NotFoundException, SocksQuantityException {
@@ -45,11 +46,6 @@ public class SocksService {
             existingSocks.setQuantity(existingSocks.getQuantity() - socks.getQuantity());
             addSocks(existingSocks);
         }
-    }
-
-    public Boolean isEnoughQuantity(Socks socks) throws NotFoundException {
-        Socks existingSocks = retrieveSocksFromDB(socks);
-        return existingSocks.getQuantity() >= socks.getQuantity();
     }
 
     public Socks retrieveSocksFromDB(Socks socks) throws NotFoundException {
