@@ -1,16 +1,16 @@
-package com.n75jr.apitesttask.socks;
+package com.n75jr.apitesttask.model;
 
 import javax.persistence.*;
-import java.math.BigInteger;
-import java.time.LocalDate;
 
-@Entity
 @Table(name = "socks")
+@IdClass(SockID.class)
+@Entity
 public class Sock {
     @Id
     @Column(name = "color")
     private String color;
 
+    @Id
     @Column(name = "cotton_part")
     private int cottonPart;
 
