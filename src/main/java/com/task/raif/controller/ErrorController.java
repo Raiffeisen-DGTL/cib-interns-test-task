@@ -19,6 +19,10 @@ import javax.validation.ConstraintViolationException;
 
 @RestControllerAdvice
 public class ErrorController {
+    private <T> ResponseEntity<?> getErrorMessage(T body) {
+        return new ResponseEntity<>(Map.of("error", body), HttpStatus.BAD_REQUEST);
+    }
+
     @ExceptionHandler(MethodArgumentNotValidException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ResponseEntity<?> MethodArgumentNotValidExceptionHandler(MethodArgumentNotValidException ex) {
@@ -26,30 +30,30 @@ public class ErrorController {
         Map<String, String> body = errors.stream()
                 .filter(error -> error.getDefaultMessage() != null)
                 .collect(Collectors.toMap(FieldError::getField, FieldError::getDefaultMessage));
-        return new ResponseEntity<>(Map.of("error", body), HttpStatus.BAD_REQUEST);
+        return getErrorMessage(body);
     }
 
     @ExceptionHandler(MethodArgumentTypeMismatchException.class)
     public ResponseEntity<?> MethodArgumentTypeMismatchExceptionHandler(MethodArgumentTypeMismatchException ex) {
         String body = "Параметры запроса отсутствуют или имеют некорректный формат: " + ex.getName();
-        return new ResponseEntity<>(Map.of("error", body), HttpStatus.BAD_REQUEST);
+        return getErrorMessage(body);
     }
 
     @ExceptionHandler(MissingServletRequestParameterException.class)
     public ResponseEntity<?> MissingServletRequestParameterExceptionHandler(MissingServletRequestParameterException ex) {
         String body = "Пропущено поле " + ex.getParameterName();
-        return new ResponseEntity<>(Map.of("error", body), HttpStatus.BAD_REQUEST);
+        return getErrorMessage(body);
     }
 
     @ExceptionHandler({InvalidQuantityException.class, NotFoundException.class})
     public ResponseEntity<?> NotFoundExceptionHandler(RuntimeException ex) {
         String body =  ex.getMessage();
-        return new ResponseEntity<>(Map.of("error", body), HttpStatus.BAD_REQUEST);
+        return getErrorMessage(body);
     }
 
     @ExceptionHandler(ConstraintViolationException.class)
     public ResponseEntity<?> ConstraintViolationExceptionHandler(RuntimeException ex) {
         String body = ex.getMessage();
-        return new ResponseEntity<>(Map.of("error", body), HttpStatus.BAD_REQUEST);
+        return getErrorMessage(body);
     }
 }

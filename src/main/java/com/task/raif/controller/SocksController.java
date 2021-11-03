@@ -1,6 +1,9 @@
 package com.task.raif.controller;
-import com.task.raif.model.Socks;
+import com.task.raif.dto.SocksDto;
 import com.task.raif.service.SocksService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +19,7 @@ import java.util.Map;
 
 @RestController
 @Validated
+@Tag(name = "Контроллер носков", description = "Позволяет находить, добавлять и забирать носки со склада")
 public class SocksController {
     private final SocksService socksService;
 
@@ -25,22 +29,34 @@ public class SocksController {
     }
 
     @PostMapping("/api/socks/income")
-    public ResponseEntity<?> socksIncome(@Valid @RequestBody Socks socks) {
-        socksService.income(socks);
+    @Operation(
+            summary = "Добавление носков",
+            description = "Позволяет зарегестрировать прибытие носков на склад"
+    )
+    public ResponseEntity<?> socksIncome(@Valid @RequestBody SocksDto socksDTO) {
+        socksService.income(socksDTO);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @PostMapping("/api/socks/outcome")
-    public ResponseEntity<?> socksOutcome(@Valid @RequestBody Socks socks) {
-        socksService.outcome(socks);
-        return new ResponseEntity<>(HttpStatus.OK);
+    @ResponseStatus(HttpStatus.OK)
+    @Operation(
+            summary = "Удаление носков",
+            description = "Позволяет зарегестрировать убытие носков со склада"
+    )
+    public void socksOutcome(@Valid @RequestBody SocksDto socksDTO) {
+        socksService.outcome(socksDTO);
     }
 
     @GetMapping("/api/socks")
+    @Operation(
+            summary = "Найти носки",
+            description = "Позволяет найти нужную пару носков на складе"
+    )
     public ResponseEntity<?> getSocksController(
-            @RequestParam @NotBlank String color,
-            @RequestParam @Pattern(regexp = "moreThan|lessThan|equal") String operation,
-            @RequestParam @Min(0) @Max(100) int cottonPart) {
+            @RequestParam @NotBlank @Parameter(description = "Цвет носков") String color,
+            @RequestParam @Pattern(regexp = "moreThan|lessThan|equal") @Parameter(description = "Название операции поиска") String operation,
+            @RequestParam @Min(0) @Max(100) @Parameter(description = "Содержание хлопка") int cottonPart) {
         int quantity = socksService.getSocksByParams(color, operation, cottonPart);
         return new ResponseEntity<>(Map.of("Quantity", quantity), HttpStatus.OK);
     }

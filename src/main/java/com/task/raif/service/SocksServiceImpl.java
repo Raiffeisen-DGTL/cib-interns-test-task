@@ -1,13 +1,13 @@
 package com.task.raif.service;
 
-import com.task.raif.model.Socks;
+import com.task.raif.dto.SocksDto;
 import com.task.raif.exception.InvalidQuantityException;
 import com.task.raif.exception.NotFoundException;
-import com.task.raif.model.SocksModel;
+import com.task.raif.model.Socks;
 import com.task.raif.repository.SocksRepository;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
-@Component
+@Service
 public class SocksServiceImpl implements SocksService {
     SocksRepository socksRepository;
 
@@ -20,36 +20,36 @@ public class SocksServiceImpl implements SocksService {
     public int getSocksByParams(String color, String operation, int cottonPart) {
         if (operation.equals("moreThan")) {
             return socksRepository.findSocksModelsByColorAndCottonPartGreaterThan(color, cottonPart)
-                    .stream().mapToInt(SocksModel::getQuantity).sum();
+                    .stream().mapToInt(Socks::getQuantity).sum();
         } else if (operation.equals("equal")) {
             return socksRepository.findSocksModelsByColorAndCottonPartEquals(color, cottonPart)
-                    .stream().mapToInt(SocksModel::getQuantity).sum();
+                    .stream().mapToInt(Socks::getQuantity).sum();
         } else {
             return socksRepository.findSocksModelsByColorAndCottonPartLessThan(color, cottonPart)
-                    .stream().mapToInt(SocksModel::getQuantity).sum();
+                    .stream().mapToInt(Socks::getQuantity).sum();
         }
     }
 
     @Override
-    public void income(Socks socks) {
-        SocksModel incomeSocks = socksRepository
-                .findSocksModelsByColorAndCottonPart(socks.getColor(), socks.getCottonPart())
-                .orElse(new SocksModel(socks.getColor(), socks.getCottonPart(), socks.getQuantity()));
+    public void income(SocksDto socksDTO) {
+        Socks incomeSocks = socksRepository
+                .findSocksModelsByColorAndCottonPart(socksDTO.getColor(), socksDTO.getCottonPart())
+                .orElse(new Socks(socksDTO.getColor(), socksDTO.getCottonPart(), socksDTO.getQuantity()));
         if (incomeSocks.getId() != null) {
-            incomeSocks.setQuantity(incomeSocks.getQuantity() + socks.getQuantity());
+            incomeSocks.setQuantity(incomeSocks.getQuantity() + socksDTO.getQuantity());
         }
         socksRepository.save(incomeSocks);
     }
 
     @Override
-    public void outcome(Socks socks) {
-        SocksModel outcomeSocks = socksRepository
-                .findSocksModelsByColorAndCottonPart(socks.getColor(), socks.getCottonPart())
+    public void outcome(SocksDto socksDTO) {
+        Socks outcomeSocks = socksRepository
+                .findSocksModelsByColorAndCottonPart(socksDTO.getColor(), socksDTO.getCottonPart())
                 .orElseThrow(() -> new NotFoundException("Данный товар отсутствует"));
-        if (outcomeSocks.getQuantity() < socks.getQuantity()) {
+        if (outcomeSocks.getQuantity() < socksDTO.getQuantity()) {
             throw new InvalidQuantityException("Недостаточное количество товара для отпуска");
         }
-        outcomeSocks.setQuantity(outcomeSocks.getQuantity() - socks.getQuantity());
+        outcomeSocks.setQuantity(outcomeSocks.getQuantity() - socksDTO.getQuantity());
         socksRepository.save(outcomeSocks);
     }
 }

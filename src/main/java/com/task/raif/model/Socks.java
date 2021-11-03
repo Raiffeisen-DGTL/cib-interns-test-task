@@ -1,28 +1,46 @@
 package com.task.raif.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import org.hibernate.Hibernate;
 
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
+import javax.persistence.*;
+import java.util.Objects;
 
-
-@Data
+@Entity
+@Table(name = "socks")
+@Getter
+@Setter
 @NoArgsConstructor
-@AllArgsConstructor
 public class Socks {
-    @NotBlank(message = "Поле не должно быть пусто")
-    String color;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
 
-    @NotNull
-    @Min(value = 0, message = "Содержание хлопка не может быть меньше 0%")
-    @Max(value = 100, message = "Содержание хлопка не может превышать 100%")
-    int cottonPart;
+    @Column
+    private String color;
 
-    @NotNull
-    @Min(value = 0, message = "Количество не может быть отрицательным")
-    int quantity;
+    @Column
+    private int cottonPart;
+
+    @Column
+    private int quantity;
+
+    public Socks(String color, int cottonPart, int quantity) {
+        this.color = color;
+        this.cottonPart = cottonPart;
+        this.quantity = quantity;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
+        Socks socks = (Socks) o;
+        return id != null && Objects.equals(id, socks.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return getClass().hashCode();
+    }
 }
