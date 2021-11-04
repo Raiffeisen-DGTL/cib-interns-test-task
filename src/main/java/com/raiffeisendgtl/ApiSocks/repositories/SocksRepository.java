@@ -19,4 +19,5 @@ public interface SocksRepository extends CrudRepository<Socks, Long> {
 
     @Query(value = "SELECT SUM(quantity) FROM socks WHERE color = :color AND cotton_part > :cottonPart", nativeQuery = true)
     Integer findCountSocksMoreThan(@Param("color") String color, @Param("cottonPart") Integer cottonPart);
+
 }

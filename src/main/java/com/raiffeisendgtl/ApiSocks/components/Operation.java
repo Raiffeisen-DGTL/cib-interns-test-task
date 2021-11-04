@@ -9,8 +9,7 @@ public enum Operation {
     public static Operation convertFromString(String operationString) {
         try {
             return Operation.valueOf(operationString);
-        }
-        catch (Throwable e) {
+        } catch (Throwable e) {
             throw new SocksException(SocksErrorCode.INCORRECT_PARAMS);
         }
     }
