@@ -1,4 +1,4 @@
-package ru.morboui.raiff.entity;
+package ru.morboui.raiff.error;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

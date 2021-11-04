@@ -32,7 +32,6 @@ public class SocksService {
             socksInBD.setQuantity(socks.getQuantity() + socksInBD.getQuantity());
             socksRepository.save(socksInBD);
         }
-//
     }
 
 

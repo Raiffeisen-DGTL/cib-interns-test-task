@@ -36,16 +36,16 @@ public class SocksController {
     @PostMapping(value = "income")
     public ResponseEntity<String> addNewSocks(@RequestBody Socks socks) {
         socksService.addNewSocks(socks);
-        return new ResponseEntity<>("Added socks: " + socks.getQuantity() +
-                " with color " + socks.getColor() +
+        return new ResponseEntity<>("Added socks: " + socks.getQuantity()
+                + " with color " + socks.getColor() +
                 " and CottonPart: " + socks.getCottonPart(), HttpStatus.OK);
     }
 
     @PostMapping(value = "outcome")
     public ResponseEntity<String> reduceSocks(@RequestBody Socks socks) {
         socksService.reduceSocks(socks);
-        return new ResponseEntity<>("Reduced socks: " + socks.getQuantity() +
-                " with color " + socks.getColor() + " and CottonPart: " + socks.getCottonPart(),
+        return new ResponseEntity<>("Reduced socks: " + socks.getQuantity()
+                + " with color " + socks.getColor() + " and CottonPart: " + socks.getCottonPart(),
                 HttpStatus.OK);
 
     }
