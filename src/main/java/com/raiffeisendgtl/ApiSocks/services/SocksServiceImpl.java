@@ -5,11 +5,13 @@ import com.raiffeisendgtl.ApiSocks.entities.Socks;
 import com.raiffeisendgtl.ApiSocks.repositories.SocksRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.NoSuchElementException;
 import java.util.Optional;
 
 @Service
+@Transactional
 public class SocksServiceImpl implements SocksService {
 
     private final SocksRepository socksRepository;
@@ -73,7 +75,8 @@ public class SocksServiceImpl implements SocksService {
         return count;
     }
 
-    private Optional<Socks> find(Socks socks) {
+    @Override
+    public Optional<Socks> find(Socks socks) {
         try {
             return socksRepository.findByColorAndCottonPart(socks.getColor(), socks.getCottonPart());
         } catch (Throwable e) {
@@ -81,7 +84,8 @@ public class SocksServiceImpl implements SocksService {
         }
     }
 
-    private void save(Socks socks) {
+    @Override
+    public void save(Socks socks) {
         try {
             socksRepository.save(socks);
         } catch (Throwable e) {

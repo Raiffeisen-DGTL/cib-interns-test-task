@@ -32,6 +32,61 @@ public class SockServiceTests {
     }
 
     @Test
+    public void findSocks() {
+        socks = mock(Socks.class);
+        Optional<Socks> result;
+
+        when(socksRepository.findByColorAndCottonPart(socks.getColor(), socks.getCottonPart()))
+                .thenReturn(Optional.of(socks));
+
+        result = socksService.find(socks);
+
+        assertEquals(socks, result.get());
+    }
+
+    @Test
+    public void findSocksIfThrowError() {
+        socks = mock(Socks.class);
+        SocksErrorCode expectedErrorCode = SocksErrorCode.SERVER_CRASH;
+
+        when(socksRepository.findByColorAndCottonPart(socks.getColor(), socks.getCottonPart()))
+                .thenThrow(new SocksException(SocksErrorCode.SERVER_CRASH));
+
+        SocksException exception = assertThrows(SocksException.class, () -> {
+            socksService.find(socks);
+        });
+
+        assertEquals(expectedErrorCode, exception.getError());
+    }
+
+    @Test
+    public void saveSocks() {
+        socks = mock(Socks.class);
+
+        socksService.save(socks);
+
+        verify(socksRepository, times(1)).save(socks);
+    }
+
+    @Test
+    public void saveSocksIfThrowError() {
+        socks = mock(Socks.class);
+        SocksErrorCode expectedErrorCode = SocksErrorCode.SERVER_CRASH;
+
+        doThrow(new SocksException(SocksErrorCode.SERVER_CRASH))
+                .when(socksRepository)
+                .save(socks);
+
+        SocksException exception = assertThrows(SocksException.class, () -> {
+            socksService.save(socks);
+        });
+
+        assertEquals(expectedErrorCode, exception.getError());
+
+        verify(socksRepository, times(1)).save(socks);
+    }
+
+    @Test
     public void incomeNewSocks() {
         socks = mock(Socks.class);
 
@@ -54,46 +109,6 @@ public class SockServiceTests {
         socksService.income(socks);
 
         verify(socks, times(1)).addQuantity(socks.getQuantity());
-        verify(socksRepository, times(1)).save(socks);
-    }
-
-    @Test
-    public void incomeIfFindThrowError() {
-        socks = mock(Socks.class);
-        SocksErrorCode resultErrorCode = SocksErrorCode.SERVER_CRASH;
-
-        when(socksRepository.findByColorAndCottonPart(socks.getColor(), socks.getCottonPart()))
-                .thenThrow(new SocksException(SocksErrorCode.SERVER_CRASH));
-
-        try {
-            socksService.income(socks);
-            fail();
-        } catch (SocksException e) {
-            assertEquals(resultErrorCode, e.getError());
-        }
-
-        verify(socks, never()).addQuantity(socks.getQuantity());
-        verify(socksRepository, never()).save(socks);
-    }
-
-    @Test
-    public void incomeIfSaveThrowError() {
-        socks = mock(Socks.class);
-        SocksErrorCode resultErrorCode = SocksErrorCode.SERVER_CRASH;
-
-        when(socksRepository.findByColorAndCottonPart(socks.getColor(), socks.getCottonPart()))
-                .thenReturn(Optional.empty());
-        doThrow(new SocksException(SocksErrorCode.SERVER_CRASH)).when(socksRepository)
-                .save(socks);
-
-        try {
-            socksService.income(socks);
-            fail();
-        } catch (SocksException e) {
-            assertEquals(resultErrorCode, e.getError());
-        }
-
-        verify(socks, never()).addQuantity(socks.getQuantity());
         verify(socksRepository, times(1)).save(socks);
     }
 
