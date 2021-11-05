@@ -40,8 +40,6 @@ public class SockServiceTests {
 
         socksService.income(socks);
 
-        verify(socksRepository, times(1))
-                .findByColorAndCottonPart(socks.getColor(), socks.getCottonPart());
         verify(socks, never()).addQuantity(socks.getQuantity());
         verify(socksRepository, times(1)).save(socks);
     }
@@ -55,8 +53,6 @@ public class SockServiceTests {
 
         socksService.income(socks);
 
-        verify(socksRepository, times(1))
-                .findByColorAndCottonPart(socks.getColor(), socks.getCottonPart());
         verify(socks, times(1)).addQuantity(socks.getQuantity());
         verify(socksRepository, times(1)).save(socks);
     }
@@ -76,8 +72,6 @@ public class SockServiceTests {
             assertEquals(resultErrorCode, e.getError());
         }
 
-        verify(socksRepository, times(1))
-                .findByColorAndCottonPart(socks.getColor(), socks.getCottonPart());
         verify(socks, never()).addQuantity(socks.getQuantity());
         verify(socksRepository, never()).save(socks);
     }
@@ -99,8 +93,6 @@ public class SockServiceTests {
             assertEquals(resultErrorCode, e.getError());
         }
 
-        verify(socksRepository, times(1))
-                .findByColorAndCottonPart(socks.getColor(), socks.getCottonPart());
         verify(socks, never()).addQuantity(socks.getQuantity());
         verify(socksRepository, times(1)).save(socks);
     }
@@ -114,8 +106,6 @@ public class SockServiceTests {
 
         socksService.outcome(socks);
 
-        verify(socksRepository, times(1))
-                .findByColorAndCottonPart(socks.getColor(), socks.getCottonPart());
         verify(socks, times(1)).subtractQuantity(socks.getQuantity());
         verify(socksRepository, times(1)).save(socks);
     }
@@ -134,8 +124,6 @@ public class SockServiceTests {
 
         assertEquals(expectedResult, exception.getError());
 
-        verify(socksRepository, times(1))
-                .findByColorAndCottonPart(socks.getColor(), socks.getCottonPart());
         verify(socks, never()).subtractQuantity(socks.getQuantity());
         verify(socksRepository, never()).save(socks);
     }
@@ -152,13 +140,6 @@ public class SockServiceTests {
         Integer actualCount = socksService.getCountSocks(color, operation, cottonPart);
 
         assertEquals(expectedCount, actualCount);
-
-        verify(socksRepository, times(1))
-                .findCountSocksLessThan(color, cottonPart);
-        verify(socksRepository, never())
-                .findCountSocksEqual(color, cottonPart);
-        verify(socksRepository, never())
-                .findCountSocksMoreThan(color, cottonPart);
     }
 
     @Test
@@ -173,13 +154,6 @@ public class SockServiceTests {
         Integer actualCount = socksService.getCountSocks(color, operation, cottonPart);
 
         assertEquals(expectedCount, actualCount);
-
-        verify(socksRepository, never())
-                .findCountSocksLessThan(color, cottonPart);
-        verify(socksRepository, times(1))
-                .findCountSocksEqual(color, cottonPart);
-        verify(socksRepository, never())
-                .findCountSocksMoreThan(color, cottonPart);
     }
 
     @Test
@@ -194,13 +168,6 @@ public class SockServiceTests {
         Integer actualCount = socksService.getCountSocks(color, operation, cottonPart);
 
         assertEquals(expectedCount, actualCount);
-
-        verify(socksRepository, never())
-                .findCountSocksLessThan(color, cottonPart);
-        verify(socksRepository, never())
-                .findCountSocksEqual(color, cottonPart);
-        verify(socksRepository, times(1))
-                .findCountSocksMoreThan(color, cottonPart);
     }
 
     @Test
@@ -218,13 +185,6 @@ public class SockServiceTests {
         } catch (SocksException e) {
             assertEquals(resultErrorCode, e.getError());
         }
-
-        verify(socksRepository, never())
-                .findCountSocksLessThan(color, cottonPart);
-        verify(socksRepository, times(1))
-                .findCountSocksEqual(color, cottonPart);
-        verify(socksRepository, never())
-                .findCountSocksMoreThan(color, cottonPart);
     }
 
     @Test
@@ -242,13 +202,6 @@ public class SockServiceTests {
         });
 
         assertEquals(resultErrorCode, exception.getError());
-
-        verify(socksRepository, never())
-                .findCountSocksLessThan(color, cottonPart);
-        verify(socksRepository, times(1))
-                .findCountSocksEqual(color, cottonPart);
-        verify(socksRepository, never())
-                .findCountSocksMoreThan(color, cottonPart);
     }
 
 }
