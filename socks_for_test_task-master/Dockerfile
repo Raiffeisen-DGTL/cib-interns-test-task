@@ -5,8 +5,6 @@ COPY src /build/src/
 WORKDIR /build/
 RUN mvn clean package -DskipTests
 
-
-
 FROM adoptopenjdk:11-jre-hotspot
 
 WORKDIR /app/

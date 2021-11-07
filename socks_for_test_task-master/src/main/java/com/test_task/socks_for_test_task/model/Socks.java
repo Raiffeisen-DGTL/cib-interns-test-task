@@ -1,32 +1,45 @@
 package com.test_task.socks_for_test_task.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
+import javax.validation.constraints.*;
+import java.util.Objects;
 
 @Entity
-@Data
-@AllArgsConstructor
+@Getter
+@Setter
+@ToString
 @NoArgsConstructor
+@Table(name = "socks")
 public class Socks {
     @JsonIgnore
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+    @NotBlank
     private String color;
 
     @Column(name = "cotton_part")
-    private int cottonPart;
+    @Min(0)
+    @Max(100)
+    private Integer cottonPart;
 
-    private int quantity;
+    @PositiveOrZero
+    private Integer quantity;
 
-    public Socks(String color, int cottonPart, int quantity) {
-        this.color = color;
-        this.cottonPart = cottonPart;
-        this.quantity = quantity;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Socks socks = (Socks) o;
+        return id.equals(socks.id) && color.equals(socks.color) && cottonPart.equals(socks.cottonPart);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, color);
     }
 }

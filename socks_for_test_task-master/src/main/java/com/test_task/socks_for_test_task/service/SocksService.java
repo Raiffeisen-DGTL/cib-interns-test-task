@@ -16,70 +16,54 @@ public class SocksService {
 
     private final SocksRepository socksRepository;
 
+    private static final String EMPTY_SOCKS_WITH_PARAM = "No socks of the specified parameters!";
+
     @Autowired
     public SocksService(SocksRepository socksRepository) {
         this.socksRepository = socksRepository;
     }
 
     public void income(@NonNull Socks socks) {
-        if (socks.getCottonPart() >= 0 && socks.getCottonPart() <= 100 && socks.getQuantity() > 0){
-            Optional<Socks> socksOptional = socksRepository
-                    .findByColorAndCottonPart(socks.getColor(), socks.getCottonPart());
-            if (socksOptional.isPresent()) {
-                Socks findSocks = socksOptional.get();
-                findSocks.setQuantity(findSocks.getQuantity() + socks.getQuantity());
-            } else socksRepository.save(socks);
+        Optional<Socks> socksOptional = socksRepository
+                .findByColorAndCottonPart(socks.getColor(), socks.getCottonPart());
+        if (socksOptional.isPresent()) {
+            Socks findSocks = socksOptional.get();
+            findSocks.setQuantity(findSocks.getQuantity() + socks.getQuantity());
         }
-        else throw new ApiInvalidParameterException("Request parameters have an incorrect format!");
+        else {
+            socksRepository.save(socks);
+        }
     }
 
     public void outcome(@NonNull Socks socks) {
-        if (socks.getCottonPart() >= 0 && socks.getCottonPart() <= 100 && socks.getQuantity() > 0){
-            Optional<Socks> socksOptional = socksRepository
-                    .findByColorAndCottonPart(socks.getColor(), socks.getCottonPart());
-            if (socksOptional.isPresent()) {
-                Socks findSocks = socksOptional.get();
-                if (findSocks.getQuantity() >= socks.getQuantity()) {
-                    findSocks.setQuantity(findSocks.getQuantity() - socks.getQuantity());
-                } else throw new ApiInvalidParameterException("Not enough socks!");
-            }
-            else throw new ApiInvalidParameterException("No socks of the specified parameters!");
+        Socks findSocks = socksRepository
+                .findByColorAndCottonPart(socks.getColor(), socks.getCottonPart()).orElseThrow(()
+                        -> new ApiInvalidParameterException("No socks of the specified parameters!"));
+        if (findSocks.getQuantity() >= socks.getQuantity()) {
+            findSocks.setQuantity(findSocks.getQuantity() - socks.getQuantity());
         }
-        else throw new ApiInvalidParameterException("Request parameters have an incorrect format!");
+        else {
+            throw new ApiInvalidParameterException("Not enough socks!");
+        }
     }
 
-    public int countOfSocks(@NonNull String color, @NonNull String operation, int cottonPart){
-        Optional<Socks> optionalSocks;
-        if (cottonPart >= 0 && cottonPart <= 100){
-            switch (operation) {
-                case "moreThan":
-                    optionalSocks = socksRepository.findByColorAndCottonPartGreaterThan(color, cottonPart);
-                    if (optionalSocks.isPresent()) {
-                        return optionalSocks.get().getQuantity();
-                    }
-                    break;
-                case "lessThan":
-                    optionalSocks = socksRepository.findByColorAndCottonPartLessThan(color, cottonPart);
-                    if (optionalSocks.isPresent()) {
-                        return optionalSocks.get().getQuantity();
-                    }
-                    break;
-                case "equal":
-                    optionalSocks = socksRepository.findByColorAndCottonPartEquals(color, cottonPart);
-                    if (optionalSocks.isPresent()) {
-                        return optionalSocks.get().getQuantity();
-                    }
-                    break;
-                default:
-                    throw new ApiInvalidParameterException("Operation name has an incorrect format!");
-            }
-            throw new ApiInvalidParameterException("No socks of the specified parameters!");
+    public int countOfSocks(@NonNull String color, String operation, int cottonPart){
+        switch (operation) {
+            case "moreThan":
+                return socksRepository.findByColorAndCottonPartGreaterThan(color, cottonPart)
+                        .map(Socks::getQuantity)
+                        .orElseThrow(() -> new ApiInvalidParameterException(EMPTY_SOCKS_WITH_PARAM));
+            case "lessThan":
+                return socksRepository.findByColorAndCottonPartLessThan(color, cottonPart)
+                        .map(Socks::getQuantity)
+                        .orElseThrow(() -> new ApiInvalidParameterException(EMPTY_SOCKS_WITH_PARAM));
+            case "equal":
+                return socksRepository.findByColorAndCottonPartEquals(color, cottonPart)
+                        .map(Socks::getQuantity)
+                        .orElseThrow(() -> new ApiInvalidParameterException(EMPTY_SOCKS_WITH_PARAM));
+            default:
+                throw new ApiInvalidParameterException("Operation name has an incorrect format!");
         }
-        throw new ApiInvalidParameterException("Parameters don't exist!");
     }
-
-
-
-
 
 }
