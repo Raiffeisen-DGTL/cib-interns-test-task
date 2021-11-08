@@ -1,6 +1,8 @@
 package com.raiffeisendgtl.ApiSocks.services;
 
-import com.raiffeisendgtl.ApiSocks.components.*;
+import com.raiffeisendgtl.ApiSocks.components.FinderOperation;
+import com.raiffeisendgtl.ApiSocks.components.exception.SocksErrorCode;
+import com.raiffeisendgtl.ApiSocks.components.exception.SocksException;
 import com.raiffeisendgtl.ApiSocks.entities.Socks;
 import com.raiffeisendgtl.ApiSocks.repositories.SocksRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,21 +51,12 @@ public class SocksServiceImpl implements SocksService {
     }
 
     @Override
-    public Integer getCountSocks(String color, String operation, int cottonPart) {
-        Operation currentOperation = Operation.convertFromString(operation);
-
+    public Integer getCountSocks(String color, FinderOperation operation, int cottonPart) {
         Integer count = 0;
 
         try {
-            if (currentOperation == Operation.lessThan) {
-                count = socksRepository.findCountSocksLessThan(color, cottonPart);
-            }
-            if (currentOperation == Operation.equal) {
-                count = socksRepository.findCountSocksEqual(color, cottonPart);
-            }
-            if (currentOperation == Operation.moreThan) {
-                count = socksRepository.findCountSocksMoreThan(color, cottonPart);
-            }
+            operation.setSocksRepository(socksRepository);
+            count = operation.findCount(color, cottonPart);
         } catch (Throwable e) {
             throw new SocksException(SocksErrorCode.SERVER_CRASH);
         }

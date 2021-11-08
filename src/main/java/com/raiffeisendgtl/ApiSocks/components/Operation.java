@@ -1,5 +1,8 @@
 package com.raiffeisendgtl.ApiSocks.components;
 
+import com.raiffeisendgtl.ApiSocks.components.exception.SocksErrorCode;
+import com.raiffeisendgtl.ApiSocks.components.exception.SocksException;
+
 public enum Operation {
 
     moreThan,

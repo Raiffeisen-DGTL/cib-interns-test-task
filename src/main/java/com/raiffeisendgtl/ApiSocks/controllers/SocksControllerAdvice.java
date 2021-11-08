@@ -1,6 +1,6 @@
 package com.raiffeisendgtl.ApiSocks.controllers;
 
-import com.raiffeisendgtl.ApiSocks.components.SocksException;
+import com.raiffeisendgtl.ApiSocks.components.exception.SocksException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 

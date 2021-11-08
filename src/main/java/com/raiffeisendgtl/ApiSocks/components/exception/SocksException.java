@@ -1,4 +1,4 @@
-package com.raiffeisendgtl.ApiSocks.components;
+package com.raiffeisendgtl.ApiSocks.components.exception;
 
 import org.springframework.stereotype.Component;
 
