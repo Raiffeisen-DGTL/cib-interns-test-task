@@ -1,6 +1,7 @@
 package com.raiffeisendgtl.ApiSocks.services;
 
 import com.raiffeisendgtl.ApiSocks.components.*;
+import com.raiffeisendgtl.ApiSocks.components.exception.*;
 import com.raiffeisendgtl.ApiSocks.entities.Socks;
 import com.raiffeisendgtl.ApiSocks.repositories.SocksRepository;
 import org.junit.jupiter.api.*;
@@ -15,7 +16,7 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(MockitoExtension.class)
-public class SockServiceTests {
+public class SocksServiceTests {
 
     private SocksService socksService;
 
@@ -24,6 +25,9 @@ public class SockServiceTests {
 
     @Mock
     private Socks socks;
+
+    @Mock
+    private FinderOperation finderOperation;
 
     @BeforeEach
     public void setUp() {
@@ -144,43 +148,15 @@ public class SockServiceTests {
     }
 
     @Test
-    public void getCountSocksIfOperationIsLessThan() {
+    public void getCountSocksIsCorrect() {
         String color = "green";
-        String operation = "lessThan";
+        finderOperation = mock(FinderLessThan.class);
         int cottonPart = 33;
         Integer expectedCount = 3;
 
-        when(socksRepository.findCountSocksLessThan(color, cottonPart)).thenReturn(expectedCount);
+        when(finderOperation.findCount(color, cottonPart)).thenReturn(expectedCount);
 
-        Integer actualCount = socksService.getCountSocks(color, operation, cottonPart);
-
-        assertEquals(expectedCount, actualCount);
-    }
-
-    @Test
-    public void getCountSocksIfOperationIsEqual() {
-        String color = "yellow";
-        String operation = "equal";
-        int cottonPart = 70;
-        Integer expectedCount = 5;
-
-        when(socksRepository.findCountSocksEqual(color, cottonPart)).thenReturn(expectedCount);
-
-        Integer actualCount = socksService.getCountSocks(color, operation, cottonPart);
-
-        assertEquals(expectedCount, actualCount);
-    }
-
-    @Test
-    public void getCountSocksIfOperationIsMoreThan() {
-        String color = "blue";
-        String operation = "moreThan";
-        int cottonPart = 80;
-        Integer expectedCount = 7;
-
-        when(socksRepository.findCountSocksMoreThan(color, cottonPart)).thenReturn(expectedCount);
-
-        Integer actualCount = socksService.getCountSocks(color, operation, cottonPart);
+        Integer actualCount = socksService.getCountSocks(color, finderOperation, cottonPart);
 
         assertEquals(expectedCount, actualCount);
     }
@@ -188,15 +164,15 @@ public class SockServiceTests {
     @Test
     public void getCountSocksIfThrowExceptionIsServerCrash() {
         String color = "black";
-        String operation = "equal";
+        finderOperation = mock(FinderEqual.class);
         int cottonPart = 50;
         SocksErrorCode resultErrorCode = SocksErrorCode.SERVER_CRASH;
 
-        doThrow(new SocksException(SocksErrorCode.SERVER_CRASH)).when(socksRepository)
-                .findCountSocksEqual(color, cottonPart);
+        doThrow(new SocksException(SocksErrorCode.SERVER_CRASH)).when(finderOperation)
+                .findCount(color, cottonPart);
 
         try {
-            socksService.getCountSocks(color, operation, cottonPart);
+            socksService.getCountSocks(color, finderOperation, cottonPart);
         } catch (SocksException e) {
             assertEquals(resultErrorCode, e.getError());
         }
@@ -205,15 +181,15 @@ public class SockServiceTests {
     @Test
     public void getCountSocksIfThrowExceptionIsIncorrectParams() {
         String color = "orange";
-        String operation = "equal";
+        finderOperation = mock(FinderEqual.class);
         int cottonPart = 95;
         SocksErrorCode resultErrorCode = SocksErrorCode.INCORRECT_PARAMS;
 
-        when(socksRepository.findCountSocksEqual(color, cottonPart))
+        when(finderOperation.findCount(color, cottonPart))
                         .thenReturn(null);
 
         SocksException exception = assertThrows(SocksException.class, () -> {
-            socksService.getCountSocks(color, operation, cottonPart);
+            socksService.getCountSocks(color, finderOperation, cottonPart);
         });
 
         assertEquals(resultErrorCode, exception.getError());

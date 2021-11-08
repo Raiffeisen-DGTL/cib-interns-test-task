@@ -1,5 +1,7 @@
 package com.raiffeisendgtl.ApiSocks.components;
 
+import com.raiffeisendgtl.ApiSocks.components.exception.SocksErrorCode;
+import com.raiffeisendgtl.ApiSocks.components.exception.SocksException;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
