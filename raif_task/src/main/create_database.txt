@@ -1,0 +1,18 @@
+CREATE TABLE IF NOT EXISTS colors
+(
+    id integer NOT NULL GENERATED ALWAYS AS IDENTITY ( INCREMENT 1 START 1 MINVALUE 1 MAXVALUE 2147483647 CACHE 1 ),
+    name character varying(100),
+    CONSTRAINT pk_colors_id PRIMARY KEY (id)
+    CONSTRAINT "uk_color_name" UNIQUE (name)
+)
+
+CREATE TABLE IF NOT EXISTS socks
+(
+    id integer NOT NULL GENERATED ALWAYS AS IDENTITY ( INCREMENT 1 START 1 MINVALUE 1 MAXVALUE 2147483647 CACHE 1 ),
+    color integer NOT NULL,
+    cotton_part integer NOT NULL,
+    quantity integer,
+    CONSTRAINT pk_socks_id PRIMARY KEY (id),
+    CONSTRAINT fk_socks_colors FOREIGN KEY (color) REFERENCES colors(id)
+    CONSTRAINT "uk_color_cottonPart" UNIQUE (color, cotton_part)
+)
