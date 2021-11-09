@@ -12,30 +12,21 @@ import javax.validation.constraints.*;
 
 @Entity
 @EqualsAndHashCode
+@Getter @Setter @NoArgsConstructor
 public class Socks {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @Getter
-    @Setter
     @NotEmpty
     private String color;
 
-    @Getter
-    @Setter
     @Min(0)
     @Max(100)
     private int cottonPart;
 
-    @Getter
-    @Setter
     @Positive
     private int quantity;
-
-    public Socks() {
-
-    }
 
     public Socks(String color, int cottonPart, int quantity) {
         this.color = color;

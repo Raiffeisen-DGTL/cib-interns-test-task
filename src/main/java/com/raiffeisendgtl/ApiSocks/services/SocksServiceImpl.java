@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.NoSuchElementException;
 import java.util.Optional;
 
 @Service
@@ -27,11 +26,10 @@ public class SocksServiceImpl implements SocksService {
     public void income(Socks socks) {
         Optional<Socks> currentSocks = find(socks);
 
-        if (!currentSocks.isPresent()) {
+        currentSocks.ifPresent((obj) -> obj.addQuantity(socks.getQuantity()));
+
+        if (currentSocks.isEmpty()) {
             currentSocks = Optional.of(socks);
-        }
-        else {
-            currentSocks.get().addQuantity(socks.getQuantity());
         }
 
         save(currentSocks.get());
@@ -41,11 +39,7 @@ public class SocksServiceImpl implements SocksService {
     public void outcome(Socks socks) {
         Optional<Socks> currentSocks = find(socks);
 
-        try {
-            currentSocks.get().subtractQuantity(socks.getQuantity());
-        } catch (NoSuchElementException e) {
-            throw new SocksException(SocksErrorCode.INCORRECT_PARAMS);
-        }
+        currentSocks.orElseThrow(() -> new SocksException(SocksErrorCode.INCORRECT_PARAMS)).subtractQuantity(socks.getQuantity());
 
         save(currentSocks.get());
     }
