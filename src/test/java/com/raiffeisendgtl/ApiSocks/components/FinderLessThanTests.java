@@ -22,6 +22,15 @@ public class FinderLessThanTests {
     }
 
     @Test
+    public void typeTest() {
+        FinderLessThan finderLessThan;
+
+        finderLessThan = new FinderLessThan();
+
+        assertTrue(FinderOperation.class.isAssignableFrom(finderLessThan.getClass()));
+    }
+
+    @Test
     public void findCountTest() {
         FinderLessThan finderLessThan = new FinderLessThan();
         finderLessThan.setSocksRepository(socksRepository);
@@ -34,7 +43,6 @@ public class FinderLessThanTests {
         Integer actualResult = finderLessThan.findCount(color, cottonPart);
 
         assertEquals(expectedResult, actualResult);
-        assertTrue(FinderOperation.class.isAssignableFrom(finderLessThan.getClass()));
     }
 
 }

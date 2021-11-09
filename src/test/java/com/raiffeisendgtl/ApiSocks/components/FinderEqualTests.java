@@ -22,6 +22,15 @@ public class FinderEqualTests {
     }
 
     @Test
+    public void typeTest() {
+        FinderEqual finderEqual;
+
+        finderEqual = new FinderEqual();
+
+        assertTrue(FinderOperation.class.isAssignableFrom(finderEqual.getClass()));
+    }
+
+    @Test
     public void findCountTest() {
         FinderEqual finderEqual = new FinderEqual();
         finderEqual.setSocksRepository(socksRepository);
@@ -34,7 +43,6 @@ public class FinderEqualTests {
         Integer actualResult = finderEqual.findCount(color, cottonPart);
 
         assertEquals(expectedResult, actualResult);
-        assertTrue(FinderOperation.class.isAssignableFrom(finderEqual.getClass()));
     }
 
 }
