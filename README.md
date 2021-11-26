@@ -13,7 +13,9 @@
 
 ## Установка
 Сервис доступен по адресу https://sillyseal.systems/raiffeisen-task/
+
 **UPD: На данный момент сервис отключен**
+
 Ниже описаны варианты установки локальной версии.
 
 Вы можете скачать исполняемый jar-файл [тут](https://github.com/mickeytheseal/cib-interns-test-task/releases/download/v1.0.0/raiffeisentask-1.0.0-RELEASE.jar "raiffeisentask-1.0.0-RELEASE.jar") и запустить через:
