@@ -1,0 +1,26 @@
+databaseChangeLog:
+  - logicalFilePath: db/changelog/db.changelog-testtask.yaml
+  - changeSet:
+      id: 1
+      author: sillyseal
+      changes:
+        - createTable:
+            tableName: socks
+            columns:
+              - column:
+                  name: color
+                  type: varchar(50)
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: cotton_part
+                  type: int
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: quantity
+                  type: int
+                  constraints:
+                    nullable: true
