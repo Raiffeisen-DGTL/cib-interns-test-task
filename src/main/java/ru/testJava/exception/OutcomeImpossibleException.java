@@ -1,4 +1,4 @@
-package ru.raiff.exception;
+package ru.testJava.exception;
 
 public class OutcomeImpossibleException extends Exception {
     public OutcomeImpossibleException(String message) {

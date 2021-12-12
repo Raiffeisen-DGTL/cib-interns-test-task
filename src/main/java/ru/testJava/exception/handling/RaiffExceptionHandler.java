@@ -1,4 +1,4 @@
-package ru.raiff.exception.handling;
+package ru.testJava.exception.handling;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -7,7 +7,7 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import ru.raiff.exception.OutcomeImpossibleException;
+import ru.testJava.exception.OutcomeImpossibleException;
 
 import javax.validation.ValidationException;
 

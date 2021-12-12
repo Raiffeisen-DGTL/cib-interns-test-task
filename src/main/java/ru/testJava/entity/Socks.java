@@ -1,4 +1,4 @@
-package ru.raiff.entity;
+package ru.testJava.entity;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;

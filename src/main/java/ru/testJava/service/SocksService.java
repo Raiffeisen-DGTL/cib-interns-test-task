@@ -1,10 +1,10 @@
-package ru.raiff.service;
+package ru.testJava.service;
 
 import org.springframework.stereotype.Service;
-import ru.raiff.dto.SocksDto;
-import ru.raiff.entity.Socks;
-import ru.raiff.exception.OutcomeImpossibleException;
-import ru.raiff.repository.SocksRepository;
+import ru.testJava.dto.SocksDto;
+import ru.testJava.entity.Socks;
+import ru.testJava.exception.OutcomeImpossibleException;
+import ru.testJava.repository.SocksRepository;
 
 
 import javax.validation.ValidationException;
@@ -12,7 +12,6 @@ import java.util.Optional;
 
 @Service
 public class SocksService {
-
     private final SocksRepository socksRepository;
 
     public SocksService(SocksRepository socksRepository) {

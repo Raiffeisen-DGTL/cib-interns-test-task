@@ -1,5 +1,7 @@
-package ru.raiff.dto;
+package ru.testJava.dto;
 
+
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -7,9 +9,9 @@ import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 
-
 @Setter
 @Getter
+@AllArgsConstructor
 public class SocksDto {
     @NotBlank
     private String color;
@@ -18,6 +20,7 @@ public class SocksDto {
     private int cottonPart;
     @Min(2)
     private int quantity;
+
 
     @Override
     public String toString() {
