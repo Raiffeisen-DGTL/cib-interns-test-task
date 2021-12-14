@@ -1,0 +1,23 @@
+POST http://localhost:9090/api/socks/income
+Content-Type: application/json
+
+{
+  "color": "black",
+  "cottonPart": 10,
+  "quantity": 10
+}
+
+
+###
+POST http://localhost:9090/api/socks/outcome
+Content-Type: application/json
+
+{
+  "color": "black",
+  "cottonPart": 10,
+  "quantity": 10
+}
+
+###
+GET http://localhost:9090/api/socks?color=black&operation=equal&cottonPart=10
+
