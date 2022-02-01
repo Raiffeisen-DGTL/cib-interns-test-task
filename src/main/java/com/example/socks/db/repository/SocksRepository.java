@@ -9,14 +9,5 @@ import java.util.List;
 
 @Repository
 public interface SocksRepository extends JpaRepository<Socks, Long> {
-
-    List<Socks> findByCottonPartIsLessThanAndColorEquals(@Param("cotton_part") int cottonPart, String color);
-
-    List<Socks> findByCottonPartGreaterThanAndColorEquals(@Param("cotton_part") int cottonPart, String color);
-
-//    List<Socks> findByCottonPartEqualsAndColorEquals(@Param("cotton_part") int cottonPart,String color);
-
-//    Socks findByCottonPartAndColor(@Param("cotton_part") int cottonPart, @Param("color") String color);
-
 }
 
