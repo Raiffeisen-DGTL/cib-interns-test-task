@@ -1,6 +1,7 @@
 package com.example.socks.controller;
 
 import com.example.socks.Util.Operations;
+import com.example.socks.Util.SocksControllerExceptionHandler;
 import com.example.socks.db.dto.SocksDTO;
 import com.example.socks.service.SocksService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -25,6 +26,7 @@ import javax.validation.constraints.NotNull;
 @RequiredArgsConstructor
 @Validated
 @Tag(name = "SocksController", description = "Главный контролер")
+@SocksControllerExceptionHandler
 public class SocksController {
 
     private final SocksService socksService;
