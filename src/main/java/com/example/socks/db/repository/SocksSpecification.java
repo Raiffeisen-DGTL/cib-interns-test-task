@@ -18,6 +18,7 @@ public class SocksSpecification {
         return (root, query, criteriaBuilder) ->
                 criteriaBuilder.greaterThan(root.get("cottonPart"), cottonPart);
     }
+
     public static Specification<Socks> cottonPartLessThan(final int cottonPart) {
         return (root, query, criteriaBuilder) ->
                 criteriaBuilder.lessThan(root.get("cottonPart"), cottonPart);
