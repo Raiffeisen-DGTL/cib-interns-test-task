@@ -6,6 +6,8 @@ import com.example.socks.db.dto.SocksDTO;
 import com.example.socks.service.SocksService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -35,6 +37,12 @@ public class SocksController {
             summary = "Добавление носков",
             description = "Регистрирует приход носков на склад."
     )
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "удалось добавить приход"),
+            @ApiResponse(responseCode = "400", description = "Параметры запроса отсутствуют или имеют некорректный формат"),
+            @ApiResponse(responseCode = "500", description = "Произошла ошибка, не зависящая от вызывающей стороны (например, база данных недоступна)")
+    }
+    )
     @PostMapping(path = "/socks/income", produces = "application/json")
     public ResponseEntity<?> income(@Valid @RequestBody SocksDTO socks, BindingResult result) {
 
@@ -50,6 +58,12 @@ public class SocksController {
     @Operation(
             summary = "Выдача носков.",
             description = "Регистрирует отпуск носков со склада."
+    )
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "удалось выдать носки"),
+            @ApiResponse(responseCode = "400", description = "Параметры запроса отсутствуют или имеют некорректный формат"),
+            @ApiResponse(responseCode = "500", description = "Произошла ошибка, не зависящая от вызывающей стороны (например, база данных недоступна)")
+    }
     )
     @PostMapping(path = "/socks/outcome", produces = "application/json")
     public ResponseEntity<?> outcome(@Valid @RequestBody SocksDTO socksDTO, BindingResult result) {
@@ -68,6 +82,12 @@ public class SocksController {
     @Operation(
             summary = "Возвращает общее количество носков на складе.",
             description = "Возвращает общее количество носков на складе, соответствующих переданным в параметрах критериям запроса."
+    )
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Запрос выполнен, результат в теле ответа в виде строкового представления целого числа;"),
+            @ApiResponse(responseCode = "400", description = "Параметры запроса отсутствуют или имеют некорректный формат"),
+            @ApiResponse(responseCode = "500", description = "Произошла ошибка, не зависящая от вызывающей стороны (например, база данных недоступна)")
+    }
     )
     @GetMapping(path = "/socks", produces = "application/json")
     public ResponseEntity<String> getSocks(@RequestParam(value = "color") @NotNull @NotBlank @Parameter(description = "Цвет носков")
