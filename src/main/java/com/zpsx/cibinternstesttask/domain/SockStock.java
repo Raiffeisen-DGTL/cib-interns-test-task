@@ -7,7 +7,10 @@ import lombok.Setter;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.validation.constraints.*;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.PositiveOrZero;
 
 @Entity
 @Getter@Setter
@@ -22,11 +25,6 @@ public class SockStock {
     @Min(0) @Max(100)
     private Byte cottonPart;
 
+    @PositiveOrZero
     private Long quantity;
-
-    public SockStock(String color, Byte cottonPart, Long quantity){
-        this.color = color;
-        this.cottonPart = cottonPart;
-        this.quantity = quantity;
-    }
 }
