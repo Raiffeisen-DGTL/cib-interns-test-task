@@ -14,7 +14,7 @@
 	<name>cib-interns-test-task</name>
 	<description>Application for the operational accounting of socks in the warehouse of the store</description>
 	<properties>
-		<java.version>11</java.version>
+		<java.version>8</java.version>
 	</properties>
 	<dependencies>
 		<dependency>
