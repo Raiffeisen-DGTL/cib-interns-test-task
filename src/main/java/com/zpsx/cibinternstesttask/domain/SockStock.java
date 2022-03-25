@@ -16,15 +16,8 @@ import javax.validation.constraints.PositiveOrZero;
 @Getter@Setter
 @NoArgsConstructor
 public class SockStock {
-    @Id @GeneratedValue
-    private Long id;
-
-    @NotBlank
-    private String color;
-
-    @Min(0) @Max(100)
-    private Byte cottonPart;
-
-    @PositiveOrZero
-    private Long quantity;
+    @Id @GeneratedValue private Long id;
+    @NotBlank private String color;
+    @Min(0) @Max(100) private Byte cottonPart;
+    @PositiveOrZero private Long quantity;
 }
