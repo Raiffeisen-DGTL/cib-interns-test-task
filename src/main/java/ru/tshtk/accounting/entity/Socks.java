@@ -2,6 +2,7 @@ package ru.tshtk.accounting.entity;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.AllArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
@@ -9,6 +10,7 @@ import javax.persistence.*;
 @Entity
 @Table(name = "socks")
 @NoArgsConstructor
+@AllArgsConstructor
 @Getter
 @Setter
 public class Socks {
@@ -22,10 +24,4 @@ public class Socks {
     private int cottonPart;
     @Column(name = "quantity")
     private int quantity;
-
-    public Socks(String color, int cottonPart, int quantity) {
-        this.color = color;
-        this.cottonPart = cottonPart;
-        this.quantity = quantity;
-    }
 }
