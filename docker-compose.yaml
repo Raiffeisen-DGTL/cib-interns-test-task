@@ -1,0 +1,27 @@
+version: '3'
+services:
+  db:
+    image: postgres:12
+    container_name: postgres
+    restart: always
+    ports:
+      - 5444:5432
+    volumes:
+      - ./pg/data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_USER: Matvey
+      POSTGRES_PASSWORD: Lazarev
+      POSTGRES_DB: socks_api
+      PGDATA: /var/lib/postgresql/data
+  app:
+    image: lazarevmatt/socks-api:1.0.0
+    container_name: application
+    restart: always
+    ports:
+      - 8080:8080
+    volumes:
+      - ./logs:/app/logs
+    environment:
+      DATASOURCE_HOST: 77.223.99.163
+    links:
+      - db

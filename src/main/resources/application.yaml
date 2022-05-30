@@ -1,0 +1,52 @@
+server:
+  port: 8080
+
+spring:
+  profiles:
+    active: prod
+
+---
+#PostreSQL
+spring:
+  datasource:
+    url: jdbc:postgresql://${DATASOURCE_HOST:localhost}:5444/socks_api
+    username: Matvey
+    password: Lazarev
+    driver-class-name: org.postgresql.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    generate-ddl: false
+    show-sql: false
+
+
+  config:
+    activate:
+      on-profile: prod
+
+  flyway:
+    baseline-on-migrate: true
+    locations: 'classpath:db/migration/{vendor}'
+
+---
+#H2 DataBase
+spring:
+  datasource:
+    driver-class-name: org.h2.Driver
+    password: 12345
+    url: jdbc:h2:mem:testdb
+    username: sa
+  h2:
+    console:
+      enabled: true
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+    show-sql: false
+  config:
+    activate:
+      on-profile: dev
+
+
+
+
